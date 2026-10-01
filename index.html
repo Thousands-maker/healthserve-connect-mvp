@@ -287,9 +287,28 @@
         </div>
       </div>
 
-      <div style="padding:14px 20px 26px;display:flex;flex-direction:column;gap:10px;flex-shrink:0;">
+      <div style="padding:14px 20px 10px;display:flex;flex-direction:column;gap:10px;flex-shrink:0;">
         <button class="cta" onclick="go('screen-quiz')" id="module-next-btn"></button>
         <button onclick="go('screen-home')" id="module-skip-btn" style="background:none;border:none;text-align:center;font-size:13.5px;color:var(--muted);font-weight:600;"></button>
+      </div>
+
+      <div class="bottomnav">
+        <button class="navitem" onclick="go('screen-home')">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1v-9"/></svg>
+          <span class="nav-home-label"></span>
+        </button>
+        <button class="navitem active" onclick="openModule(continueLearningId)">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15z"/></svg>
+          <span class="nav-learn-label"></span>
+        </button>
+        <button class="navitem" onclick="go('screen-checkin')">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5 5 0 00-7.1 0L12 6.3l-1.7-1.7a5 5 0 10-7.1 7.1L12 20.4l8.8-8.7a5 5 0 000-7.1z"/></svg>
+          <span class="nav-checkin-label"></span>
+        </button>
+        <button class="navitem" onclick="go('screen-profile')">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+          <span class="nav-profile-label"></span>
+        </button>
       </div>
     </div>
 
@@ -316,8 +335,27 @@
         </div>
       </div>
 
-      <div style="padding:14px 20px 26px;flex-shrink:0;">
+      <div style="padding:14px 20px 10px;flex-shrink:0;">
         <button class="cta" id="quiz-finish" disabled onclick="finishModule()"></button>
+      </div>
+
+      <div class="bottomnav">
+        <button class="navitem" onclick="go('screen-home')">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1v-9"/></svg>
+          <span class="nav-home-label"></span>
+        </button>
+        <button class="navitem active" onclick="openModule(continueLearningId)">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15z"/></svg>
+          <span class="nav-learn-label"></span>
+        </button>
+        <button class="navitem" onclick="go('screen-checkin')">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5 5 0 00-7.1 0L12 6.3l-1.7-1.7a5 5 0 10-7.1 7.1L12 20.4l8.8-8.7a5 5 0 000-7.1z"/></svg>
+          <span class="nav-checkin-label"></span>
+        </button>
+        <button class="navitem" onclick="go('screen-profile')">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+          <span class="nav-profile-label"></span>
+        </button>
       </div>
     </div>
 
@@ -382,6 +420,25 @@
           </a>
           <div id="checkin-availability-note" style="text-align:center;font-size:11.5px;color:#8A4433;"></div>
         </div>
+      </div>
+
+      <div class="bottomnav">
+        <button class="navitem" onclick="go('screen-home')">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1v-9"/></svg>
+          <span class="nav-home-label"></span>
+        </button>
+        <button class="navitem" onclick="openModule(continueLearningId)">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15z"/></svg>
+          <span class="nav-learn-label"></span>
+        </button>
+        <button class="navitem active" onclick="go('screen-checkin')">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5 5 0 00-7.1 0L12 6.3l-1.7-1.7a5 5 0 10-7.1 7.1L12 20.4l8.8-8.7a5 5 0 000-7.1z"/></svg>
+          <span class="nav-checkin-label"></span>
+        </button>
+        <button class="navitem" onclick="go('screen-profile')">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+          <span class="nav-profile-label"></span>
+        </button>
       </div>
     </div>
 
