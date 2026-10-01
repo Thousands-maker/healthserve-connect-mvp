@@ -1,2 +1,2 @@
 # healthserve-connect-mvp
-Interactive offline HTML prototype of HealthServe Connect — a multilingual wellbeing web MVP for dormitory-based migrant workers in Singapore.
+HealthServe Connect (R1 — LEARN) is a click-through UI prototype for a digital front door into HealthServe's mental health and wellbeing services, built for dormitory-based migrant workers whose shift patterns make it hard to attend scheduled outreach. This single-file HTML prototype covers language selection, sign-up with voucher incentive, wellbeing learning modules with audio support, a comprehension quiz, a daily mood check-in with escalation to a human counsellor, and a progress profile — runs fully offline, no build step or server required.
