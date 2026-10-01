@@ -305,27 +305,35 @@
         </div>
 
         <div style="background:var(--teal-tint);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
-          <button id="playbtn" onclick="togglePlay()" style="width:42px;height:42px;border-radius:50%;background:var(--teal);border:none;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <svg id="playicon" width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" stroke="none"><path d="M8 5v14l11-7z"/></svg>
-          </button>
-          <div style="flex:1;">
-            <div id="module-listen-label" style="font-size:13px;font-weight:600;"></div>
-            <div style="display:flex;gap:3px;align-items:flex-end;height:16px;margin-top:6px;">
-              <div style="width:3px;height:6px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
-              <div style="width:3px;height:10px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
-              <div style="width:3px;height:14px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
-              <div style="width:3px;height:8px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
-              <div style="width:3px;height:16px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
-              <div style="width:3px;height:12px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
-              <div style="width:3px;height:7px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
-              <div style="width:3px;height:15px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
-              <div style="width:3px;height:9px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
-              <div style="width:3px;height:13px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
+          <div id="module-audio-available-row" style="display:flex;align-items:center;gap:12px;width:100%;">
+            <button id="playbtn" onclick="togglePlay()" style="width:42px;height:42px;border-radius:50%;background:var(--teal);border:none;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg id="playicon" width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" stroke="none"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <div style="flex:1;">
+              <div id="module-listen-label" style="font-size:13px;font-weight:600;"></div>
+              <div style="display:flex;gap:3px;align-items:flex-end;height:16px;margin-top:6px;">
+                <div style="width:3px;height:6px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
+                <div style="width:3px;height:10px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
+                <div style="width:3px;height:14px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
+                <div style="width:3px;height:8px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
+                <div style="width:3px;height:16px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
+                <div style="width:3px;height:12px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
+                <div style="width:3px;height:7px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
+                <div style="width:3px;height:15px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
+                <div style="width:3px;height:9px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
+                <div style="width:3px;height:13px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
+              </div>
             </div>
+            <div id="module-lang-tag" style="font-size:11.5px;color:#2B4B47;font-weight:600;"></div>
           </div>
-          <div id="module-lang-tag" style="font-size:11.5px;color:#2B4B47;font-weight:600;"></div>
+          <div id="module-audio-comingsoon-row" style="display:none;align-items:center;gap:12px;width:100%;">
+            <div style="width:42px;height:42px;border-radius:50%;background:#D9D2C2;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6E7873" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            </div>
+            <div id="module-comingsoon-label" style="flex:1;font-size:12.5px;color:#6E7873;line-height:1.45;"></div>
+            <div id="module-lang-tag-2" style="font-size:11.5px;color:#6E7873;font-weight:600;flex-shrink:0;"></div>
+          </div>
         </div>
-        <div id="module-audio-unavailable" style="display:none;font-size:12.5px;color:#7A2E1E;line-height:1.5;margin-top:-6px;"></div>
       </div>
 
       <div style="padding:14px 20px 10px;display:flex;flex-direction:column;gap:10px;flex-shrink:0;">
@@ -2239,9 +2247,10 @@
     prevBtn.style.display = currentChapterIdx === 0 ? 'none' : 'flex';
     prevBtn.setAttribute('aria-label', t('previousChapter'));
 
-    var audioNote = document.getElementById('module-audio-unavailable');
-    audioNote.style.display = 'none';
-    audioNote.textContent = '';
+    // Decide up front whether this device actually has a voice for the
+    // selected language, so we never show a play button that can't work —
+    // no false "listening" promise, no reactive error message after the fact.
+    setAudioRowAvailability(hasVoiceForLang(SPEECH_LANG[pickedLang] || 'en-US'), langEntry);
 
     updateModuleBookmarkIcon();
   }
@@ -2303,16 +2312,28 @@
       ? '<rect x="6" y="5" width="4" height="14"></rect><rect x="14" y="5" width="4" height="14"></rect>'
       : '<path d="M8 5v14l11-7z"></path>';
   }
-  function showAudioUnavailableNote(){
-    var note = document.getElementById('module-audio-unavailable');
-    if (!note) return;
-    note.textContent = t('audioUnavailable');
-    note.style.display = 'block';
+  // Switches the audio row between "play button" and "narration coming
+  // soon" states. Driven proactively by renderModuleScreen() (based on
+  // whether the device actually has a voice for the chosen language), and
+  // also used reactively if a genuine speech error fires mid-playback.
+  function setAudioRowAvailability(available, langEntry){
+    var availableRow = document.getElementById('module-audio-available-row');
+    var comingSoonRow = document.getElementById('module-audio-comingsoon-row');
+    if (!availableRow || !comingSoonRow) return;
+    availableRow.style.display = available ? 'flex' : 'none';
+    comingSoonRow.style.display = available ? 'none' : 'flex';
+    if (!available){
+      document.getElementById('module-comingsoon-label').textContent = t('audioUnavailable');
+      document.getElementById('module-lang-tag-2').textContent = langEntry ? langEntry.native : '';
+    }
   }
   function togglePlay(){
-    if (!('speechSynthesis' in window)){
-      // No speech support on this device/browser — nothing to toggle to.
-      showAudioUnavailableNote();
+    if (!('speechSynthesis' in window) || playing === false && !hasVoiceForLang(SPEECH_LANG[pickedLang] || 'en-US')){
+      // No speech support at all, or no voice for this language — the play
+      // button shouldn't even be visible in that case (see
+      // renderModuleScreen), but guard here too in case state is stale.
+      var langEntry = LANGS.filter(function(l){ return l.id === pickedLang; })[0] || LANGS[1];
+      setAudioRowAvailability(false, langEntry);
       return;
     }
     if (playing){
@@ -2322,14 +2343,6 @@
       return;
     }
     var langTag = SPEECH_LANG[pickedLang] || 'en-US';
-    // Some browsers/OSes simply have no voice installed for this language
-    // (common for Burmese/my-MM) — don't pretend to play; tell the person
-    // plainly so it doesn't look like a silent, unexplained bug.
-    if (!hasVoiceForLang(langTag)){
-      showAudioUnavailableNote();
-      return;
-    }
-    document.getElementById('module-audio-unavailable').style.display = 'none';
     var content = chapterBody(currentModuleId, currentChapterIdx, pickedLang);
     var text = content.headline + '. ' + content.text;
     var utter = new SpeechSynthesisUtterance(text);
@@ -2338,28 +2351,23 @@
     if (voice) utter.voice = voice;
     utter.rate = 0.95;
     utter.pitch = 1;
-    var started = false;
-    utter.onstart = function(){ started = true; };
     utter.onend = function(){ playing = false; setPlayIcon(false); };
-    utter.onerror = function(){ playing = false; setPlayIcon(false); showAudioUnavailableNote(); };
+    utter.onerror = function(e){
+      // A genuine synthesis failure (not just "paused by the user"):
+      // "canceled"/"interrupted" fire whenever we stop our own speech
+      // (including the stopSpeech(false) call a few lines below, right
+      // before every fresh play) — that's normal and not a real error.
+      if (e && (e.error === 'canceled' || e.error === 'interrupted')) return;
+      playing = false;
+      setPlayIcon(false);
+      var le = LANGS.filter(function(l){ return l.id === pickedLang; })[0] || LANGS[1];
+      setAudioRowAvailability(false, le);
+    };
     stopSpeech(false); // stop anything already speaking first, no deferred re-cancel
     speechGeneration++; // invalidate any still-pending re-cancel from an earlier stopSpeech() call
     window.speechSynthesis.speak(utter);
     playing = true;
     setPlayIcon(true);
-    // Watchdog: some mobile browsers silently no-op speak() for a language
-    // they report a voice for but can't actually synthesize. If nothing
-    // audibly started within 1.5s, treat it as unavailable rather than
-    // leaving the play icon stuck in a "playing" state that's doing nothing.
-    var watchGeneration = speechGeneration;
-    setTimeout(function(){
-      if (watchGeneration !== speechGeneration) return; // a newer action took over, ignore
-      if (!started && !window.speechSynthesis.speaking){
-        playing = false;
-        setPlayIcon(false);
-        showAudioUnavailableNote();
-      }
-    }, 1500);
   }
 
   // ===================== QUIZ =====================
