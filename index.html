@@ -44,7 +44,7 @@
   .chip{text-align:left;border-radius:14px;padding:14px;border:1.5px solid var(--line);background:#FFFFFF;}
   .chip.picked{border-color:var(--accent);background:#FEF6E8;}
 
-  .nav-controls{display:flex;gap:10px;align-items:center;margin-top:4px;}
+  .nav-controls{display:flex;gap:10px;align-items:center;margin-top:4px;flex-wrap:wrap;justify-content:center;}
   .nav-controls button{background:#FFFFFF;border:1px solid #C9C2B4;border-radius:10px;padding:8px 14px;font-size:12.5px;font-weight:600;color:#39433E;}
   .nav-controls button:hover{background:#F2EFE8;}
 
@@ -70,12 +70,12 @@
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7.5-4.6-10-9.3C.3 8 2 4 6 4c2.4 0 4 1.4 6 4 2-2.6 3.6-4 6-4 4 0 5.7 4 4 7.7C19.5 16.4 12 21 12 21z"/></svg>
         </div>
         <h1 style="color:#FFFFFF;font-size:22px;letter-spacing:-0.2px;">HealthServe Connect</h1>
-        <div style="color:#CFE6E1;font-size:14px;text-align:center;line-height:1.4;max-width:260px;">Wellbeing support that fits around your shift, in your language.</div>
+        <div id="lang-tagline" style="color:#CFE6E1;font-size:14px;text-align:center;line-height:1.4;max-width:260px;"></div>
       </div>
 
       <div class="scroll" style="padding:28px 24px 8px;display:flex;flex-direction:column;gap:18px;">
         <div>
-          <div style="font-size:15px;font-weight:600;">Choose your language</div>
+          <div id="lang-choose-label" style="font-size:15px;font-weight:600;"></div>
           <div style="font-size:13px;color:var(--muted);margin-top:2px;">உங்கள் மொழியைத் தேர்ந்தெடுக்கவும் · আপনার ভাষা বেছে নিন</div>
         </div>
 
@@ -83,16 +83,16 @@
 
         <div style="margin-top:4px;background:var(--teal-tint);border-radius:14px;padding:14px 16px;display:flex;gap:10px;align-items:flex-start;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0E5C55" stroke-width="2" stroke-linecap="round" style="flex-shrink:0;margin-top:1px;"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
-          <div style="font-size:12.5px;color:#2B4B47;line-height:1.5;">Everything you see can also be read aloud. No reading needed to get help.</div>
+          <div id="lang-audio-note" style="font-size:12.5px;color:#2B4B47;line-height:1.5;"></div>
         </div>
       </div>
 
       <div style="padding:16px 24px 28px;display:flex;flex-direction:column;gap:12px;flex-shrink:0;">
-        <button class="cta" onclick="continueFromLanguage()" style="display:flex;align-items:center;justify-content:center;gap:8px;">
-          Continue
+        <button class="cta" id="lang-continue-btn" onclick="continueFromLanguage()" style="display:flex;align-items:center;justify-content:center;gap:8px;">
+          <span id="lang-continue-label"></span>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </button>
-        <div style="text-align:center;font-size:11.5px;color:var(--muted);">An initiative by HealthServe · Private &amp; confidential</div>
+        <div id="footer-note-1" style="text-align:center;font-size:11.5px;color:var(--muted);"></div>
       </div>
     </div>
 
@@ -102,7 +102,7 @@
         <button class="backbtn" onclick="go('screen-lang')" aria-label="Back">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1C2520" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
         </button>
-        <h1 style="font-size:17px;">Get started</h1>
+        <h1 id="signup-title" style="font-size:17px;"></h1>
       </div>
 
       <div class="scroll" style="padding:16px 24px 8px;display:flex;flex-direction:column;gap:18px;">
@@ -111,30 +111,30 @@
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B9791F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4a2 2 0 002 2h2a2 2 0 110 4m0-16a2 2 0 100 4m14-4v16M3 10V6a2 2 0 012-2h14a2 2 0 012 2v4M3 10h18"/></svg>
           </div>
           <div>
-            <div style="font-family:var(--font-head);font-weight:700;font-size:15px;color:#5A3B0A;">Get a S$10 EZ-Link voucher</div>
-            <div style="font-size:12.5px;color:#7A5A24;margin-top:2px;">Paid once your sign-up is verified</div>
+            <div id="signup-voucher-title" style="font-family:var(--font-head);font-weight:700;font-size:15px;color:#5A3B0A;"></div>
+            <div id="signup-voucher-sub" style="font-size:12.5px;color:#7A5A24;margin-top:2px;"></div>
           </div>
         </div>
 
         <div style="display:flex;flex-direction:column;gap:14px;">
           <div>
-            <div style="font-size:13px;font-weight:600;margin-bottom:6px;">Mobile number</div>
+            <div id="signup-mobile-label" style="font-size:13px;font-weight:600;margin-bottom:6px;"></div>
             <input type="text" placeholder="+65 8xxx xxxx" style="width:100%;padding:14px 16px;border-radius:12px;border:1.5px solid var(--line);font-size:15px;background:#FFFFFF;"/>
           </div>
           <div>
-            <div style="font-size:13px;font-weight:600;margin-bottom:6px;">Work Permit / FIN — last 4 digits</div>
+            <div id="signup-fin-label" style="font-size:13px;font-weight:600;margin-bottom:6px;"></div>
             <input type="text" placeholder="e.g. 7421" style="width:100%;padding:14px 16px;border-radius:12px;border:1.5px solid var(--line);font-size:15px;background:#FFFFFF;"/>
           </div>
         </div>
 
         <div style="background:var(--teal-tint);border-radius:14px;padding:14px 16px;display:flex;gap:10px;align-items:flex-start;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0E5C55" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px;"><path d="M12 2l8 4v6c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-4z"/></svg>
-          <div style="font-size:12.5px;color:#2B4B47;line-height:1.5;">Your details stay with HealthServe. We never share this with your employer or agent.</div>
+          <div id="signup-privacy-note" style="font-size:12.5px;color:#2B4B47;line-height:1.5;"></div>
         </div>
       </div>
 
       <div style="padding:16px 24px 28px;flex-shrink:0;">
-        <button class="cta" onclick="finishSignup()">Verify &amp; continue</button>
+        <button class="cta" id="signup-verify-btn" onclick="finishSignup()"></button>
       </div>
     </div>
 
@@ -144,7 +144,7 @@
         <div style="display:flex;align-items:center;justify-content:space-between;">
           <div>
             <div style="font-size:13px;color:var(--muted);">Thursday, 1 Oct</div>
-            <h1 style="font-size:21px;margin-top:2px;">Vanakkam, Kumar 👋</h1>
+            <h1 id="home-greeting" style="font-size:21px;margin-top:2px;"></h1>
           </div>
           <div style="width:40px;height:40px;border-radius:12px;background:#FFFFFF;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;">
             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1C2520" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9zM13.7 21a2 2 0 01-3.4 0"/></svg>
@@ -152,8 +152,8 @@
         </div>
 
         <div style="background:var(--teal);border-radius:18px;padding:18px;">
-          <div style="color:#FFFFFF;font-weight:700;font-family:var(--font-head);font-size:15.5px;">How are you feeling today?</div>
-          <div style="color:#CFE6E1;font-size:12.5px;margin-top:3px;">One tap, right here</div>
+          <div id="home-mood-title" style="color:#FFFFFF;font-weight:700;font-family:var(--font-head);font-size:15.5px;"></div>
+          <div id="home-mood-sub" style="color:#CFE6E1;font-size:12.5px;margin-top:3px;"></div>
 
           <div style="display:flex;justify-content:space-between;gap:6px;margin-top:14px;" id="home-mood-row">
             <button class="home-mood-btn" data-mood="great" onclick="pickHomeMood(this)" style="flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 2px;border-radius:12px;border:1.5px solid transparent;background:rgba(255,255,255,0.14);">
@@ -175,110 +175,62 @@
 
           <div id="home-mood-good" style="display:none;margin-top:14px;background:rgba(255,255,255,0.92);border-radius:14px;padding:14px;text-align:center;">
             <div style="font-size:24px;">🌱</div>
-            <div style="font-family:var(--font-head);font-weight:700;font-size:14px;margin-top:4px;color:#255440;">Good to hear. Keep it up.</div>
+            <div id="home-good-title" style="font-family:var(--font-head);font-weight:700;font-size:14px;margin-top:4px;color:#255440;"></div>
           </div>
 
           <div id="home-mood-escalate" style="display:none;margin-top:14px;background:rgba(255,255,255,0.96);border-radius:14px;padding:14px;flex-direction:column;gap:10px;">
             <div>
-              <div style="font-family:var(--font-head);font-weight:700;font-size:14px;color:#7A2E1E;">It's okay to not be okay.</div>
-              <div style="font-size:12px;color:#7A2E1E;margin-top:3px;line-height:1.5;">You don't have to carry this alone. Confidential support is a tap away.</div>
+              <div id="home-escalate-title" style="font-family:var(--font-head);font-weight:700;font-size:14px;color:#7A2E1E;"></div>
+              <div id="home-escalate-sub" style="font-size:12px;color:#7A2E1E;margin-top:3px;line-height:1.5;"></div>
             </div>
             <a href="https://wa.me/6591511767" target="_blank" rel="noopener" style="display:block;">
               <button style="width:100%;background:#1C2520;color:#FFFFFF;border:none;border-radius:11px;padding:12px;font-size:13.5px;font-weight:700;font-family:var(--font-head);display:flex;align-items:center;justify-content:center;gap:8px;">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 01-8.9 8.4 8.5 8.5 0 01-4-1l-4.6 1.2 1.3-4.5a8.4 8.4 0 01-1-4A8.5 8.5 0 0112.5 3a8.4 8.4 0 018.5 8.5z"/></svg>
-                WhatsApp us — +65 9151 1767
+                <span id="home-whatsapp-label"></span>
               </button>
             </a>
           </div>
         </div>
 
-        <button onclick="go('screen-module')" style="background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;text-align:left;">
+        <button onclick="openModule(continueLearningId)" style="background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;text-align:left;">
           <div style="display:flex;align-items:center;gap:12px;">
-            <div style="width:48px;height:48px;border-radius:12px;background:#FDEFD9;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B9791F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7.5-4.6-9-9.1C1.5 8.4 3.3 5 7 5c1.9 0 3.3 1 5 3 1.7-2 3.1-3 5-3 3.7 0 5.5 3.4 4 6.9C19.5 16.4 12 21 12 21z"/></svg>
-            </div>
+            <div id="continue-icon-wrap" style="width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"></div>
             <div style="flex:1;">
-              <div style="font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;">Continue learning</div>
-              <div style="font-weight:700;font-family:var(--font-head);font-size:15px;margin-top:1px;">Managing Stress at Work</div>
+              <div id="continue-eyebrow" style="font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;"></div>
+              <div id="continue-title" style="font-weight:700;font-family:var(--font-head);font-size:15px;margin-top:1px;"></div>
             </div>
           </div>
           <div style="margin-top:12px;height:7px;border-radius:5px;background:#EFE9DD;overflow:hidden;">
-            <div style="width:40%;height:100%;background:var(--accent);border-radius:5px;"></div>
+            <div id="continue-progress-bar" style="width:40%;height:100%;background:var(--accent);border-radius:5px;"></div>
           </div>
-          <div style="font-size:11.5px;color:var(--muted);margin-top:6px;">Step 2 of 5 · 3 min left</div>
+          <div id="continue-progress-label" style="font-size:11.5px;color:var(--muted);margin-top:6px;"></div>
         </button>
 
         <div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-            <div style="font-weight:700;font-family:var(--font-head);font-size:15.5px;">Wellbeing modules</div>
-            <div style="font-size:12.5px;color:var(--muted);">4 topics</div>
+            <div id="wellbeing-modules-label" style="font-weight:700;font-family:var(--font-head);font-size:15.5px;"></div>
+            <div id="topics-count-label" style="font-size:12.5px;color:var(--muted);"></div>
           </div>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-
-            <button onclick="go('screen-module')" style="background:var(--card);border:1px solid var(--line);border-radius:16px;padding:13px 14px;display:flex;align-items:center;gap:12px;text-align:left;">
-              <div style="width:42px;height:42px;border-radius:11px;background:#FDEFD9;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0E5C55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7.5-4.6-9-9.1C1.5 8.4 3.3 5 7 5c1.9 0 3.3 1 5 3 1.7-2 3.1-3 5-3 3.7 0 5.5 3.4 4 6.9C19.5 16.4 12 21 12 21z"/></svg>
-              </div>
-              <div style="flex:1;">
-                <div style="font-weight:600;font-size:14px;">Managing Stress at Work</div>
-                <div style="font-size:12px;color:var(--muted);margin-top:1px;">5 steps · In progress</div>
-              </div>
-              <div style="font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px;background:#FDEFD9;color:#B9791F;white-space:nowrap;">In progress</div>
-            </button>
-
-            <button onclick="go('screen-module')" style="background:var(--card);border:1px solid var(--line);border-radius:16px;padding:13px 14px;display:flex;align-items:center;gap:12px;text-align:left;">
-              <div style="width:42px;height:42px;border-radius:11px;background:#E3EFEC;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0E5C55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
-              </div>
-              <div style="flex:1;">
-                <div style="font-weight:600;font-size:14px;">Sleep &amp; Rest</div>
-                <div style="font-size:12px;color:var(--muted);margin-top:1px;">4 steps · Not started</div>
-              </div>
-              <div style="font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px;background:#E3EFEC;color:#0E5C55;white-space:nowrap;">Start</div>
-            </button>
-
-            <button onclick="go('screen-module')" style="background:var(--card);border:1px solid var(--line);border-radius:16px;padding:13px 14px;display:flex;align-items:center;gap:12px;text-align:left;">
-              <div style="width:42px;height:42px;border-radius:11px;background:#E3EFEC;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0E5C55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5 5 0 00-7.1 0L12 6.3l-1.7-1.7a5 5 0 10-7.1 7.1L12 20.4l8.8-8.7a5 5 0 000-7.1z"/></svg>
-              </div>
-              <div style="flex:1;">
-                <div style="font-weight:600;font-size:14px;">Homesickness &amp; Staying Connected</div>
-                <div style="font-size:12px;color:var(--muted);margin-top:1px;">3 steps · Not started</div>
-              </div>
-              <div style="font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px;background:#E3EFEC;color:#0E5C55;white-space:nowrap;">Start</div>
-            </button>
-
-            <button onclick="go('screen-module')" style="background:var(--card);border:1px solid var(--line);border-radius:16px;padding:13px 14px;display:flex;align-items:center;gap:12px;text-align:left;">
-              <div style="width:42px;height:42px;border-radius:11px;background:#E7F2EB;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0E5C55" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-              </div>
-              <div style="flex:1;">
-                <div style="font-weight:600;font-size:14px;">Money Worries &amp; Remittances</div>
-                <div style="font-size:12px;color:var(--muted);margin-top:1px;">4 steps · Completed</div>
-              </div>
-              <div style="font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px;background:#E7F2EB;color:#3F8F6B;white-space:nowrap;">Done</div>
-            </button>
-
-          </div>
+          <div id="module-list" style="display:flex;flex-direction:column;gap:10px;"></div>
         </div>
       </div>
 
       <div class="bottomnav">
         <button class="navitem active" onclick="go('screen-home')">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1v-9"/></svg>
-          Home
+          <span class="nav-home-label"></span>
         </button>
-        <button class="navitem" onclick="go('screen-module')">
+        <button class="navitem" onclick="openModule(continueLearningId)">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15z"/></svg>
-          Learn
+          <span class="nav-learn-label"></span>
         </button>
         <button class="navitem" onclick="go('screen-checkin')">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5 5 0 00-7.1 0L12 6.3l-1.7-1.7a5 5 0 10-7.1 7.1L12 20.4l8.8-8.7a5 5 0 000-7.1z"/></svg>
-          Check-in
+          <span class="nav-checkin-label"></span>
         </button>
         <button class="navitem" onclick="go('screen-profile')">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
-          Profile
+          <span class="nav-profile-label"></span>
         </button>
       </div>
     </div>
@@ -290,28 +242,20 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1C2520" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
         </button>
         <div style="flex:1;">
-          <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;">Wellbeing module</div>
-          <h1 style="font-size:16px;">Managing Stress at Work</h1>
+          <div id="module-eyebrow" style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;"></div>
+          <h1 id="module-title" style="font-size:16px;"></h1>
         </div>
       </div>
 
-      <div style="padding:14px 20px 0;display:flex;gap:6px;flex-shrink:0;">
-        <div style="flex:1;height:6px;border-radius:4px;background:#0E5C55;"></div>
-        <div style="flex:1;height:6px;border-radius:4px;background:#0E5C55;"></div>
-        <div style="flex:1;height:6px;border-radius:4px;background:#E7E1D6;"></div>
-        <div style="flex:1;height:6px;border-radius:4px;background:#E7E1D6;"></div>
-        <div style="flex:1;height:6px;border-radius:4px;background:#E7E1D6;"></div>
-      </div>
-      <div style="padding:6px 20px 0;font-size:12px;color:var(--muted);flex-shrink:0;">Step 2 of 5</div>
+      <div id="module-dots" style="padding:14px 20px 0;display:flex;gap:6px;flex-shrink:0;"></div>
+      <div id="module-step-label" style="padding:6px 20px 0;font-size:12px;color:var(--muted);flex-shrink:0;"></div>
 
       <div class="scroll" style="padding:18px 20px 12px;display:flex;flex-direction:column;gap:18px;">
-        <div style="background:var(--card);border:1px solid var(--line);border-radius:20px;height:180px;display:flex;align-items:center;justify-content:center;">
-          <svg width="76" height="76" viewBox="0 0 24 24" fill="none" stroke="#0E5C55" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"><path d="M12 21s-7.5-4.6-9-9.1C1.5 8.4 3.3 5 7 5c1.9 0 3.3 1 5 3 1.7-2 3.1-3 5-3 3.7 0 5.5 3.4 4 6.9C19.5 16.4 12 21 12 21z"/></svg>
-        </div>
+        <div id="module-icon-box" style="background:var(--card);border:1px solid var(--line);border-radius:20px;height:180px;display:flex;align-items:center;justify-content:center;"></div>
 
         <div>
-          <h2 style="font-size:19px;line-height:1.35;">You are not alone in feeling this way.</h2>
-          <p style="font-size:14.5px;line-height:1.65;color:#39433E;margin-top:10px;">Many workers feel tense or tired after long shifts. This is a normal response to pressure — not a weakness. Small, simple actions can help your body and mind settle, even on a busy day.</p>
+          <h2 id="module-headline" style="font-size:19px;line-height:1.35;"></h2>
+          <p id="module-body" style="font-size:14.5px;line-height:1.65;color:#39433E;margin-top:10px;"></p>
         </div>
 
         <div style="background:var(--teal-tint);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
@@ -319,7 +263,7 @@
             <svg id="playicon" width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" stroke="none"><path d="M8 5v14l11-7z"/></svg>
           </button>
           <div style="flex:1;">
-            <div style="font-size:13px;font-weight:600;">Listen instead of reading</div>
+            <div id="module-listen-label" style="font-size:13px;font-weight:600;"></div>
             <div style="display:flex;gap:3px;align-items:flex-end;height:16px;margin-top:6px;">
               <div style="width:3px;height:6px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
               <div style="width:3px;height:10px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
@@ -333,13 +277,13 @@
               <div style="width:3px;height:13px;background:#0E5C55;border-radius:2px;opacity:0.55;"></div>
             </div>
           </div>
-          <div style="font-size:11.5px;color:#2B4B47;font-weight:600;">தமிழ்</div>
+          <div id="module-lang-tag" style="font-size:11.5px;color:#2B4B47;font-weight:600;"></div>
         </div>
       </div>
 
       <div style="padding:14px 20px 26px;display:flex;flex-direction:column;gap:10px;flex-shrink:0;">
-        <button class="cta" onclick="go('screen-quiz')">Next</button>
-        <button onclick="go('screen-home')" style="background:none;border:none;text-align:center;font-size:13.5px;color:var(--muted);font-weight:600;">Skip for now</button>
+        <button class="cta" onclick="go('screen-quiz')" id="module-next-btn"></button>
+        <button onclick="go('screen-home')" id="module-skip-btn" style="background:none;border:none;text-align:center;font-size:13.5px;color:var(--muted);font-weight:600;"></button>
       </div>
     </div>
 
@@ -349,33 +293,14 @@
         <button class="backbtn" onclick="go('screen-module')" aria-label="Back">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1C2520" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
         </button>
-        <h1 style="font-size:17px;">Quick check</h1>
+        <h1 id="quiz-topbar-title" style="font-size:17px;"></h1>
       </div>
 
       <div class="scroll" style="padding:22px 20px 12px;display:flex;flex-direction:column;gap:18px;">
-        <div style="font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;">Managing Stress at Work</div>
-        <h2 style="font-size:19px;line-height:1.4;">What can help most when you feel stressed at work?</h2>
+        <div id="quiz-eyebrow" style="font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;"></div>
+        <h2 id="quiz-question" style="font-size:19px;line-height:1.4;"></h2>
 
-        <div style="display:flex;flex-direction:column;gap:10px;" id="quiz-options">
-          <button class="chip" onclick="pickQuiz(this,false)">
-            <div style="display:flex;align-items:center;gap:12px;">
-              <div class="ring" style="width:22px;height:22px;border-radius:50%;border:2px solid #CBD3CE;flex-shrink:0;"></div>
-              <div style="font-size:14.5px;font-weight:500;flex:1;">Ignore it and keep working through the shift</div>
-            </div>
-          </button>
-          <button class="chip" onclick="pickQuiz(this,true)">
-            <div style="display:flex;align-items:center;gap:12px;">
-              <div class="ring" style="width:22px;height:22px;border-radius:50%;border:2px solid #CBD3CE;flex-shrink:0;"></div>
-              <div style="font-size:14.5px;font-weight:500;flex:1;">Take a short breath, drink water, talk to a friend or peer leader</div>
-            </div>
-          </button>
-          <button class="chip" onclick="pickQuiz(this,false)">
-            <div style="display:flex;align-items:center;gap:12px;">
-              <div class="ring" style="width:22px;height:22px;border-radius:50%;border:2px solid #CBD3CE;flex-shrink:0;"></div>
-              <div style="font-size:14.5px;font-weight:500;flex:1;">Keep worries to yourself so no one finds out</div>
-            </div>
-          </button>
-        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;" id="quiz-options"></div>
 
         <div id="quiz-feedback" style="display:none;border-radius:16px;padding:16px;gap:10px;align-items:flex-start;">
           <div style="display:flex;gap:10px;">
@@ -386,7 +311,7 @@
       </div>
 
       <div style="padding:14px 20px 26px;flex-shrink:0;">
-        <button class="cta" id="quiz-finish" disabled onclick="go('screen-home')">Choose an answer</button>
+        <button class="cta" id="quiz-finish" disabled onclick="go('screen-home')"></button>
       </div>
     </div>
 
@@ -396,58 +321,58 @@
         <button class="backbtn" onclick="go('screen-home')" aria-label="Back">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1C2520" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
         </button>
-        <h1 style="font-size:17px;">Daily check-in</h1>
+        <h1 id="checkin-title" style="font-size:17px;"></h1>
       </div>
 
       <div class="scroll" style="padding:26px 24px 12px;display:flex;flex-direction:column;gap:24px;">
         <div style="text-align:center;">
-          <h2 style="font-size:20px;">How are you feeling right now?</h2>
-          <div style="font-size:13px;color:var(--muted);margin-top:6px;">Only you can see this. Be honest with yourself.</div>
+          <h2 id="checkin-question" style="font-size:20px;"></h2>
+          <div id="checkin-sub" style="font-size:13px;color:var(--muted);margin-top:6px;"></div>
         </div>
 
         <div style="display:flex;justify-content:space-between;gap:8px;" id="mood-row">
           <button class="mood-btn" data-mood="great" onclick="pickMood(this)" style="flex:1;display:flex;flex-direction:column;align-items:center;padding:12px 4px;border-radius:14px;border:1.5px solid var(--line);background:#FFFFFF;">
-            <div style="font-size:28px;">😄</div><div style="font-size:10.5px;font-weight:600;margin-top:6px;color:#39433E;">Great</div>
+            <div style="font-size:28px;">😄</div><div class="mood-label-great" style="font-size:10.5px;font-weight:600;margin-top:6px;color:#39433E;"></div>
           </button>
           <button class="mood-btn" data-mood="okay" onclick="pickMood(this)" style="flex:1;display:flex;flex-direction:column;align-items:center;padding:12px 4px;border-radius:14px;border:1.5px solid var(--line);background:#FFFFFF;">
-            <div style="font-size:28px;">🙂</div><div style="font-size:10.5px;font-weight:600;margin-top:6px;color:#39433E;">Okay</div>
+            <div style="font-size:28px;">🙂</div><div class="mood-label-okay" style="font-size:10.5px;font-weight:600;margin-top:6px;color:#39433E;"></div>
           </button>
           <button class="mood-btn" data-mood="tired" onclick="pickMood(this)" style="flex:1;display:flex;flex-direction:column;align-items:center;padding:12px 4px;border-radius:14px;border:1.5px solid var(--line);background:#FFFFFF;">
-            <div style="font-size:28px;">😐</div><div style="font-size:10.5px;font-weight:600;margin-top:6px;color:#39433E;">Tired</div>
+            <div style="font-size:28px;">😐</div><div class="mood-label-tired" style="font-size:10.5px;font-weight:600;margin-top:6px;color:#39433E;"></div>
           </button>
           <button class="mood-btn" data-mood="stressed" onclick="pickMood(this)" style="flex:1;display:flex;flex-direction:column;align-items:center;padding:12px 4px;border-radius:14px;border:1.5px solid var(--line);background:#FFFFFF;">
-            <div style="font-size:28px;">😣</div><div style="font-size:10.5px;font-weight:600;margin-top:6px;color:#39433E;">Stressed</div>
+            <div style="font-size:28px;">😣</div><div class="mood-label-stressed" style="font-size:10.5px;font-weight:600;margin-top:6px;color:#39433E;"></div>
           </button>
           <button class="mood-btn" data-mood="struggling" onclick="pickMood(this)" style="flex:1;display:flex;flex-direction:column;align-items:center;padding:12px 4px;border-radius:14px;border:1.5px solid var(--line);background:#FFFFFF;">
-            <div style="font-size:28px;">😞</div><div style="font-size:10.5px;font-weight:600;margin-top:6px;color:#39433E;">Struggling</div>
+            <div style="font-size:28px;">😞</div><div class="mood-label-struggling" style="font-size:10.5px;font-weight:600;margin-top:6px;color:#39433E;"></div>
           </button>
         </div>
 
         <div id="mood-good" style="display:none;background:var(--good-tint);border-radius:18px;padding:18px;text-align:center;">
           <div style="font-size:30px;">🌱</div>
-          <div style="font-family:var(--font-head);font-weight:700;font-size:15px;margin-top:8px;color:#255440;">Good to hear. Keep it up.</div>
-          <div style="font-size:12.5px;color:#3B6952;margin-top:4px;line-height:1.5;">We've logged today's check-in. See you tomorrow.</div>
+          <div id="checkin-good-title" style="font-family:var(--font-head);font-weight:700;font-size:15px;margin-top:8px;color:#255440;"></div>
+          <div id="checkin-good-sub" style="font-size:12.5px;color:#3B6952;margin-top:4px;line-height:1.5;"></div>
         </div>
 
         <div id="mood-escalate" style="display:none;background:var(--alert-tint);border-radius:18px;padding:18px;flex-direction:column;gap:12px;">
           <div style="display:flex;gap:10px;align-items:flex-start;">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C85A41" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px;"><path d="M12 21s-7.5-4.6-9-9.1C1.5 8.4 3.3 5 7 5c1.9 0 3.3 1 5 3 1.7-2 3.1-3 5-3 3.7 0 5.5 3.4 4 6.9C19.5 16.4 12 21 12 21z"/></svg>
             <div>
-              <div style="font-family:var(--font-head);font-weight:700;font-size:14.5px;color:#7A2E1E;">It's okay to not be okay.</div>
-              <div style="font-size:12.5px;color:#7A2E1E;margin-top:4px;line-height:1.55;">You don't have to carry this alone. A trained counsellor can talk with you in your language, in confidence.</div>
+              <div id="checkin-escalate-title" style="font-family:var(--font-head);font-weight:700;font-size:14.5px;color:#7A2E1E;"></div>
+              <div id="checkin-counsellor-note" style="font-size:12.5px;color:#7A2E1E;margin-top:4px;line-height:1.55;"></div>
             </div>
           </div>
           <button style="width:100%;background:#C85A41;color:#FFFFFF;border:none;border-radius:12px;padding:14px;font-size:14.5px;font-weight:700;font-family:var(--font-head);display:flex;align-items:center;justify-content:center;gap:8px;">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.1-8.7A2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 2 .7 3a2 2 0 01-.5 2.1L8 10a16 16 0 006 6l1.2-1.3a2 2 0 012.1-.5c1 .3 2 .5 3 .7a2 2 0 011.7 2z"/></svg>
-            Talk to a counsellor now
+            <span id="checkin-talk-label"></span>
           </button>
           <a href="https://wa.me/6591511767" target="_blank" rel="noopener" style="display:block;">
             <button style="width:100%;background:#1C2520;color:#FFFFFF;border:none;border-radius:12px;padding:14px;font-size:14.5px;font-weight:700;font-family:var(--font-head);display:flex;align-items:center;justify-content:center;gap:8px;">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 01-8.9 8.4 8.5 8.5 0 01-4-1l-4.6 1.2 1.3-4.5a8.4 8.4 0 01-1-4A8.5 8.5 0 0112.5 3a8.4 8.4 0 018.5 8.5z"/></svg>
-              WhatsApp us — +65 9151 1767
+              <span id="checkin-whatsapp-label"></span>
             </button>
           </a>
-          <div style="text-align:center;font-size:11.5px;color:#8A4433;">Available during service hours · Fully confidential, not shared with your employer</div>
+          <div id="checkin-availability-note" style="text-align:center;font-size:11.5px;color:#8A4433;"></div>
         </div>
       </div>
     </div>
@@ -455,61 +380,61 @@
     <!-- ===================== SCREEN 7: PROFILE ===================== -->
     <div class="screen" id="screen-profile">
       <div class="scroll" style="padding:24px 20px 12px;display:flex;flex-direction:column;gap:20px;">
-        <h1 style="font-size:20px;">My progress</h1>
+        <h1 id="profile-title" style="font-size:20px;"></h1>
 
         <div style="background:var(--teal);border-radius:18px;padding:18px;display:flex;align-items:center;gap:14px;">
           <div style="width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;color:#FFFFFF;font-size:18px;">RK</div>
           <div>
             <div style="color:#FFFFFF;font-family:var(--font-head);font-weight:700;font-size:16px;">Kumar R.</div>
-            <div style="color:#CFE6E1;font-size:12px;margin-top:2px;">Work Permit ···· 7421 · Tamil</div>
+            <div id="profile-identity-sub" style="color:#CFE6E1;font-size:12px;margin-top:2px;"></div>
           </div>
         </div>
 
         <div style="display:flex;gap:10px;">
           <div style="flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center;">
             <div style="font-family:var(--font-head);font-weight:800;font-size:22px;color:var(--teal);">7</div>
-            <div style="font-size:11px;color:var(--muted);margin-top:2px;">Day streak</div>
+            <div id="profile-stat-streak" style="font-size:11px;color:var(--muted);margin-top:2px;"></div>
           </div>
           <div style="flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center;">
-            <div style="font-family:var(--font-head);font-weight:800;font-size:22px;color:var(--teal);">1</div>
-            <div style="font-size:11px;color:var(--muted);margin-top:2px;">Modules done</div>
+            <div id="profile-modules-done-count" style="font-family:var(--font-head);font-weight:800;font-size:22px;color:var(--teal);"></div>
+            <div id="profile-stat-modules" style="font-size:11px;color:var(--muted);margin-top:2px;"></div>
           </div>
           <div style="flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center;">
             <div style="font-family:var(--font-head);font-weight:800;font-size:22px;color:var(--teal);">5</div>
-            <div style="font-size:11px;color:var(--muted);margin-top:2px;">Check-ins</div>
+            <div id="profile-stat-checkins" style="font-size:11px;color:var(--muted);margin-top:2px;"></div>
           </div>
         </div>
 
         <div>
-          <div style="font-weight:700;font-family:var(--font-head);font-size:14.5px;margin-bottom:10px;">Badges</div>
+          <div id="profile-badges-label" style="font-weight:700;font-family:var(--font-head);font-size:14.5px;margin-bottom:10px;"></div>
           <div style="display:flex;gap:10px;">
             <div style="flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center;">
-              <div style="font-size:22px;">🔥</div><div style="font-size:11px;font-weight:600;margin-top:4px;">7-day streak</div>
+              <div style="font-size:22px;">🔥</div><div id="profile-badge-7day" style="font-size:11px;font-weight:600;margin-top:4px;"></div>
             </div>
             <div style="flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center;">
-              <div style="font-size:22px;">🎓</div><div style="font-size:11px;font-weight:600;margin-top:4px;">First module</div>
+              <div style="font-size:22px;">🎓</div><div id="profile-badge-first" style="font-size:11px;font-weight:600;margin-top:4px;"></div>
             </div>
             <div style="flex:1;background:#F2EFE8;border:1px dashed var(--line);border-radius:14px;padding:12px;text-align:center;opacity:0.6;">
-              <div style="font-size:22px;">🌟</div><div style="font-size:11px;font-weight:600;margin-top:4px;">All 4 topics</div>
+              <div style="font-size:22px;">🌟</div><div id="profile-badge-all" style="font-size:11px;font-weight:600;margin-top:4px;"></div>
             </div>
           </div>
         </div>
 
         <div style="display:flex;flex-direction:column;gap:1px;background:var(--line);border-radius:14px;overflow:hidden;border:1px solid var(--line);">
           <button onclick="openLanguage('screen-profile')" style="background:var(--card);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;text-align:left;border:none;">
-            <div style="font-size:14px;font-weight:500;">Language — தமிழ் (Tamil)</div>
+            <div id="profile-language-row" style="font-size:14px;font-weight:500;"></div>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9BA299" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
           </button>
           <div style="background:var(--card);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;">
-            <div style="font-size:14px;font-weight:500;">Notifications</div>
+            <div id="profile-notifications-row" style="font-size:14px;font-weight:500;"></div>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9BA299" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
           </div>
           <div style="background:var(--card);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;">
-            <div style="font-size:14px;font-weight:500;">Privacy &amp; data</div>
+            <div id="profile-privacy-row" style="font-size:14px;font-weight:500;"></div>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9BA299" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
           </div>
           <div style="background:var(--card);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;">
-            <div style="font-size:14px;font-weight:500;">Help &amp; FAQ</div>
+            <div id="profile-help-row" style="font-size:14px;font-weight:500;"></div>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9BA299" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
           </div>
         </div>
@@ -518,19 +443,19 @@
       <div class="bottomnav">
         <button class="navitem" onclick="go('screen-home')">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1v-9"/></svg>
-          Home
+          <span class="nav-home-label"></span>
         </button>
-        <button class="navitem" onclick="go('screen-module')">
+        <button class="navitem" onclick="openModule(continueLearningId)">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15z"/></svg>
-          Learn
+          <span class="nav-learn-label"></span>
         </button>
         <button class="navitem" onclick="go('screen-checkin')">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5 5 0 00-7.1 0L12 6.3l-1.7-1.7a5 5 0 10-7.1 7.1L12 20.4l8.8-8.7a5 5 0 000-7.1z"/></svg>
-          Check-in
+          <span class="nav-checkin-label"></span>
         </button>
         <button class="navitem active" onclick="go('screen-profile')">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
-          Profile
+          <span class="nav-profile-label"></span>
         </button>
       </div>
     </div>
@@ -541,7 +466,7 @@
     <button onclick="go('screen-lang')">1 · Language</button>
     <button onclick="go('screen-signup')">2 · Sign up</button>
     <button onclick="go('screen-home')">3 · Home</button>
-    <button onclick="go('screen-module')">4 · Module</button>
+    <button onclick="openModule('stress')">4 · Module</button>
     <button onclick="go('screen-quiz')">5 · Quiz</button>
     <button onclick="go('screen-checkin')">6 · Check-in</button>
     <button onclick="go('screen-profile')">7 · Profile</button>
@@ -557,7 +482,7 @@
     if (scroller) scroller.scrollTop = 0;
   }
 
-  // Language picker
+  // ===================== LANGUAGES =====================
   var LANGS = [
     {id:'en', native:'English', english:'English'},
     {id:'ta', native:'தமிழ்', english:'Tamil'},
@@ -566,12 +491,99 @@
     {id:'my', native:'မြန်မာ', english:'Myanmar'},
     {id:'th', native:'ไทย', english:'Thai'}
   ];
+
+  // ===================== UI STRINGS (all screens, all 6 languages) =====================
+  var STRINGS = {
+    en: { tagline:"Wellbeing support that fits around your shift, in your language.", chooseLanguage:"Choose your language", audioNote:"Everything you see can also be read aloud. No reading needed to get help.", continue:"Continue", footerNote:"An initiative by HealthServe · Private & confidential", getStarted:"Get started", voucherTitle:"Get a S$10 EZ-Link voucher", voucherSub:"Paid once your sign-up is verified", mobileLabel:"Mobile number", finLabel:"Work Permit / FIN — last 4 digits", privacyNote:"Your details stay with HealthServe. We never share this with your employer or agent.", verifyContinue:"Verify & continue", greetingWord:"Hello", moodQuestion:"How are you feeling today?", moodSub:"One tap, right here", moodGoodTitle:"Good to hear. Keep it up.", moodEscalateTitle:"It's okay to not be okay.", moodEscalateSub:"You don't have to carry this alone. Confidential support is a tap away.", whatsappCta:"WhatsApp us — +65 9151 1767", continueLearning:"Continue learning", wellbeingModules:"Wellbeing modules", topicsCount:"4 topics", navHome:"Home", navLearn:"Learn", navCheckin:"Check-in", navProfile:"Profile", quickCheck:"Quick check", chooseAnswer:"Choose an answer", finishModule:"Finish module", wellbeingModuleLabel:"Wellbeing module", next:"Next", skipForNow:"Skip for now", listenInstead:"Listen instead of reading", dailyCheckin:"Daily check-in", checkinQuestion:"How are you feeling right now?", checkinSub:"Only you can see this. Be honest with yourself.", checkinLoggedTitle:"Good to hear. Keep it up.", checkinLoggedSub:"We've logged today's check-in. See you tomorrow.", counsellorNote:"You don't have to carry this alone. A trained counsellor can talk with you in your language, in confidence.", talkToCounsellor:"Talk to a counsellor now", availabilityNote:"Available during service hours · Fully confidential, not shared with your employer", myProgress:"My progress", dayStreak:"Day streak", modulesDone:"Modules done", checkins:"Check-ins", badges:"Badges", badge7day:"7-day streak", badgeFirstModule:"First module", badgeAllTopics:"All 4 topics", languageRow:"Language", notifications:"Notifications", privacyData:"Privacy & data", helpFaq:"Help & FAQ", moodGreat:"Great", moodOkay:"Okay", moodTired:"Tired", moodStressed:"Stressed", moodStruggling:"Struggling", statusStart:"Start", statusInProgress:"In progress", statusDone:"Done", stepsSuffix:"steps", notStarted:"Not started", completed:"Completed", stepOf:"Step {n} of {total}", minLeft:"min left" },
+    ta: { tagline:"உங்கள் ஷிப்ட் நேரத்திற்கு ஏற்ப, உங்கள் மொழியில் நல்வாழ்வு ஆதரவு.", chooseLanguage:"உங்கள் மொழியைத் தேர்ந்தெடுக்கவும்", audioNote:"நீங்கள் பார்க்கும் அனைத்தையும் சத்தமாகவும் படிக்கலாம். உதவி பெற வாசிப்பது அவசியமில்லை.", continue:"தொடரவும்", footerNote:"HealthServe இன் ஒரு முயற்சி · தனிப்பட்டது மற்றும் இரகசியமானது", getStarted:"தொடங்குவோம்", voucherTitle:"S$10 EZ-Link வவுச்சர் பெறுங்கள்", voucherSub:"உங்கள் பதிவு உறுதிப்படுத்தப்பட்டவுடன் வழங்கப்படும்", mobileLabel:"மொபைல் எண்", finLabel:"Work Permit / FIN — கடைசி 4 இலக்கங்கள்", privacyNote:"உங்கள் விவரங்கள் HealthServe இடம் மட்டுமே இருக்கும். உங்கள் முதலாளி அல்லது ஏஜென்ட்டுடன் இதை நாங்கள் பகிர மாட்டோம்.", verifyContinue:"சரிபார்த்து தொடரவும்", greetingWord:"வணக்கம்", moodQuestion:"இன்று நீங்கள் எப்படி உணர்கிறீர்கள்?", moodSub:"ஒரே தட்டலில், இங்கேயே", moodGoodTitle:"கேட்க நல்லா இருக்கு. தொடருங்கள்.", moodEscalateTitle:"பரவாயில்லை, எப்போதும் நலமாக உணர வேண்டியதில்லை.", moodEscalateSub:"இதை நீங்கள் தனியாக சுமக்க வேண்டியதில்லை. இரகசியமான ஆதரவு ஒரு தட்டலில் உள்ளது.", whatsappCta:"WhatsApp செய்யுங்கள் — +65 9151 1767", continueLearning:"கற்றலைத் தொடரவும்", wellbeingModules:"நல்வாழ்வு பாடங்கள்", topicsCount:"4 தலைப்புகள்", navHome:"முகப்பு", navLearn:"கற்க", navCheckin:"செக்-இன்", navProfile:"சுயவிவரம்", quickCheck:"விரைவு சோதனை", chooseAnswer:"ஒரு பதிலைத் தேர்ந்தெடுக்கவும்", finishModule:"பாடத்தை முடிக்கவும்", wellbeingModuleLabel:"நல்வாழ்வு பாடம்", next:"அடுத்து", skipForNow:"இப்போது தவிர்க்கவும்", listenInstead:"படிப்பதற்கு பதிலாக கேளுங்கள்", dailyCheckin:"தினசரி செக்-இன்", checkinQuestion:"இப்போது நீங்கள் எப்படி உணர்கிறீர்கள்?", checkinSub:"இதை நீங்கள் மட்டுமே பார்க்க முடியும். உங்களிடம் நேர்மையாக இருங்கள்.", checkinLoggedTitle:"கேட்க நல்லா இருக்கு. தொடருங்கள்.", checkinLoggedSub:"இன்றைய செக்-இன் பதிவு செய்யப்பட்டது. நாளை சந்திப்போம்.", counsellorNote:"இதை நீங்கள் தனியாக சுமக்க வேண்டியதில்லை. பயிற்சி பெற்ற ஆலோசகர் உங்கள் மொழியில், இரகசியமாக பேசலாம்.", talkToCounsellor:"இப்போது ஆலோசகரிடம் பேசுங்கள்", availabilityNote:"சேவை நேரத்தில் கிடைக்கும் · முழுமையாக இரகசியமானது, உங்கள் முதலாளியுடன் பகிரப்படாது", myProgress:"எனது முன்னேற்றம்", dayStreak:"நாள் தொடர்ச்சி", modulesDone:"முடிந்த பாடங்கள்", checkins:"செக்-இன்கள்", badges:"பேட்ஜ்கள்", badge7day:"7-நாள் தொடர்ச்சி", badgeFirstModule:"முதல் பாடம்", badgeAllTopics:"அனைத்து 4 தலைப்புகளும்", languageRow:"மொழி", notifications:"அறிவிப்புகள்", privacyData:"தனியுரிமை & தரவு", helpFaq:"உதவி & கேள்விகள்", moodGreat:"மிகச் சிறப்பு", moodOkay:"சரி", moodTired:"களைப்பு", moodStressed:"மன அழுத்தம்", moodStruggling:"சிரமம்", statusStart:"தொடங்கு", statusInProgress:"நடைபெறுகிறது", statusDone:"முடிந்தது", stepsSuffix:"படிகள்", notStarted:"தொடங்கவில்லை", completed:"முடிந்தது", stepOf:"படி {n} / {total}", minLeft:"நிமிடம் மீதம்" },
+    bn: { tagline:"আপনার শিফট অনুযায়ী, আপনার ভাষায় সুস্থতা সহায়তা।", chooseLanguage:"আপনার ভাষা বেছে নিন", audioNote:"আপনি যা দেখছেন তা জোরে পড়েও শোনা যাবে। সাহায্য পেতে পড়া জানার দরকার নেই।", continue:"চালিয়ে যান", footerNote:"HealthServe-এর একটি উদ্যোগ · ব্যক্তিগত ও গোপনীয়", getStarted:"শুরু করুন", voucherTitle:"S$10 EZ-Link ভাউচার পান", voucherSub:"আপনার সাইন-আপ যাচাই হলে দেওয়া হবে", mobileLabel:"মোবাইল নম্বর", finLabel:"Work Permit / FIN — শেষ ৪ সংখ্যা", privacyNote:"আপনার তথ্য শুধু HealthServe-এর কাছে থাকবে। আমরা এটি আপনার নিয়োগকর্তা বা এজেন্টের সাথে শেয়ার করি না।", verifyContinue:"যাচাই করে চালিয়ে যান", greetingWord:"নমস্কার", moodQuestion:"আজ আপনি কেমন অনুভব করছেন?", moodSub:"এক ট্যাপেই, এখানেই", moodGoodTitle:"শুনে ভালো লাগল। এভাবেই চালিয়ে যান।", moodEscalateTitle:"ভালো না লাগাটাও ঠিক আছে।", moodEscalateSub:"এটা একা বহন করতে হবে না। গোপনীয় সহায়তা এক ট্যাপ দূরে।", whatsappCta:"হোয়াটসঅ্যাপ করুন — +65 9151 1767", continueLearning:"শেখা চালিয়ে যান", wellbeingModules:"সুস্থতা মডিউল", topicsCount:"৪টি বিষয়", navHome:"হোম", navLearn:"শিখুন", navCheckin:"চেক-ইন", navProfile:"প্রোফাইল", quickCheck:"দ্রুত পরীক্ষা", chooseAnswer:"একটি উত্তর বেছে নিন", finishModule:"মডিউল শেষ করুন", wellbeingModuleLabel:"সুস্থতা মডিউল", next:"পরবর্তী", skipForNow:"এখন বাদ দিন", listenInstead:"পড়ার বদলে শুনুন", dailyCheckin:"দৈনিক চেক-ইন", checkinQuestion:"এই মুহূর্তে আপনি কেমন অনুভব করছেন?", checkinSub:"এটা শুধু আপনিই দেখতে পাবেন। নিজের সাথে সৎ থাকুন।", checkinLoggedTitle:"শুনে ভালো লাগল। এভাবেই চালিয়ে যান।", checkinLoggedSub:"আজকের চেক-ইন রেকর্ড করা হয়েছে। কাল দেখা হবে।", counsellorNote:"এটা একা বহন করতে হবে না। একজন প্রশিক্ষিত কাউন্সেলর আপনার ভাষায়, গোপনীয়ভাবে কথা বলতে পারেন।", talkToCounsellor:"এখনই কাউন্সেলরের সাথে কথা বলুন", availabilityNote:"সেবার সময়ে উপলব্ধ · সম্পূর্ণ গোপনীয়, আপনার নিয়োগকর্তার সাথে শেয়ার করা হয় না", myProgress:"আমার অগ্রগতি", dayStreak:"দিনের ধারা", modulesDone:"সম্পন্ন মডিউল", checkins:"চেক-ইন", badges:"ব্যাজ", badge7day:"৭-দিনের ধারা", badgeFirstModule:"প্রথম মডিউল", badgeAllTopics:"সব ৪টি বিষয়", languageRow:"ভাষা", notifications:"বিজ্ঞপ্তি", privacyData:"গোপনীয়তা ও তথ্য", helpFaq:"সাহায্য ও প্রশ্ন", moodGreat:"দারুণ", moodOkay:"ঠিক আছে", moodTired:"ক্লান্ত", moodStressed:"চাপে আছি", moodStruggling:"কষ্টে আছি", statusStart:"শুরু করুন", statusInProgress:"চলছে", statusDone:"সম্পন্ন", stepsSuffix:"ধাপ", notStarted:"শুরু হয়নি", completed:"সম্পন্ন", stepOf:"ধাপ {n} / {total}", minLeft:"মিনিট বাকি" },
+    zh: { tagline:"根据您的班次,用您的语言提供身心健康支持。", chooseLanguage:"选择您的语言", audioNote:"您看到的内容都可以朗读。不需要阅读也能获得帮助。", continue:"继续", footerNote:"HealthServe 倡议 · 私密与保密", getStarted:"开始", voucherTitle:"获得 S$10 EZ-Link 礼券", voucherSub:"注册验证后发放", mobileLabel:"手机号码", finLabel:"工作准证 / FIN — 后4位数字", privacyNote:"您的资料只保留在 HealthServe。我们绝不与您的雇主或中介分享。", verifyContinue:"验证并继续", greetingWord:"你好", moodQuestion:"你今天感觉怎么样?", moodSub:"一键即可,就在这里", moodGoodTitle:"很高兴听到。继续保持。", moodEscalateTitle:"感觉不好也没关系。", moodEscalateSub:"你不必独自承受。保密支持只需一键。", whatsappCta:"WhatsApp联系我们 — +65 9151 1767", continueLearning:"继续学习", wellbeingModules:"身心健康课程", topicsCount:"4个主题", navHome:"首页", navLearn:"学习", navCheckin:"签到", navProfile:"我的", quickCheck:"快速测验", chooseAnswer:"选择一个答案", finishModule:"完成课程", wellbeingModuleLabel:"身心健康课程", next:"下一步", skipForNow:"暂时跳过", listenInstead:"听而不是读", dailyCheckin:"每日签到", checkinQuestion:"此刻你感觉怎么样?", checkinSub:"只有你能看到。诚实面对自己。", checkinLoggedTitle:"很高兴听到。继续保持。", checkinLoggedSub:"今天的签到已记录。明天见。", counsellorNote:"你不必独自承受。专业辅导员可以用你的语言,保密地与你交谈。", talkToCounsellor:"立即联系辅导员", availabilityNote:"服务时间内提供 · 完全保密,不会与雇主分享", myProgress:"我的进度", dayStreak:"连续天数", modulesDone:"已完成课程", checkins:"签到次数", badges:"徽章", badge7day:"连续7天", badgeFirstModule:"第一个课程", badgeAllTopics:"全部4个主题", languageRow:"语言", notifications:"通知", privacyData:"隐私与数据", helpFaq:"帮助与常见问题", moodGreat:"很好", moodOkay:"还好", moodTired:"疲惫", moodStressed:"有压力", moodStruggling:"很困难", statusStart:"开始", statusInProgress:"进行中", statusDone:"已完成", stepsSuffix:"步骤", notStarted:"未开始", completed:"已完成", stepOf:"第 {n} 步,共 {total} 步", minLeft:"分钟剩余" },
+    th: { tagline:"การสนับสนุนด้านสุขภาพใจที่เหมาะกับกะงานของคุณ เป็นภาษาของคุณ", chooseLanguage:"เลือกภาษาของคุณ", audioNote:"ทุกอย่างที่คุณเห็นสามารถอ่านออกเสียงได้ ไม่จำเป็นต้องอ่านเพื่อขอความช่วยเหลือ", continue:"ดำเนินการต่อ", footerNote:"โครงการโดย HealthServe · เป็นส่วนตัวและเป็นความลับ", getStarted:"เริ่มต้น", voucherTitle:"รับบัตรกำนัล EZ-Link มูลค่า S$10", voucherSub:"จ่ายเมื่อการสมัครของคุณได้รับการยืนยัน", mobileLabel:"หมายเลขโทรศัพท์มือถือ", finLabel:"Work Permit / FIN — 4 หลักสุดท้าย", privacyNote:"ข้อมูลของคุณจะอยู่กับ HealthServe เท่านั้น เราจะไม่แบ่งปันกับนายจ้างหรือเอเจนต์ของคุณ", verifyContinue:"ยืนยันและดำเนินการต่อ", greetingWord:"สวัสดี", moodQuestion:"วันนี้คุณรู้สึกอย่างไร?", moodSub:"แตะเพียงครั้งเดียว ตรงนี้เลย", moodGoodTitle:"ดีใจที่ได้ยินแบบนั้น ทำแบบนี้ต่อไปนะ", moodEscalateTitle:"ไม่เป็นไรถ้ารู้สึกไม่โอเค", moodEscalateSub:"คุณไม่ต้องแบกรับเรื่องนี้คนเดียว การสนับสนุนที่เป็นความลับอยู่แค่ปลายนิ้ว", whatsappCta:"WhatsApp หาเรา — +65 9151 1767", continueLearning:"เรียนต่อ", wellbeingModules:"บทเรียนสุขภาพใจ", topicsCount:"4 หัวข้อ", navHome:"หน้าแรก", navLearn:"เรียนรู้", navCheckin:"เช็คอิน", navProfile:"โปรไฟล์", quickCheck:"แบบทดสอบสั้นๆ", chooseAnswer:"เลือกคำตอบ", finishModule:"จบบทเรียน", wellbeingModuleLabel:"บทเรียนสุขภาพใจ", next:"ถัดไป", skipForNow:"ข้ามไปก่อน", listenInstead:"ฟังแทนการอ่าน", dailyCheckin:"เช็คอินประจำวัน", checkinQuestion:"ตอนนี้คุณรู้สึกอย่างไร?", checkinSub:"มีเพียงคุณเท่านั้นที่เห็นสิ่งนี้ ซื่อสัตย์กับตัวเองนะ", checkinLoggedTitle:"ดีใจที่ได้ยินแบบนั้น ทำแบบนี้ต่อไปนะ", checkinLoggedSub:"บันทึกการเช็คอินวันนี้แล้ว พบกันพรุ่งนี้", counsellorNote:"คุณไม่ต้องแบกรับเรื่องนี้คนเดียว ที่ปรึกษาที่ผ่านการฝึกอบรมสามารถพูดคุยกับคุณเป็นภาษาของคุณได้ อย่างเป็นความลับ", talkToCounsellor:"คุยกับที่ปรึกษาตอนนี้", availabilityNote:"ให้บริการในเวลาทำการ · เป็นความลับทั้งหมด ไม่แบ่งปันกับนายจ้างของคุณ", myProgress:"ความคืบหน้าของฉัน", dayStreak:"วันต่อเนื่อง", modulesDone:"บทเรียนที่จบแล้ว", checkins:"จำนวนเช็คอิน", badges:"ตราสัญลักษณ์", badge7day:"ต่อเนื่อง 7 วัน", badgeFirstModule:"บทเรียนแรก", badgeAllTopics:"ครบทั้ง 4 หัวข้อ", languageRow:"ภาษา", notifications:"การแจ้งเตือน", privacyData:"ความเป็นส่วนตัวและข้อมูล", helpFaq:"ช่วยเหลือและคำถามที่พบบ่อย", moodGreat:"ดีมาก", moodOkay:"โอเค", moodTired:"เหนื่อย", moodStressed:"เครียด", moodStruggling:"ลำบาก", statusStart:"เริ่ม", statusInProgress:"กำลังทำ", statusDone:"เสร็จแล้ว", stepsSuffix:"ขั้นตอน", notStarted:"ยังไม่เริ่ม", completed:"เสร็จสมบูรณ์", stepOf:"ขั้นตอนที่ {n} จาก {total}", minLeft:"นาทีที่เหลือ" },
+    my: { tagline:"သင့်အလုပ်အချိန်ဇယားနှင့် ကိုက်ညီပြီး သင့်ဘာသာစကားဖြင့် စိတ်ကျန်းမာရေးအထောက်အပံ့။", chooseLanguage:"သင့်ဘာသာစကားကို ရွေးချယ်ပါ", audioNote:"သင်တွေ့မြင်ရသမျှကို အသံထွက်ဖတ်နိုင်ပါသည်။ အကူအညီရယူရန် စာဖတ်စရာမလိုပါ။", continue:"ရှေ့ဆက်ရန်", footerNote:"HealthServe ၏ စီမံကိန်းတစ်ခု · ကိုယ်ရေးကိုယ်တာနှင့် လျှို့ဝှက်ချက်", getStarted:"စတင်ရန်", voucherTitle:"S$10 EZ-Link ဘောင်ချာ ရယူပါ", voucherSub:"သင့်စာရင်းသွင်းမှု အတည်ပြုပြီးနောက် ပေးအပ်မည်", mobileLabel:"မိုဘိုင်းဖုန်းနံပါတ်", finLabel:"အလုပ်သမားကတ် / FIN — နောက်ဆုံး ၄ လုံး", privacyNote:"သင့်အချက်အလက်များကို HealthServe တွင်သာ ထားရှိမည်ဖြစ်သည်။ သင့်အလုပ်ရှင် သို့မဟုတ် အေဂျင့်နှင့် ဝေမျှမည်မဟုတ်ပါ။", verifyContinue:"အတည်ပြုပြီး ရှေ့ဆက်ရန်", greetingWord:"မင်္ဂလာပါ", moodQuestion:"ဒီနေ့ သင်ဘယ်လိုခံစားရလဲ?", moodSub:"တစ်ချက်နှိပ်လိုက်ရုံပါပဲ", moodGoodTitle:"ကြားရတာ ဝမ်းသာပါတယ်။ ဆက်လုပ်ပါ။", moodEscalateTitle:"စိတ်မကောင်းဖြစ်နေတာလည်း အဆင်ပြေပါတယ်။", moodEscalateSub:"ဒါကို သင်တစ်ယောက်တည်း ထမ်းစရာမလိုပါ။ လျှို့ဝှက်အကူအညီကို တစ်ချက်နှိပ်ရုံနဲ့ ရနိုင်ပါတယ်။", whatsappCta:"WhatsApp ဆက်သွယ်ပါ — +65 9151 1767", continueLearning:"ဆက်လက်သင်ယူရန်", wellbeingModules:"စိတ်ကျန်းမာရေး သင်ခန်းစာများ", topicsCount:"ခေါင်းစဉ် ၄ ခု", navHome:"ပင်မစာမျက်နှာ", navLearn:"သင်ယူရန်", navCheckin:"စစ်ဆေးမှတ်တမ်း", navProfile:"ကိုယ်ရေးအချက်အလက်", quickCheck:"အမြန်စစ်ဆေးမှု", chooseAnswer:"အဖြေတစ်ခုရွေးပါ", finishModule:"သင်ခန်းစာပြီးဆုံးရန်", wellbeingModuleLabel:"စိတ်ကျန်းမာရေး သင်ခန်းစာ", next:"ရှေ့ဆက်ရန်", skipForNow:"အခုလောလောဆယ် ကျော်ရန်", listenInstead:"ဖတ်မည့်အစား နားထောင်ပါ", dailyCheckin:"နေ့စဉ် စစ်ဆေးမှတ်တမ်း", checkinQuestion:"လက်ရှိ သင်ဘယ်လိုခံစားရလဲ?", checkinSub:"သင်တစ်ယောက်တည်းသာ ဒါကိုမြင်နိုင်ပါတယ်။ ကိုယ့်ကိုယ်ကို ရိုးသားပါ။", checkinLoggedTitle:"ကြားရတာ ဝမ်းသာပါတယ်။ ဆက်လုပ်ပါ။", checkinLoggedSub:"ယနေ့၏ စစ်ဆေးမှတ်တမ်းကို မှတ်တမ်းတင်ပြီးပါပြီ။ မနက်ဖြန် တွေ့ကြမယ်။", counsellorNote:"ဒါကို သင်တစ်ယောက်တည်း ထမ်းစရာမလိုပါ။ လေ့ကျင့်ထားသော အတိုင်ပင်ခံတစ်ဦးသည် သင့်ဘာသာစကားဖြင့် လျှို့ဝှက်စွာ စကားပြောနိုင်ပါတယ်။", talkToCounsellor:"အခုပဲ အတိုင်ပင်ခံနှင့် စကားပြောပါ", availabilityNote:"ဝန်ဆောင်မှုအချိန်အတွင်း ရရှိနိုင်ပါတယ် · လုံးဝလျှို့ဝှက်ပြီး သင့်အလုပ်ရှင်နှင့် မမျှဝေပါ", myProgress:"ကျွန်ုပ်၏ တိုးတက်မှု", dayStreak:"ဆက်တိုက်ရက်များ", modulesDone:"ပြီးစီးသည့် သင်ခန်းစာများ", checkins:"စစ်ဆေးမှတ်တမ်းအကြိမ်ရေ", badges:"တံဆိပ်များ", badge7day:"ဆက်တိုက် ၇ ရက်", badgeFirstModule:"ပထမဆုံးသင်ခန်းစာ", badgeAllTopics:"ခေါင်းစဉ် ၄ ခုလုံး", languageRow:"ဘာသာစကား", notifications:"အသိပေးချက်များ", privacyData:"ကိုယ်ရေးလုံခြုံမှုနှင့် ဒေတာ", helpFaq:"အကူအညီနှင့် မေးလေ့ရှိသောမေးခွန်းများ", moodGreat:"အရမ်းကောင်းတယ်", moodOkay:"အဆင်ပြေတယ်", moodTired:"ပင်ပန်းတယ်", moodStressed:"စိတ်ဖိစီးမှုရှိတယ်", moodStruggling:"ခက်ခဲနေတယ်", statusStart:"စတင်ရန်", statusInProgress:"လုပ်ဆောင်နေဆဲ", statusDone:"ပြီးပါပြီ", stepsSuffix:"အဆင့်", notStarted:"မစတင်ရသေး", completed:"ပြီးစီးပါပြီ", stepOf:"အဆင့် {n} / {total}", minLeft:"မိနစ် ကျန်" }
+  };
+  function t(key){
+    var d = STRINGS[pickedLang] || STRINGS.en;
+    return (d[key] !== undefined ? d[key] : STRINGS.en[key]) || key;
+  }
+
+  // ===================== MODULES (4 topics, EN/TA/BN full content; other langs fall back to EN for long-form copy) =====================
+  var MODULES = {
+    stress: {
+      steps: 5, status: 'in-progress', currentStep: 2,
+      iconPath: 'M12 21s-7.5-4.6-9-9.1C1.5 8.4 3.3 5 7 5c1.9 0 3.3 1 5 3 1.7-2 3.1-3 5-3 3.7 0 5.5 3.4 4 6.9C19.5 16.4 12 21 12 21z', iconBg:'#FDEFD9', iconColorSmall:'#B9791F', iconColorBig:'#0E5C55',
+      titles: { en:'Managing Stress at Work', ta:'வேலையில் மன அழுத்தத்தை நிர்வகித்தல்', bn:'কাজে মানসিক চাপ সামলানো', zh:'应对工作压力', my:'အလုပ်တွင် စိတ်ဖိစီးမှု စီမံခန့်ခွဲခြင်း', th:'การจัดการความเครียดในที่ทำงาน' },
+      body: {
+        en:{ headline:"You are not alone in feeling this way.", text:"Many workers feel tense or tired after long shifts. This is a normal response to pressure — not a weakness. Small, simple actions can help your body and mind settle, even on a busy day." },
+        ta:{ headline:"இப்படி உணர்வது நீங்கள் மட்டும் அல்ல.", text:"நீண்ட ஷிப்ட் வேலைக்குப் பிறகு பல தொழிலாளர்கள் பதற்றமாகவோ அல்லது சோர்வாகவோ உணர்கிறார்கள். இது அழுத்தத்திற்கான இயல்பான எதிர்வினை — பலவீனம் அல்ல. சிறிய, எளிய செயல்கள் பரபரப்பான நாளிலும் உங்கள் உடலையும் மனதையும் அமைதிப்படுத்த உதவும்." },
+        bn:{ headline:"এভাবে অনুভব করা আপনি একা নন।", text:"দীর্ঘ শিফটের পর অনেক শ্রমিকই উত্তেজনা বা ক্লান্তি অনুভব করেন। এটি চাপের একটি স্বাভাবিক প্রতিক্রিয়া — দুর্বলতা নয়। ছোট ছোট সহজ পদক্ষেপ ব্যস্ত দিনেও আপনার শরীর ও মনকে শান্ত করতে সাহায্য করতে পারে।" }
+      },
+      quiz: {
+        en:{ question:"What can help most when you feel stressed at work?", options:["Ignore it and keep working through the shift","Take a short breath, drink water, talk to a friend or peer leader","Keep worries to yourself so no one finds out"], correct:1, wrongFeedback:"Not quite — carrying it alone or pushing through usually makes it harder on your body. Try another answer.", correctFeedback:"That's right. Small steps like these really do help your body calm down." },
+        ta:{ question:"வேலையில் மன அழுத்தமாக உணரும்போது எது மிகவும் உதவும்?", options:["அதை புறக்கணித்து ஷிப்ட் முழுவதும் வேலை செய்தல்","சிறிது மூச்சு விடுதல், தண்ணீர் குடித்தல், ஒரு நண்பர் அல்லது பீர் லீடருடன் பேசுதல்","யாருக்கும் தெரியாமல் கவலைகளை தனக்குள்ளேயே வைத்துக்கொள்ளுதல்"], correct:1, wrongFeedback:"சரியில்லை — தனியாக சுமப்பது அல்லது தொடர்ந்து தள்ளுவது பொதுவாக உடலுக்கு மேலும் கடினமாக்கும். வேறு பதிலை முயற்சிக்கவும்.", correctFeedback:"சரி. இதுபோன்ற சிறிய படிகள் உங்கள் உடலை அமைதிப்படுத்த உண்மையிலேயே உதவும்." },
+        bn:{ question:"কাজে চাপ অনুভব করলে সবচেয়ে বেশি কী সাহায্য করতে পারে?", options:["এটা উপেক্ষা করে শিফট চালিয়ে যাওয়া","একটু শ্বাস নেওয়া, পানি খাওয়া, বন্ধু বা পিয়ার লিডারের সাথে কথা বলা","কাউকে জানতে না দিয়ে দুশ্চিন্তা নিজের মধ্যে রাখা"], correct:1, wrongFeedback:"ঠিক নয় — একা বহন করা বা জোর করে চালিয়ে যাওয়া সাধারণত শরীরের জন্য আরও কঠিন করে তোলে। অন্য উত্তর চেষ্টা করুন।", correctFeedback:"ঠিক বলেছেন। এই ধরনের ছোট পদক্ষেপ সত্যিই আপনার শরীরকে শান্ত হতে সাহায্য করে।" }
+      }
+    },
+    sleep: {
+      steps: 4, status: 'not-started', currentStep: 0,
+      iconPath: 'M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z', iconBg:'#E3EFEC', iconColorSmall:'#0E5C55', iconColorBig:'#0E5C55',
+      titles: { en:'Sleep & Rest', ta:'தூக்கம் & ஓய்வு', bn:'ঘুম ও বিশ্রাম', zh:'睡眠与休息', my:'အိပ်စက်ခြင်းနှင့် အနားယူခြင်း', th:'การนอนหลับและการพักผ่อน' },
+      body: {
+        en:{ headline:"Good rest helps your body recover.", text:"Shift work can make sleep hard to get right. Even short, better-quality rest can leave you feeling steadier the next day. Try to keep a regular sleep time where you can, and keep your room dark and quiet before bed." },
+        ta:{ headline:"நல்ல ஓய்வு உங்கள் உடலை மீட்க உதவுகிறது.", text:"ஷிப்ட் வேலை தூக்கத்தை சரியாகப் பெறுவதை கடினமாக்கும். குறுகிய ஆனால் தரமான ஓய்வு கூட, அடுத்த நாள் உங்களை நிலையாக உணர வைக்கும். முடிந்தவரை ஒரே நேரத்தில் தூங்கவும், படுக்கைக்கு முன் அறையை இருட்டாகவும் அமைதியாகவும் வைக்கவும்." },
+        bn:{ headline:"ভালো বিশ্রাম আপনার শরীরকে সুস্থ হতে সাহায্য করে।", text:"শিফটের কাজ ঘুমকে ঠিকমতো পাওয়া কঠিন করে তুলতে পারে। অল্প সময়ের ভালো মানের বিশ্রামও পরদিন আপনাকে স্থির অনুভব করাতে পারে। যতটা সম্ভব নিয়মিত সময়ে ঘুমানোর চেষ্টা করুন এবং ঘুমানোর আগে ঘর অন্ধকার ও শান্ত রাখুন।" }
+      },
+      quiz: {
+        en:{ question:"What can help you sleep better after a night shift?", options:["Drink coffee or tea right before sleeping","Keep the room dark and cool, and sleep around the same time each day","Use your phone in bed until you feel tired"], correct:1, wrongFeedback:"Not quite — that can actually make it harder for your body to fall asleep. Try another answer.", correctFeedback:"That's right. A dark, quiet room and a steady sleep time help your body rest properly." },
+        ta:{ question:"இரவு ஷிப்ட்டுக்குப் பிறகு நன்றாக தூங்க எது உதவும்?", options:["தூங்குவதற்கு முன் காபி அல்லது தேநீர் குடித்தல்","அறையை இருட்டாகவும் குளிர்ச்சியாகவும் வைத்து, தினமும் ஒரே நேரத்தில் தூங்குதல்","படுக்கையில் தூக்கம் வரும் வரை போனைப் பயன்படுத்துதல்"], correct:1, wrongFeedback:"சரியில்லை — அது உண்மையில் உங்கள் உடலுக்கு தூங்குவதை கடினமாக்கும். வேறு பதிலை முயற்சிக்கவும்.", correctFeedback:"சரி. இருண்ட, அமைதியான அறையும் நிலையான தூக்க நேரமும் உங்கள் உடலை சரியாக ஓய்வெடுக்க உதவும்." },
+        bn:{ question:"নাইট শিফটের পর ভালো ঘুমাতে কী সাহায্য করতে পারে?", options:["ঘুমানোর ঠিক আগে কফি বা চা খাওয়া","ঘর অন্ধকার ও ঠান্ডা রাখা এবং প্রতিদিন প্রায় একই সময়ে ঘুমানো","ক্লান্ত না লাগা পর্যন্ত বিছানায় ফোন ব্যবহার করা"], correct:1, wrongFeedback:"ঠিক নয় — এটি আসলে আপনার শরীরের ঘুমিয়ে পড়া আরও কঠিন করে তুলতে পারে। অন্য উত্তর চেষ্টা করুন।", correctFeedback:"ঠিক বলেছেন। অন্ধকার, শান্ত ঘর এবং নির্দিষ্ট ঘুমের সময় আপনার শরীরকে ঠিকমতো বিশ্রাম নিতে সাহায্য করে।" }
+      }
+    },
+    homesick: {
+      steps: 3, status: 'not-started', currentStep: 0,
+      iconPath: 'M20.8 4.6a5 5 0 00-7.1 0L12 6.3l-1.7-1.7a5 5 0 10-7.1 7.1L12 20.4l8.8-8.7a5 5 0 000-7.1z', iconBg:'#E3EFEC', iconColorSmall:'#0E5C55', iconColorBig:'#0E5C55',
+      titles: { en:'Homesickness & Staying Connected', ta:'வீட்டை நினைத்து ஏங்குதல் & தொடர்பில் இருத்தல்', bn:'বাড়ির জন্য মন খারাপ ও যোগাযোগ রাখা', zh:'思乡与保持联系', my:'ပြည်တွင်းကို လွမ်းခြင်းနှင့် ဆက်သွယ်မှုထိန်းသိမ်းခြင်း', th:'ความคิดถึงบ้านและการรักษาการติดต่อ' },
+      body: {
+        en:{ headline:"Missing home is a sign you care, not a weakness.", text:"Being far from family and friends is hard, especially during festivals or important days back home. Staying connected — even with a short message or call — can help you feel less alone." },
+        ta:{ headline:"வீட்டை நினைத்து ஏங்குவது அக்கறையின் அடையாளம், பலவீனம் அல்ல.", text:"குடும்பம் மற்றும் நண்பர்களை விட்டு தூரமாக இருப்பது கடினம், குறிப்பாக பண்டிகைகள் அல்லது முக்கியமான நாட்களில். ஒரு சிறிய செய்தி அல்லது அழைப்பு மூலமாவது தொடர்பில் இருப்பது தனிமையை குறைக்க உதவும்." },
+        bn:{ headline:"বাড়ির জন্য মন খারাপ হওয়া মানে আপনি যত্নশীল, দুর্বল নন।", text:"পরিবার ও বন্ধুদের থেকে দূরে থাকা কঠিন, বিশেষ করে উৎসব বা বাড়ির গুরুত্বপূর্ণ দিনগুলোতে। একটি ছোট বার্তা বা ফোন কলের মাধ্যমে যোগাযোগ রাখলেও একাকীত্ব কম অনুভব হতে পারে।" }
+      },
+      quiz: {
+        en:{ question:"What can help when you are missing home?", options:["Avoid talking about it so it hurts less","Call or message family, or talk to a friend or peer leader about it","Keep it to yourself and work longer hours to distract yourself"], correct:1, wrongFeedback:"Not quite — keeping it inside usually makes the feeling heavier, not lighter. Try another answer.", correctFeedback:"That's right. Staying connected and talking about it can really help." },
+        ta:{ question:"வீட்டை நினைத்து ஏங்கும்போது எது உதவும்?", options:["குறைவாக வலிக்க, அதைப் பற்றி பேசாமல் தவிர்த்தல்","குடும்பத்தை அழைத்தல் அல்லது செய்தி அனுப்புதல், அல்லது நண்பர் அல்லது பீர் லீடருடன் பேசுதல்","அதை தனக்குள் வைத்துக்கொண்டு, கவனத்தைத் திசை திருப்ப அதிக நேரம் வேலை செய்தல்"], correct:1, wrongFeedback:"சரியில்லை — உள்ளேயே வைத்துக்கொள்வது பொதுவாக உணர்வை இலகுவாக்காமல் கனமாக்கும். வேறு பதிலை முயற்சிக்கவும்.", correctFeedback:"சரி. தொடர்பில் இருப்பதும் அதைப் பற்றி பேசுவதும் உண்மையிலேயே உதவும்." },
+        bn:{ question:"বাড়ির জন্য মন খারাপ হলে কী সাহায্য করতে পারে?", options:["কম কষ্ট পেতে এ নিয়ে কথা না বলা","পরিবারকে কল বা মেসেজ করা, অথবা বন্ধু বা পিয়ার লিডারের সাথে এ নিয়ে কথা বলা","নিজের মধ্যে রেখে মনোযোগ সরাতে বেশি সময় কাজ করা"], correct:1, wrongFeedback:"ঠিক নয় — ভেতরে চেপে রাখলে অনুভূতি সাধারণত হালকা না হয়ে আরও ভারী হয়ে যায়। অন্য উত্তর চেষ্টা করুন।", correctFeedback:"ঠিক বলেছেন। যোগাযোগ রাখা এবং এ নিয়ে কথা বলা সত্যিই সাহায্য করতে পারে।" }
+      }
+    },
+    money: {
+      steps: 4, status: 'done', currentStep: 4,
+      iconPath: 'M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6', iconBg:'#E7F2EB', iconColorSmall:'#0E5C55', iconColorBig:'#0E5C55',
+      titles: { en:'Money Worries & Remittances', ta:'பண கவலைகள் & பணம் அனுப்புதல்', bn:'অর্থ চিন্তা ও রেমিট্যান্স', zh:'金钱烦恼与汇款', my:'ငွေကြေးစိုးရိမ်မှုနှင့် ငွေလွှဲခြင်း', th:'ความกังวลเรื่องเงินและการโอนเงิน' },
+      body: {
+        en:{ headline:"Money stress is common — you're not alone.", text:"Supporting family back home while managing your own costs here can feel heavy. Planning your spending and knowing where to ask for help can make it easier to manage." },
+        ta:{ headline:"பண அழுத்தம் பொதுவானது — நீங்கள் மட்டும் இல்லை.", text:"இங்கே உங்கள் சொந்த செலவுகளை நிர்வகிக்கும்போதே வீட்டில் உள்ள குடும்பத்தை ஆதரிப்பது சுமையாக உணரலாம். உங்கள் செலவுகளை திட்டமிடுவதும், உதவி எங்கே கேட்பது என்று தெரிந்துகொள்வதும் இதை எளிதாக்கும்." },
+        bn:{ headline:"অর্থ নিয়ে দুশ্চিন্তা সাধারণ ব্যাপার — আপনি একা নন।", text:"এখানে নিজের খরচ সামলানোর পাশাপাশি বাড়ির পরিবারকে সাহায্য করা কঠিন মনে হতে পারে। আপনার খরচের পরিকল্পনা করা এবং কোথায় সাহায্য চাইতে হবে তা জানা এটি সহজ করে তুলতে পারে।" }
+      },
+      quiz: {
+        en:{ question:"What can help you manage money worries?", options:["Borrow from unlicensed moneylenders to cover gaps","Make a simple plan for your pay and ask HealthServe or a peer leader if you need help","Avoid thinking about it until the problem goes away"], correct:1, wrongFeedback:"Not quite — that can create bigger problems later. Try another answer.", correctFeedback:"That's right. A simple plan and asking for help early makes a big difference." },
+        ta:{ question:"பண கவலைகளை நிர்வகிக்க எது உதவும்?", options:["இடைவெளிகளை நிரப்ப உரிமம் இல்லாத கடன் வழங்குநர்களிடம் கடன் வாங்குதல்","உங்கள் சம்பளத்திற்கு எளிய திட்டம் தயாரித்து, தேவைப்பட்டால் HealthServe அல்லது பீர் லீடரிடம் உதவி கேட்டல்","பிரச்சனை தானாக போகும் வரை அதைப் பற்றி நினைக்காமல் இருத்தல்"], correct:1, wrongFeedback:"சரியில்லை — அது பின்னர் பெரிய பிரச்சனைகளை உருவாக்கக்கூடும். வேறு பதிலை முயற்சிக்கவும்.", correctFeedback:"சரி. எளிய திட்டமும் சீக்கிரமே உதவி கேட்பதும் பெரிய மாற்றத்தை ஏற்படுத்தும்." },
+        bn:{ question:"অর্থ চিন্তা সামলাতে কী সাহায্য করতে পারে?", options:["ঘাটতি পূরণে অবৈধ মহাজনের কাছ থেকে ধার নেওয়া","আপনার বেতনের জন্য একটি সহজ পরিকল্পনা করা এবং প্রয়োজনে HealthServe বা পিয়ার লিডারের সাহায্য চাওয়া","সমস্যা নিজে থেকে চলে না যাওয়া পর্যন্ত এটা নিয়ে না ভাবা"], correct:1, wrongFeedback:"ঠিক নয় — এটি পরে আরও বড় সমস্যা তৈরি করতে পারে। অন্য উত্তর চেষ্টা করুন।", correctFeedback:"ঠিক বলেছেন। একটি সহজ পরিকল্পনা এবং আগে থেকে সাহায্য চাওয়া অনেক পার্থক্য তৈরি করে।" }
+      }
+    }
+  };
+  var MODULE_ORDER = ['stress','sleep','homesick','money'];
+  var continueLearningId = 'stress'; // the module shown in Home's "Continue learning" card
+
+  function moduleTitle(id, lang){ return MODULES[id].titles[lang] || MODULES[id].titles.en; }
+  function moduleBody(id, lang){ return MODULES[id].body[lang] || MODULES[id].body.en; }
+  function moduleQuiz(id, lang){ return MODULES[id].quiz[lang] || MODULES[id].quiz.en; }
+
+  // ===================== LANGUAGE PICKER =====================
   var langGrid = document.getElementById('lang-grid');
   var pickedLang = 'ta'; // defaults to Tamil — matches this demo persona's language elsewhere (greeting, profile)
   try {
     var savedLang = localStorage.getItem('hsc_lang');
     if (savedLang) pickedLang = savedLang;
   } catch(e) {}
+
   function renderLangs(){
     langGrid.innerHTML = '';
     LANGS.forEach(function(l){
@@ -579,11 +591,10 @@
       btn.className = 'chip' + (l.id === pickedLang ? ' picked' : '');
       btn.innerHTML = '<div style="font-family:var(--font-head);font-weight:700;font-size:16px;">'+l.native+'</div>'+
                       '<div style="font-size:12px;margin-top:2px;opacity:0.75;">'+l.english+'</div>';
-      btn.onclick = function(){ pickedLang = l.id; renderLangs(); };
+      btn.onclick = function(){ pickedLang = l.id; try{ localStorage.setItem('hsc_lang', pickedLang); }catch(e){} renderLangs(); applyLanguage(); };
       langGrid.appendChild(btn);
     });
   }
-  renderLangs();
 
   // Where "Continue" on the language screen should go: first-time users move on to
   // Sign up, but opening the language screen from Profile (to change a preference)
@@ -594,7 +605,6 @@
     go('screen-lang');
   }
   function continueFromLanguage(){
-    try { localStorage.setItem('hsc_lang', pickedLang); } catch(e) {}
     go(languageReturnScreen);
   }
 
@@ -604,9 +614,161 @@
     try { localStorage.setItem('hsc_onboarded', 'true'); } catch(e) {}
     go('screen-home');
   }
-  var alreadyOnboarded = false;
-  try { alreadyOnboarded = localStorage.getItem('hsc_onboarded') === 'true'; } catch(e) {}
-  if (alreadyOnboarded) go('screen-home');
+
+  // ===================== APPLY LANGUAGE ACROSS ALL SCREENS =====================
+  function setText(id, val){ var el = document.getElementById(id); if (el) el.textContent = val; }
+  function setTextClass(cls, val){ document.querySelectorAll('.'+cls).forEach(function(el){ el.textContent = val; }); }
+
+  function applyLanguage(){
+    // Screen 1 — Language select
+    setText('lang-tagline', t('tagline'));
+    setText('lang-choose-label', t('chooseLanguage'));
+    setText('lang-audio-note', t('audioNote'));
+    setText('lang-continue-label', t('continue'));
+    setText('footer-note-1', t('footerNote'));
+
+    // Screen 2 — Sign up
+    setText('signup-title', t('getStarted'));
+    setText('signup-voucher-title', t('voucherTitle'));
+    setText('signup-voucher-sub', t('voucherSub'));
+    setText('signup-mobile-label', t('mobileLabel'));
+    setText('signup-fin-label', t('finLabel'));
+    setText('signup-privacy-note', t('privacyNote'));
+    setText('signup-verify-btn', t('verifyContinue'));
+
+    // Screen 3 — Home
+    setText('home-greeting', t('greetingWord') + ', Kumar 👋');
+    setText('home-mood-title', t('moodQuestion'));
+    setText('home-mood-sub', t('moodSub'));
+    setText('home-good-title', t('moodGoodTitle'));
+    setText('home-escalate-title', t('moodEscalateTitle'));
+    setText('home-escalate-sub', t('moodEscalateSub'));
+    setText('home-whatsapp-label', t('whatsappCta'));
+    setText('wellbeing-modules-label', t('wellbeingModules'));
+    setText('topics-count-label', t('topicsCount'));
+    setTextClass('nav-home-label', t('navHome'));
+    setTextClass('nav-learn-label', t('navLearn'));
+    setTextClass('nav-checkin-label', t('navCheckin'));
+    setTextClass('nav-profile-label', t('navProfile'));
+    renderHomeModules();
+    renderContinueCard();
+
+    // Screen 4 — Module (re-render current module's content in the new language)
+    renderModuleScreen();
+
+    // Screen 5 — Quiz
+    renderQuiz();
+    setText('quiz-finish', quizSolved ? t('finishModule') : t('chooseAnswer'));
+
+    // Screen 6 — Check-in
+    setText('checkin-title', t('dailyCheckin'));
+    setText('checkin-question', t('checkinQuestion'));
+    setText('checkin-sub', t('checkinSub'));
+    setText('checkin-good-title', t('checkinLoggedTitle'));
+    setText('checkin-good-sub', t('checkinLoggedSub'));
+    setText('checkin-escalate-title', t('moodEscalateTitle'));
+    setText('checkin-counsellor-note', t('counsellorNote'));
+    setText('checkin-talk-label', t('talkToCounsellor'));
+    setText('checkin-whatsapp-label', t('whatsappCta'));
+    setText('checkin-availability-note', t('availabilityNote'));
+    setTextClass('mood-label-great', t('moodGreat'));
+    setTextClass('mood-label-okay', t('moodOkay'));
+    setTextClass('mood-label-tired', t('moodTired'));
+    setTextClass('mood-label-stressed', t('moodStressed'));
+    setTextClass('mood-label-struggling', t('moodStruggling'));
+
+    // Screen 7 — Profile
+    setText('profile-title', t('myProgress'));
+    var langEntry = LANGS.filter(function(l){ return l.id === pickedLang; })[0] || LANGS[1];
+    setText('profile-identity-sub', 'Work Permit ···· 7421 · ' + langEntry.english);
+    setText('profile-stat-streak', t('dayStreak'));
+    setText('profile-stat-modules', t('modulesDone'));
+    setText('profile-stat-checkins', t('checkins'));
+    setText('profile-modules-done-count', MODULE_ORDER.filter(function(id){ return MODULES[id].status === 'done'; }).length);
+    setText('profile-badges-label', t('badges'));
+    setText('profile-badge-7day', t('badge7day'));
+    setText('profile-badge-first', t('badgeFirstModule'));
+    setText('profile-badge-all', t('badgeAllTopics'));
+    setText('profile-language-row', t('languageRow') + ' — ' + langEntry.native + ' (' + langEntry.english + ')');
+    setText('profile-notifications-row', t('notifications'));
+    setText('profile-privacy-row', t('privacyData'));
+    setText('profile-help-row', t('helpFaq'));
+  }
+
+  function renderHomeModules(){
+    var list = document.getElementById('module-list');
+    list.innerHTML = '';
+    MODULE_ORDER.forEach(function(id){
+      var m = MODULES[id];
+      var statusLabel = m.status === 'done' ? t('statusDone') : (m.status === 'in-progress' ? t('statusInProgress') : t('statusStart'));
+      var statusBg = m.status === 'done' ? '#E7F2EB' : (m.status === 'in-progress' ? '#FDEFD9' : m.iconBg);
+      var statusColor = m.status === 'done' ? '#3F8F6B' : (m.status === 'in-progress' ? '#B9791F' : '#0E5C55');
+      var stepsNote = m.steps + ' ' + t('stepsSuffix') + ' · ' + (m.status === 'done' ? t('completed') : (m.status === 'in-progress' ? t('statusInProgress') : t('notStarted')));
+      var btn = document.createElement('button');
+      btn.onclick = function(){ openModule(id); };
+      btn.style.cssText = 'background:var(--card);border:1px solid var(--line);border-radius:16px;padding:13px 14px;display:flex;align-items:center;gap:12px;text-align:left;width:100%;';
+      btn.innerHTML =
+        '<div style="width:42px;height:42px;border-radius:11px;background:'+m.iconBg+';display:flex;align-items:center;justify-content:center;flex-shrink:0;">' +
+          '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="'+m.iconColorSmall+'" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="'+m.iconPath+'"/></svg>' +
+        '</div>' +
+        '<div style="flex:1;">' +
+          '<div style="font-weight:600;font-size:14px;">'+moduleTitle(id, pickedLang)+'</div>' +
+          '<div style="font-size:12px;color:var(--muted);margin-top:1px;">'+stepsNote+'</div>' +
+        '</div>' +
+        '<div style="font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px;background:'+statusBg+';color:'+statusColor+';white-space:nowrap;">'+statusLabel+'</div>';
+      list.appendChild(btn);
+    });
+  }
+
+  function renderContinueCard(){
+    var m = MODULES[continueLearningId];
+    document.getElementById('continue-icon-wrap').innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="'+m.iconColorSmall+'" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="'+m.iconPath+'"/></svg>';
+    document.getElementById('continue-icon-wrap').style.background = m.iconBg;
+    document.getElementById('continue-eyebrow').textContent = t('continueLearning');
+    document.getElementById('continue-title').textContent = moduleTitle(continueLearningId, pickedLang);
+    document.getElementById('continue-progress-bar').style.width = Math.round((m.currentStep / m.steps) * 100) + '%';
+    document.getElementById('continue-progress-label').textContent = t('stepOf').replace('{n}', m.currentStep).replace('{total}', m.steps) + ' · 3 ' + t('minLeft');
+  }
+
+  // ===================== MODULE SCREEN =====================
+  var currentModuleId = 'stress';
+  function openModule(id){
+    currentModuleId = id;
+    resetQuizState();
+    renderModuleScreen();
+    renderQuiz();
+    go('screen-module');
+  }
+
+  function renderModuleScreen(){
+    var m = MODULES[currentModuleId];
+    document.getElementById('module-eyebrow').textContent = t('wellbeingModuleLabel');
+    document.getElementById('module-title').textContent = moduleTitle(currentModuleId, pickedLang);
+
+    var dots = document.getElementById('module-dots');
+    dots.innerHTML = '';
+    var filled = m.status === 'done' ? m.steps : m.currentStep;
+    for (var i = 0; i < m.steps; i++){
+      var dot = document.createElement('div');
+      dot.style.cssText = 'flex:1;height:6px;border-radius:4px;background:' + (i < filled ? '#0E5C55' : '#E7E1D6') + ';';
+      dots.appendChild(dot);
+    }
+    var stepLabel = m.status === 'done' ? t('completed') : t('stepOf').replace('{n}', Math.max(m.currentStep,1)).replace('{total}', m.steps);
+    document.getElementById('module-step-label').textContent = stepLabel;
+
+    document.getElementById('module-icon-box').innerHTML = '<svg width="76" height="76" viewBox="0 0 24 24" fill="none" stroke="'+m.iconColorBig+'" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"><path d="'+m.iconPath+'"/></svg>';
+
+    var body = moduleBody(currentModuleId, pickedLang);
+    document.getElementById('module-headline').textContent = body.headline;
+    document.getElementById('module-body').textContent = body.text;
+
+    document.getElementById('module-listen-label').textContent = t('listenInstead');
+    var langEntry = LANGS.filter(function(l){ return l.id === pickedLang; })[0] || LANGS[1];
+    document.getElementById('module-lang-tag').textContent = langEntry.native;
+
+    document.getElementById('module-next-btn').textContent = t('next');
+    document.getElementById('module-skip-btn').textContent = t('skipForNow');
+  }
 
   // Audio player toggle (visual only)
   var playing = false;
@@ -618,13 +780,40 @@
       : '<path d="M8 5v14l11-7z"></path>';
   }
 
-  // Quiz
+  // ===================== QUIZ =====================
   var quizSolved = false;
+
+  function resetQuizState(){
+    quizSolved = false;
+  }
+
+  function renderQuiz(){
+    var q = moduleQuiz(currentModuleId, pickedLang);
+    document.getElementById('quiz-topbar-title').textContent = t('quickCheck');
+    document.getElementById('quiz-eyebrow').textContent = moduleTitle(currentModuleId, pickedLang);
+    document.getElementById('quiz-question').textContent = q.question;
+
+    var opts = document.getElementById('quiz-options');
+    opts.innerHTML = '';
+    q.options.forEach(function(optText, idx){
+      var btn = document.createElement('button');
+      btn.className = 'chip';
+      btn.onclick = function(){ pickQuiz(btn, idx === q.correct); };
+      btn.innerHTML = '<div style="display:flex;align-items:center;gap:12px;">' +
+        '<div class="ring" style="width:22px;height:22px;border-radius:50%;border:2px solid #CBD3CE;flex-shrink:0;"></div>' +
+        '<div style="font-size:14.5px;font-weight:500;flex:1;">'+optText+'</div>' +
+      '</div>';
+      opts.appendChild(btn);
+    });
+
+    document.getElementById('quiz-feedback').style.display = 'none';
+    document.getElementById('quiz-finish').disabled = !quizSolved;
+    document.getElementById('quiz-finish').textContent = quizSolved ? t('finishModule') : t('chooseAnswer');
+  }
 
   function pickQuiz(el, correct){
     if (quizSolved) return; // lock in the right answer once found, so the state stays unambiguous
 
-    // reset every option's ring to neutral, and un-highlight any previous selection
     document.querySelectorAll('#quiz-options .chip').forEach(function(c){
       c.classList.remove('picked');
       c.style.borderColor = '#E7E1D6';
@@ -647,6 +836,8 @@
     var finishBtn = document.getElementById('quiz-finish');
     feedback.style.display = 'flex';
 
+    var q = moduleQuiz(currentModuleId, pickedLang);
+
     if (correct) {
       quizSolved = true;
       el.style.borderColor = '#3F8F6B';
@@ -658,10 +849,10 @@
       feedback.style.background = 'var(--good-tint)';
       icon.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3F8F6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>';
       text.style.color = '#255440';
-      text.textContent = "That's right. Short breaks, breathing slowly and talking to someone you trust can all help your body calm down.";
+      text.textContent = q.correctFeedback;
 
       finishBtn.disabled = false;
-      finishBtn.textContent = 'Finish module';
+      finishBtn.textContent = t('finishModule');
     } else {
       el.style.borderColor = '#C85A41';
       el.style.background = '#FBEAE6';
@@ -672,14 +863,14 @@
       feedback.style.background = 'var(--alert-tint)';
       icon.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C85A41" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>';
       text.style.color = '#7A2E1E';
-      text.textContent = "Not quite — carrying it alone or pushing through usually makes it harder on your body. Try another answer.";
+      text.textContent = q.wrongFeedback;
 
       finishBtn.disabled = true;
-      finishBtn.textContent = 'Choose an answer';
+      finishBtn.textContent = t('chooseAnswer');
     }
   }
 
-  // Check-in moods
+  // ===================== CHECK-IN =====================
   function pickMood(el){
     document.querySelectorAll('.mood-btn').forEach(function(b){
       b.style.border = '1.5px solid var(--line)';
@@ -720,6 +911,15 @@
       escalate.style.display = 'flex';
     }
   }
+
+  // ===================== INITIALISE =====================
+  renderLangs();
+  applyLanguage();
+
+  // A returning, already-onboarded user skips language + sign-up entirely.
+  var alreadyOnboarded = false;
+  try { alreadyOnboarded = localStorage.getItem('hsc_onboarded') === 'true'; } catch(e) {}
+  if (alreadyOnboarded) go('screen-home');
 </script>
 
 </body>
