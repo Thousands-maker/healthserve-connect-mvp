@@ -2264,7 +2264,11 @@
 
     var quizRow = document.createElement('button');
     var quizDone = m.status === 'done';
-    quizRow.onclick = function(){ renderQuiz(); go('screen-quiz'); };
+    quizRow.onclick = function(){
+      currentModuleId = id; // jumping here directly from the chapter list, without passing through openChapter()
+      renderQuiz(true); // fresh=true: a previously-solved quiz (this or another module) must not carry over as "already answered"
+      go('screen-quiz');
+    };
     quizRow.style.cssText = 'text-align:left;background:'+(quizDone ? '#E7F2EB' : 'var(--teal-tint)')+';border:1px solid var(--line);border-radius:16px;padding:13px 14px;display:flex;align-items:center;gap:12px;width:100%;';
     quizRow.innerHTML =
       '<div style="width:30px;height:30px;border-radius:50%;background:'+(quizDone ? '#CFE6DB' : '#FFFFFF')+';display:flex;align-items:center;justify-content:center;flex-shrink:0;">' +
@@ -2303,20 +2307,30 @@
       continueLearningId = id;
       STATE.lastOpenedModule = id;
     }
+    // Jumping straight to a later chapter (chapter list, dots, reminders,
+    // "continue learning") means everything before it was necessarily
+    // already passed — count those as completed too, not just chapters
+    // reached by clicking "Next chapter" in order.
+    for (var i = 0; i < chapterIdx; i++){
+      markChapterCompleted(id, i);
+    }
     saveState();
     renderReminderBadge();
 
     renderModuleScreen();
     go('screen-module');
+    maybeTriggerSurvey();
   }
 
   function nextChapterOrQuiz(){
     var m = MODULES[currentModuleId];
-    markChapterCompleted(currentModuleId, currentChapterIdx); // the chapter being left behind is, by definition, read
     if (currentChapterIdx < m.chapters.length - 1){
+      markChapterCompleted(currentModuleId, currentChapterIdx); // the chapter being left behind is, by definition, read
       openChapter(currentModuleId, currentChapterIdx + 1);
     } else {
-      renderQuiz();
+      // The last chapter of a module isn't "completed" just by opening its
+      // quiz — only once the quiz itself is actually passed (see pickQuiz()).
+      renderQuiz(true);
       go('screen-quiz');
     }
     maybeTriggerSurvey();
@@ -2516,7 +2530,13 @@
     go('screen-home');
   }
 
-  function renderQuiz(){
+  function renderQuiz(fresh){
+    // fresh=true means "the visitor is newly arriving at this quiz" (vs. a
+    // language-switch re-render of a quiz already in progress) — only then
+    // do we clear any previously-solved state, so jumping straight to a
+    // different module's quiz can't inherit an earlier quiz's "already
+    // answered" status and silently ignore every option tap.
+    if (fresh) resetQuizState();
     var q = moduleQuiz(currentModuleId, pickedLang);
     document.getElementById('quiz-topbar-title').textContent = t('quickCheck');
     document.getElementById('quiz-eyebrow').textContent = moduleTitle(currentModuleId, pickedLang);
@@ -2589,7 +2609,11 @@
       MODULES[currentModuleId].currentStep = MODULES[currentModuleId].steps;
       STATE.moduleStatus[currentModuleId] = 'done';
       STATE.moduleStep[currentModuleId] = MODULES[currentModuleId].steps;
+      // The module's last chapter only counts as "completed" now that its
+      // quiz is actually passed — not back when the quiz screen was opened.
+      markChapterCompleted(currentModuleId, MODULES[currentModuleId].chapters.length - 1);
       saveState();
+      maybeTriggerSurvey();
     } else {
       el.style.borderColor = '#C85A41';
       el.style.background = '#FBEAE6';
