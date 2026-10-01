@@ -349,10 +349,10 @@
           </button>
         </div>
 
-        <div id="quiz-feedback" style="display:none;background:var(--good-tint);border-radius:16px;padding:16px;gap:10px;align-items:flex-start;">
+        <div id="quiz-feedback" style="display:none;border-radius:16px;padding:16px;gap:10px;align-items:flex-start;">
           <div style="display:flex;gap:10px;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3F8F6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
-            <div style="font-size:13.5px;line-height:1.55;color:#255440;">That's right. Short breaks, breathing slowly and talking to someone you trust can all help your body calm down.</div>
+            <div id="quiz-feedback-icon" style="flex-shrink:0;"></div>
+            <div id="quiz-feedback-text" style="font-size:13.5px;line-height:1.55;"></div>
           </div>
         </div>
       </div>
@@ -437,7 +437,7 @@
             <div style="font-size:11px;color:var(--muted);margin-top:2px;">Day streak</div>
           </div>
           <div style="flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center;">
-            <div style="font-family:var(--font-head);font-weight:800;font-size:22px;color:var(--teal);">3</div>
+            <div style="font-family:var(--font-head);font-weight:800;font-size:22px;color:var(--teal);">1</div>
             <div style="font-size:11px;color:var(--muted);margin-top:2px;">Modules done</div>
           </div>
           <div style="flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center;">
@@ -533,7 +533,7 @@
     {id:'th', native:'ไทย', english:'Thai'}
   ];
   var langGrid = document.getElementById('lang-grid');
-  var pickedLang = 'en';
+  var pickedLang = 'ta'; // defaults to Tamil — matches this demo persona's language elsewhere (greeting, profile)
   function renderLangs(){
     langGrid.innerHTML = '';
     LANGS.forEach(function(l){
@@ -558,29 +558,64 @@
   }
 
   // Quiz
+  var quizSolved = false;
+
   function pickQuiz(el, correct){
+    if (quizSolved) return; // lock in the right answer once found, so the state stays unambiguous
+
+    // reset every option's ring to neutral, and un-highlight any previous selection
     document.querySelectorAll('#quiz-options .chip').forEach(function(c){
       c.classList.remove('picked');
+      c.style.borderColor = '#E7E1D6';
+      c.style.background = '#FFFFFF';
       var ring = c.querySelector('.ring');
       ring.style.border = '2px solid #CBD3CE';
       ring.style.background = 'transparent';
       ring.innerHTML = '';
     });
+
     el.classList.add('picked');
-    el.style.borderColor = '#3F8F6B';
-    el.style.background = '#F3FBF6';
     var ring = el.querySelector('.ring');
-    ring.style.border = '2px solid #3F8F6B';
-    ring.style.background = '#3F8F6B';
     ring.style.display = 'flex';
     ring.style.alignItems = 'center';
     ring.style.justifyContent = 'center';
-    ring.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
 
-    document.getElementById('quiz-feedback').style.display = 'flex';
+    var feedback = document.getElementById('quiz-feedback');
+    var icon = document.getElementById('quiz-feedback-icon');
+    var text = document.getElementById('quiz-feedback-text');
     var finishBtn = document.getElementById('quiz-finish');
-    finishBtn.disabled = false;
-    finishBtn.textContent = 'Finish module';
+    feedback.style.display = 'flex';
+
+    if (correct) {
+      quizSolved = true;
+      el.style.borderColor = '#3F8F6B';
+      el.style.background = '#F3FBF6';
+      ring.style.border = '2px solid #3F8F6B';
+      ring.style.background = '#3F8F6B';
+      ring.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+
+      feedback.style.background = 'var(--good-tint)';
+      icon.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3F8F6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>';
+      text.style.color = '#255440';
+      text.textContent = "That's right. Short breaks, breathing slowly and talking to someone you trust can all help your body calm down.";
+
+      finishBtn.disabled = false;
+      finishBtn.textContent = 'Finish module';
+    } else {
+      el.style.borderColor = '#C85A41';
+      el.style.background = '#FBEAE6';
+      ring.style.border = '2px solid #C85A41';
+      ring.style.background = '#C85A41';
+      ring.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>';
+
+      feedback.style.background = 'var(--alert-tint)';
+      icon.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C85A41" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>';
+      text.style.color = '#7A2E1E';
+      text.textContent = "Not quite — carrying it alone or pushing through usually makes it harder on your body. Try another answer.";
+
+      finishBtn.disabled = true;
+      finishBtn.textContent = 'Choose an answer';
+    }
   }
 
   // Check-in moods
