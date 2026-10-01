@@ -594,6 +594,13 @@
 
 <script>
   function go(id){
+    // Stop any module audio the instant the screen changes — otherwise the
+    // voice keeps reading a lesson the visitor has already navigated away
+    // from, which feels broken (and a bit unsettling in a wellbeing app).
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+    if (typeof playing !== 'undefined') playing = false;
+    if (typeof setPlayIcon === 'function') setPlayIcon(false);
+
     document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
     var target = document.getElementById(id);
     target.classList.add('active');
