@@ -88,7 +88,7 @@
       </div>
 
       <div style="padding:16px 24px 28px;display:flex;flex-direction:column;gap:12px;flex-shrink:0;">
-        <button class="cta" onclick="go('screen-signup')" style="display:flex;align-items:center;justify-content:center;gap:8px;">
+        <button class="cta" onclick="continueFromLanguage()" style="display:flex;align-items:center;justify-content:center;gap:8px;">
           Continue
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </button>
@@ -125,7 +125,6 @@
             <div style="font-size:13px;font-weight:600;margin-bottom:6px;">Work Permit / FIN — last 4 digits</div>
             <input type="text" placeholder="e.g. 7421" style="width:100%;padding:14px 16px;border-radius:12px;border:1.5px solid var(--line);font-size:15px;background:#FFFFFF;"/>
           </div>
-          <button class="cta-outline">Send verification code</button>
         </div>
 
         <div style="background:var(--teal-tint);border-radius:14px;padding:14px 16px;display:flex;gap:10px;align-items:flex-start;">
@@ -135,7 +134,7 @@
       </div>
 
       <div style="padding:16px 24px 28px;flex-shrink:0;">
-        <button class="cta" onclick="go('screen-home')">Verify &amp; continue</button>
+        <button class="cta" onclick="finishSignup()">Verify &amp; continue</button>
       </div>
     </div>
 
@@ -497,7 +496,7 @@
         </div>
 
         <div style="display:flex;flex-direction:column;gap:1px;background:var(--line);border-radius:14px;overflow:hidden;border:1px solid var(--line);">
-          <button onclick="go('screen-lang')" style="background:var(--card);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;text-align:left;border:none;">
+          <button onclick="openLanguage('screen-profile')" style="background:var(--card);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;text-align:left;border:none;">
             <div style="font-size:14px;font-weight:500;">Language — தமிழ் (Tamil)</div>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9BA299" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
           </button>
@@ -569,6 +568,10 @@
   ];
   var langGrid = document.getElementById('lang-grid');
   var pickedLang = 'ta'; // defaults to Tamil — matches this demo persona's language elsewhere (greeting, profile)
+  try {
+    var savedLang = localStorage.getItem('hsc_lang');
+    if (savedLang) pickedLang = savedLang;
+  } catch(e) {}
   function renderLangs(){
     langGrid.innerHTML = '';
     LANGS.forEach(function(l){
@@ -581,6 +584,29 @@
     });
   }
   renderLangs();
+
+  // Where "Continue" on the language screen should go: first-time users move on to
+  // Sign up, but opening the language screen from Profile (to change a preference)
+  // should return straight to Profile — never loop back through onboarding/sign-up.
+  var languageReturnScreen = 'screen-signup';
+  function openLanguage(next){
+    languageReturnScreen = next;
+    go('screen-lang');
+  }
+  function continueFromLanguage(){
+    try { localStorage.setItem('hsc_lang', pickedLang); } catch(e) {}
+    go(languageReturnScreen);
+  }
+
+  // Sign-up completion: remember it so a returning user skips language + sign-up
+  // entirely next time and lands straight on Home (0 taps instead of 2).
+  function finishSignup(){
+    try { localStorage.setItem('hsc_onboarded', 'true'); } catch(e) {}
+    go('screen-home');
+  }
+  var alreadyOnboarded = false;
+  try { alreadyOnboarded = localStorage.getItem('hsc_onboarded') === 'true'; } catch(e) {}
+  if (alreadyOnboarded) go('screen-home');
 
   // Audio player toggle (visual only)
   var playing = false;
