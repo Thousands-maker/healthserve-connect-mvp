@@ -1076,6 +1076,43 @@
   // Audio player toggle (visual only)
   var playing = false;
   var SPEECH_LANG = { en:'en-US', ta:'ta-IN', bn:'bn-IN', zh:'zh-CN', th:'th-TH', my:'my-MM' };
+
+  // Pick a calmer, more natural-sounding voice where one is available —
+  // some browsers fall back to a harsh, robotic default system voice
+  // (particularly for English) which isn't right for a wellbeing app.
+  var cachedVoices = [];
+  function refreshVoiceCache(){
+    if ('speechSynthesis' in window) cachedVoices = window.speechSynthesis.getVoices();
+  }
+  if ('speechSynthesis' in window){
+    refreshVoiceCache();
+    window.speechSynthesis.onvoiceschanged = refreshVoiceCache;
+  }
+  function pickVoice(langTag){
+    if (!cachedVoices.length) refreshVoiceCache();
+    var voices = cachedVoices;
+    if (!voices || !voices.length) return null;
+    var langPrefix = langTag.split('-')[0];
+    var pool = voices.filter(function(v){ return v.lang === langTag; });
+    if (!pool.length) pool = voices.filter(function(v){ return v.lang && v.lang.indexOf(langPrefix) === 0; });
+    if (!pool.length) return null;
+    // Avoid known harsh/novelty system voices; prefer natural-sounding ones.
+    var harsh = /whisper|bells|albert|bad news|bahh|boing|bubbles|cellos|deranged|hysterical|pipe organ|trinoids|zarvox|wobble|jester|organ|rocko|eddy|flo|grandpa|grandma|reed|sandy|shelley|junior/i;
+    var calm = voices.filter(function(v){ return pool.indexOf(v) !== -1 && !harsh.test(v.name); });
+    var candidates = calm.length ? calm : pool;
+    candidates = candidates.slice().sort(function(a, b){
+      function score(v){
+        var s = 0;
+        if (/google|natural|online|neural|microsoft.*online/i.test(v.name)) s += 3;
+        if (/female/i.test(v.name)) s += 1; // tends to read calmer by default for this content
+        if (v.localService === false) s += 1; // cloud voices are usually higher quality
+        return s;
+      }
+      return score(b) - score(a);
+    });
+    return candidates[0];
+  }
+
   function setPlayIcon(isPlaying){
     var icon = document.getElementById('playicon');
     if (!icon) return;
@@ -1097,8 +1134,12 @@
     var content = moduleBody(currentModuleId, pickedLang);
     var text = content.headline + '. ' + content.text;
     var utter = new SpeechSynthesisUtterance(text);
-    utter.lang = SPEECH_LANG[pickedLang] || 'en-US';
+    var langTag = SPEECH_LANG[pickedLang] || 'en-US';
+    utter.lang = langTag;
+    var voice = pickVoice(langTag);
+    if (voice) utter.voice = voice;
     utter.rate = 0.95;
+    utter.pitch = 1;
     utter.onend = function(){ playing = false; setPlayIcon(false); };
     utter.onerror = function(){ playing = false; setPlayIcon(false); };
     window.speechSynthesis.cancel(); // stop anything already speaking first
