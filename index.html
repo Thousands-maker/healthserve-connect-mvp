@@ -593,11 +593,34 @@
 </div>
 
 <script>
+  // Stopping speech reliably needs more than a bare cancel(): some mobile
+  // browsers (iOS Safari in particular) can keep an utterance audibly
+  // playing after cancel() alone if it's called mid-speech. Pausing first,
+  // then cancelling, and repeating the cancel shortly after on a timer,
+  // covers the engines that need the extra nudge without affecting the ones
+  // that don't.
+  // speechGeneration guards the deferred follow-up cancel below: if new
+  // speech starts (a newer generation) before that timeout fires, the
+  // follow-up backs off instead of killing the utterance that just started.
+  var speechGeneration = 0;
+  function stopSpeech(scheduleFollowup){
+    speechGeneration++;
+    var myGeneration = speechGeneration;
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+    try { window.speechSynthesis.pause(); } catch(e) {}
+    window.speechSynthesis.cancel();
+    if (scheduleFollowup === false) return;
+    setTimeout(function(){
+      if (speechGeneration !== myGeneration) return; // newer speech started since — leave it alone
+      try { window.speechSynthesis.cancel(); } catch(e) {}
+    }, 50);
+  }
+
   function go(id){
     // Stop any module audio the instant the screen changes — otherwise the
     // voice keeps reading a lesson the visitor has already navigated away
     // from, which feels broken (and a bit unsettling in a wellbeing app).
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+    stopSpeech();
     if (typeof playing !== 'undefined') playing = false;
     if (typeof setPlayIcon === 'function') setPlayIcon(false);
 
@@ -1866,7 +1889,7 @@
     currentModuleId = id;
     currentChapterIdx = chapterIdx;
     resetQuizState();
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+    stopSpeech();
     playing = false;
     setPlayIcon(false);
 
@@ -1994,7 +2017,7 @@
       return;
     }
     if (playing){
-      window.speechSynthesis.cancel();
+      stopSpeech();
       playing = false;
       setPlayIcon(false);
       return;
@@ -2010,7 +2033,8 @@
     utter.pitch = 1;
     utter.onend = function(){ playing = false; setPlayIcon(false); };
     utter.onerror = function(){ playing = false; setPlayIcon(false); };
-    window.speechSynthesis.cancel(); // stop anything already speaking first
+    stopSpeech(false); // stop anything already speaking first, no deferred re-cancel
+    speechGeneration++; // invalidate any still-pending re-cancel from an earlier stopSpeech() call
     window.speechSynthesis.speak(utter);
     playing = true;
     setPlayIcon(true);
