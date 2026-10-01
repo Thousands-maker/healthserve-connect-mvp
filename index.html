@@ -2233,7 +2233,10 @@
     document.getElementById('module-skip-btn').textContent = t('viewAllChapters');
 
     var prevBtn = document.getElementById('module-prev-btn');
-    prevBtn.style.visibility = currentChapterIdx === 0 ? 'hidden' : 'visible';
+    // display:none (not visibility:hidden) on chapter 1, so its reserved
+    // width+gap doesn't shift the Next button off-center / out of alignment
+    // with the audio card and "View all chapters" link above and below it.
+    prevBtn.style.display = currentChapterIdx === 0 ? 'none' : 'flex';
     prevBtn.setAttribute('aria-label', t('previousChapter'));
 
     var audioNote = document.getElementById('module-audio-unavailable');
