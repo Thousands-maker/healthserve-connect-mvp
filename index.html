@@ -198,7 +198,7 @@
           </div>
         </div>
 
-        <button onclick="openModule(continueLearningId)" style="background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;text-align:left;">
+        <button onclick="continueLearningCardTap()" style="background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;text-align:left;">
           <div style="display:flex;align-items:center;gap:12px;">
             <div id="continue-icon-wrap" style="width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"></div>
             <div style="flex:1;">
@@ -241,16 +241,55 @@
       </div>
     </div>
 
+    <!-- ===================== SCREEN 3b: CHAPTER PICKER ===================== -->
+    <div class="screen" id="screen-chapters">
+      <div class="topbar">
+        <button class="backbtn" onclick="go('screen-home')" aria-label="Back">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1C2520" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        </button>
+        <div style="flex:1;">
+          <div id="chapters-eyebrow" style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;"></div>
+          <h1 id="chapters-title" style="font-size:16px;"></h1>
+        </div>
+      </div>
+
+      <div class="scroll" style="padding:16px 20px 12px;display:flex;flex-direction:column;gap:10px;">
+        <div id="chapters-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+      </div>
+
+      <div class="bottomnav">
+        <button class="navitem" onclick="go('screen-home')">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1v-9"/></svg>
+          <span class="nav-home-label"></span>
+        </button>
+        <button class="navitem active" onclick="openModule(continueLearningId)">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15z"/></svg>
+          <span class="nav-learn-label"></span>
+        </button>
+        <button class="navitem" onclick="openCheckin()">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5 5 0 00-7.1 0L12 6.3l-1.7-1.7a5 5 0 10-7.1 7.1L12 20.4l8.8-8.7a5 5 0 000-7.1z"/></svg>
+          <span class="nav-checkin-label"></span>
+        </button>
+        <button class="navitem" onclick="go('screen-profile')">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+          <span class="nav-profile-label"></span>
+        </button>
+      </div>
+    </div>
+
     <!-- ===================== SCREEN 4: MODULE ===================== -->
     <div class="screen" id="screen-module">
       <div class="topbar">
-        <button class="backbtn" onclick="go('screen-home')" aria-label="Back">
+        <button class="backbtn" onclick="backToChapters()" aria-label="Back">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1C2520" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
         </button>
         <div style="flex:1;">
           <div id="module-eyebrow" style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;"></div>
           <h1 id="module-title" style="font-size:16px;"></h1>
         </div>
+        <button id="module-bookmark-btn" onclick="toggleCurrentBookmark()" aria-label="Bookmark" style="background:none;border:none;padding:6px;flex-shrink:0;">
+          <svg id="module-bookmark-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0E5C55" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+        </button>
       </div>
 
       <div id="module-dots" style="padding:14px 20px 0;display:flex;gap:6px;flex-shrink:0;"></div>
@@ -288,8 +327,8 @@
       </div>
 
       <div style="padding:14px 20px 10px;display:flex;flex-direction:column;gap:10px;flex-shrink:0;">
-        <button class="cta" onclick="go('screen-quiz')" id="module-next-btn"></button>
-        <button onclick="go('screen-home')" id="module-skip-btn" style="background:none;border:none;text-align:center;font-size:13.5px;color:var(--muted);font-weight:600;"></button>
+        <button class="cta" onclick="nextChapterOrQuiz()" id="module-next-btn"></button>
+        <button onclick="backToChapters()" id="module-skip-btn" style="background:none;border:none;text-align:center;font-size:13.5px;color:var(--muted);font-weight:600;"></button>
       </div>
 
       <div class="bottomnav">
@@ -574,12 +613,12 @@
 
   // ===================== UI STRINGS (all screens, all 6 languages) =====================
   var STRINGS = {
-    en: { tagline:"Wellbeing support that fits around your shift, in your language.", chooseLanguage:"Choose your language", audioNote:"Wellbeing lessons can be read aloud to you — no reading needed for those.", continue:"Continue", footerNote:"An initiative by AGOV · Private & confidential", getStarted:"Get started", voucherTitle:"Get a S$10 EZ-Link voucher", voucherSub:"Paid once your sign-up is verified", mobileLabel:"Mobile number", finLabel:"Work Permit / FIN — last 4 digits", privacyNote:"Your details stay with HealthServe. We never share this with your employer or agent.", verifyContinue:"Verify & continue", greetingWord:"Hello", moodQuestion:"How are you feeling today?", moodSub:"One tap, right here", moodGoodTitle:"Good to hear. Keep it up.", moodEscalateTitle:"It's okay to not be okay.", moodEscalateSub:"You don't have to carry this alone. Confidential support is a tap away.", whatsappCta:"Or WhatsApp Samaritans of Singapore (SOS) — +65 9151 1767", continueLearning:"Continue learning", wellbeingModules:"Wellbeing modules", topicsCount:"4 topics", navHome:"Home", navLearn:"Learn", navCheckin:"Check-in", navProfile:"Profile", quickCheck:"Quick check", chooseAnswer:"Choose an answer", finishModule:"Finish module", wellbeingModuleLabel:"Wellbeing module", next:"Next", skipForNow:"Skip for now", listenInstead:"Listen instead of reading", dailyCheckin:"Daily check-in", checkinQuestion:"How are you feeling right now?", checkinSub:"Only you can see this. Be honest with yourself.", checkinLoggedTitle:"Good to hear. Keep it up.", checkinLoggedSub:"We've logged today's check-in. See you tomorrow.", counsellorNote:"You don't have to carry this alone. HealthServe's 24-hour crisis helpline can talk with you in your language, any time, in confidence.", talkToCounsellor:"Call 24-hr Crisis Helpline — +65 3129 5000", availabilityNote:"Available 24 hours a day, every day · Fully confidential, not shared with your employer", myProgress:"My progress", dayStreak:"Day streak", modulesDone:"Modules done", checkins:"Check-ins", badges:"Badges", badge7day:"7-day streak", badgeFirstModule:"First module", badgeAllTopics:"All 4 topics", languageRow:"Language", notifications:"Notifications", privacyData:"Privacy & data", helpFaq:"Help & FAQ", moodGreat:"Great", moodOkay:"Okay", moodTired:"Tired", moodStressed:"Stressed", moodStruggling:"Struggling", statusStart:"Start", statusInProgress:"In progress", statusDone:"Done", stepsSuffix:"steps", notStarted:"Not started", completed:"Completed", stepOf:"Step {n} of {total}", minLeft:"min left", todayLabel:"Today", yourCheckins:"Your check-ins", noCheckinsYet:"No check-ins yet.", changeEntry:"Change" },
-    ta: { tagline:"உங்கள் ஷிப்ட் நேரத்திற்கு ஏற்ப, உங்கள் மொழியில் நல்வாழ்வு ஆதரவு.", chooseLanguage:"உங்கள் மொழியைத் தேர்ந்தெடுக்கவும்", audioNote:"நல்வாழ்வு பாடங்களை சத்தமாக கேட்கவும் முடியும் — அதற்கு வாசிப்பது அவசியமில்லை.", continue:"தொடரவும்", footerNote:"AGOV இன் ஒரு முயற்சி · தனிப்பட்டது மற்றும் இரகசியமானது", getStarted:"தொடங்குவோம்", voucherTitle:"S$10 EZ-Link வவுச்சர் பெறுங்கள்", voucherSub:"உங்கள் பதிவு உறுதிப்படுத்தப்பட்டவுடன் வழங்கப்படும்", mobileLabel:"மொபைல் எண்", finLabel:"Work Permit / FIN — கடைசி 4 இலக்கங்கள்", privacyNote:"உங்கள் விவரங்கள் HealthServe இடம் மட்டுமே இருக்கும். உங்கள் முதலாளி அல்லது ஏஜென்ட்டுடன் இதை நாங்கள் பகிர மாட்டோம்.", verifyContinue:"சரிபார்த்து தொடரவும்", greetingWord:"வணக்கம்", moodQuestion:"இன்று நீங்கள் எப்படி உணர்கிறீர்கள்?", moodSub:"ஒரே தட்டலில், இங்கேயே", moodGoodTitle:"கேட்க நல்லா இருக்கு. தொடருங்கள்.", moodEscalateTitle:"பரவாயில்லை, எப்போதும் நலமாக உணர வேண்டியதில்லை.", moodEscalateSub:"இதை நீங்கள் தனியாக சுமக்க வேண்டியதில்லை. இரகசியமான ஆதரவு ஒரு தட்டலில் உள்ளது.", whatsappCta:"அல்லது Samaritans of Singapore (SOS) அமைப்பிற்கு WhatsApp செய்யுங்கள் — +65 9151 1767", continueLearning:"கற்றலைத் தொடரவும்", wellbeingModules:"நல்வாழ்வு பாடங்கள்", topicsCount:"4 தலைப்புகள்", navHome:"முகப்பு", navLearn:"கற்க", navCheckin:"செக்-இன்", navProfile:"சுயவிவரம்", quickCheck:"விரைவு சோதனை", chooseAnswer:"ஒரு பதிலைத் தேர்ந்தெடுக்கவும்", finishModule:"பாடத்தை முடிக்கவும்", wellbeingModuleLabel:"நல்வாழ்வு பாடம்", next:"அடுத்து", skipForNow:"இப்போது தவிர்க்கவும்", listenInstead:"படிப்பதற்கு பதிலாக கேளுங்கள்", dailyCheckin:"தினசரி செக்-இன்", checkinQuestion:"இப்போது நீங்கள் எப்படி உணர்கிறீர்கள்?", checkinSub:"இதை நீங்கள் மட்டுமே பார்க்க முடியும். உங்களிடம் நேர்மையாக இருங்கள்.", checkinLoggedTitle:"கேட்க நல்லா இருக்கு. தொடருங்கள்.", checkinLoggedSub:"இன்றைய செக்-இன் பதிவு செய்யப்பட்டது. நாளை சந்திப்போம்.", counsellorNote:"இதை நீங்கள் தனியாக சுமக்க வேண்டியதில்லை. HealthServe இன் 24 மணி நேர நெருக்கடி உதவி எண் உங்கள் மொழியில், எந்த நேரத்திலும், இரகசியமாக பேசும்.", talkToCounsellor:"24 மணி நேர நெருக்கடி உதவி எண்ணை அழைக்கவும் — +65 3129 5000", availabilityNote:"நாள் முழுவதும், தினமும் கிடைக்கும் · முழுமையாக இரகசியமானது, உங்கள் முதலாளியுடன் பகிரப்படாது", myProgress:"எனது முன்னேற்றம்", dayStreak:"நாள் தொடர்ச்சி", modulesDone:"முடிந்த பாடங்கள்", checkins:"செக்-இன்கள்", badges:"பேட்ஜ்கள்", badge7day:"7-நாள் தொடர்ச்சி", badgeFirstModule:"முதல் பாடம்", badgeAllTopics:"அனைத்து 4 தலைப்புகளும்", languageRow:"மொழி", notifications:"அறிவிப்புகள்", privacyData:"தனியுரிமை & தரவு", helpFaq:"உதவி & கேள்விகள்", moodGreat:"மிகச் சிறப்பு", moodOkay:"சரி", moodTired:"களைப்பு", moodStressed:"மன அழுத்தம்", moodStruggling:"சிரமம்", statusStart:"தொடங்கு", statusInProgress:"நடைபெறுகிறது", statusDone:"முடிந்தது", stepsSuffix:"படிகள்", notStarted:"தொடங்கவில்லை", completed:"முடிந்தது", stepOf:"படி {n} / {total}", minLeft:"நிமிடம் மீதம்", todayLabel:"இன்று", yourCheckins:"உங்கள் செக்-இன்கள்", noCheckinsYet:"இன்னும் செக்-இன்கள் இல்லை.", changeEntry:"மாற்று" },
-    bn: { tagline:"আপনার শিফট অনুযায়ী, আপনার ভাষায় সুস্থতা সহায়তা।", chooseLanguage:"আপনার ভাষা বেছে নিন", audioNote:"সুস্থতা পাঠগুলো জোরে পড়ে শোনানো যায় — সেগুলোর জন্য পড়তে জানার দরকার নেই।", continue:"চালিয়ে যান", footerNote:"AGOV-এর একটি উদ্যোগ · ব্যক্তিগত ও গোপনীয়", getStarted:"শুরু করুন", voucherTitle:"S$10 EZ-Link ভাউচার পান", voucherSub:"আপনার সাইন-আপ যাচাই হলে দেওয়া হবে", mobileLabel:"মোবাইল নম্বর", finLabel:"Work Permit / FIN — শেষ ৪ সংখ্যা", privacyNote:"আপনার তথ্য শুধু HealthServe-এর কাছে থাকবে। আমরা এটি আপনার নিয়োগকর্তা বা এজেন্টের সাথে শেয়ার করি না।", verifyContinue:"যাচাই করে চালিয়ে যান", greetingWord:"নমস্কার", moodQuestion:"আজ আপনি কেমন অনুভব করছেন?", moodSub:"এক ট্যাপেই, এখানেই", moodGoodTitle:"শুনে ভালো লাগল। এভাবেই চালিয়ে যান।", moodEscalateTitle:"ভালো না লাগাটাও ঠিক আছে।", moodEscalateSub:"এটা একা বহন করতে হবে না। গোপনীয় সহায়তা এক ট্যাপ দূরে।", whatsappCta:"অথবা Samaritans of Singapore (SOS)-কে হোয়াটসঅ্যাপ করুন — +65 9151 1767", continueLearning:"শেখা চালিয়ে যান", wellbeingModules:"সুস্থতা মডিউল", topicsCount:"৪টি বিষয়", navHome:"হোম", navLearn:"শিখুন", navCheckin:"চেক-ইন", navProfile:"প্রোফাইল", quickCheck:"দ্রুত পরীক্ষা", chooseAnswer:"একটি উত্তর বেছে নিন", finishModule:"মডিউল শেষ করুন", wellbeingModuleLabel:"সুস্থতা মডিউল", next:"পরবর্তী", skipForNow:"এখন বাদ দিন", listenInstead:"পড়ার বদলে শুনুন", dailyCheckin:"দৈনিক চেক-ইন", checkinQuestion:"এই মুহূর্তে আপনি কেমন অনুভব করছেন?", checkinSub:"এটা শুধু আপনিই দেখতে পাবেন। নিজের সাথে সৎ থাকুন।", checkinLoggedTitle:"শুনে ভালো লাগল। এভাবেই চালিয়ে যান।", checkinLoggedSub:"আজকের চেক-ইন রেকর্ড করা হয়েছে। কাল দেখা হবে।", counsellorNote:"এটা একা বহন করতে হবে না। HealthServe-এর ২৪ ঘণ্টার ক্রাইসিস হেল্পলাইন আপনার ভাষায়, যেকোনো সময়, গোপনীয়ভাবে কথা বলতে পারে।", talkToCounsellor:"২৪ ঘণ্টার ক্রাইসিস হেল্পলাইনে কল করুন — +65 3129 5000", availabilityNote:"দিনে ২৪ ঘণ্টা, প্রতিদিন উপলব্ধ · সম্পূর্ণ গোপনীয়, আপনার নিয়োগকর্তার সাথে শেয়ার করা হয় না", myProgress:"আমার অগ্রগতি", dayStreak:"দিনের ধারা", modulesDone:"সম্পন্ন মডিউল", checkins:"চেক-ইন", badges:"ব্যাজ", badge7day:"৭-দিনের ধারা", badgeFirstModule:"প্রথম মডিউল", badgeAllTopics:"সব ৪টি বিষয়", languageRow:"ভাষা", notifications:"বিজ্ঞপ্তি", privacyData:"গোপনীয়তা ও তথ্য", helpFaq:"সাহায্য ও প্রশ্ন", moodGreat:"দারুণ", moodOkay:"ঠিক আছে", moodTired:"ক্লান্ত", moodStressed:"চাপে আছি", moodStruggling:"কষ্টে আছি", statusStart:"শুরু করুন", statusInProgress:"চলছে", statusDone:"সম্পন্ন", stepsSuffix:"ধাপ", notStarted:"শুরু হয়নি", completed:"সম্পন্ন", stepOf:"ধাপ {n} / {total}", minLeft:"মিনিট বাকি", todayLabel:"আজ", yourCheckins:"আপনার চেক-ইনগুলো", noCheckinsYet:"এখনো কোনো চেক-ইন নেই।", changeEntry:"পরিবর্তন করুন" },
-    zh: { tagline:"不论上哪个班次,都能用您熟悉的语言获得贴心的身心健康支持。", chooseLanguage:"选择您的语言", audioNote:"身心健康课程都能读给您听,不用阅读也可以。", continue:"继续", footerNote:"AGOV 发起的项目 · 私密保密", getStarted:"开始", voucherTitle:"可获得 S$10 EZ-Link 礼券", voucherSub:"完成注册验证后发放", mobileLabel:"手机号码", finLabel:"工作准证 / FIN — 后4位数字", privacyNote:"您的资料由 HealthServe 保密保管,绝不透露给您的雇主或中介。", verifyContinue:"验证并继续", greetingWord:"你好", moodQuestion:"你今天感觉怎么样?", moodSub:"点一下就好,就在这里", moodGoodTitle:"很高兴听到,请继续保持。", moodEscalateTitle:"感觉不好也没关系。", moodEscalateSub:"你不必独自承受,一键就能获得保密支持。", whatsappCta:"或通过WhatsApp联系新加坡援人协会(SOS)— +65 9151 1767", continueLearning:"继续学习", wellbeingModules:"身心健康课程", topicsCount:"4个主题", navHome:"首页", navLearn:"学习", navCheckin:"签到", navProfile:"我的", quickCheck:"快速测验", chooseAnswer:"请选择一个答案", finishModule:"完成课程", wellbeingModuleLabel:"身心健康课程", next:"下一步", skipForNow:"暂时跳过", listenInstead:"用听的,不用阅读", dailyCheckin:"每日签到", checkinQuestion:"此刻你感觉怎么样?", checkinSub:"只有你看得到,对自己诚实就好。", checkinLoggedTitle:"很高兴听到,请继续保持。", checkinLoggedSub:"今天的签到已记录。明天见。", counsellorNote:"你不必独自承受,HealthServe的24小时危机热线能随时用你的语言,保密地与你交谈。", talkToCounsellor:"拨打24小时危机热线 — +65 3129 5000", availabilityNote:"24小时全天候提供 · 完全保密,绝不告诉你的雇主", myProgress:"我的进度", dayStreak:"连续打卡", modulesDone:"已完成课程", checkins:"签到次数", badges:"徽章", badge7day:"连续签到7天", badgeFirstModule:"完成首个课程", badgeAllTopics:"完成所有4个主题", languageRow:"语言", notifications:"通知", privacyData:"隐私与数据", helpFaq:"帮助与常见问题", moodGreat:"很好", moodOkay:"还好", moodTired:"累了", moodStressed:"有压力", moodStruggling:"很难受", statusStart:"开始", statusInProgress:"进行中", statusDone:"已完成", stepsSuffix:"步骤", notStarted:"未开始", completed:"已完成", stepOf:"第 {n} 步,共 {total} 步", minLeft:"分钟", todayLabel:"今天", yourCheckins:"您的签到记录", noCheckinsYet:"还没有签到记录。", changeEntry:"更改" },
-    th: { tagline:"การดูแลสุขภาพใจที่เข้าใจตารางกะงานของคุณ และพูดภาษาเดียวกับคุณ", chooseLanguage:"เลือกภาษาของคุณ", audioNote:"บทเรียนสุขภาพใจสามารถอ่านออกเสียงให้ฟังได้ ไม่จำเป็นต้องอ่านเอง", continue:"ดำเนินการต่อ", footerNote:"โครงการโดย AGOV · เป็นส่วนตัวและเป็นความลับ", getStarted:"เริ่มต้น", voucherTitle:"รับบัตรกำนัล EZ-Link มูลค่า S$10", voucherSub:"จ่ายเมื่อการสมัครของคุณได้รับการยืนยัน", mobileLabel:"หมายเลขโทรศัพท์มือถือ", finLabel:"Work Permit / FIN — 4 หลักสุดท้าย", privacyNote:"ข้อมูลของคุณจะอยู่กับ HealthServe เท่านั้น เราจะไม่แบ่งปันกับนายจ้างหรือเอเจนต์ของคุณ", verifyContinue:"ยืนยันและดำเนินการต่อ", greetingWord:"สวัสดี", moodQuestion:"วันนี้คุณรู้สึกอย่างไร?", moodSub:"แตะเพียงครั้งเดียว ตรงนี้เลย", moodGoodTitle:"ดีใจที่ได้ยินแบบนั้น ทำแบบนี้ต่อไปนะ", moodEscalateTitle:"ไม่เป็นไรถ้ารู้สึกไม่โอเค", moodEscalateSub:"คุณไม่ต้องแบกรับเรื่องนี้คนเดียว การสนับสนุนที่เป็นความลับอยู่แค่ปลายนิ้ว", whatsappCta:"หรือแอด WhatsApp หา Samaritans of Singapore (SOS) — +65 9151 1767", continueLearning:"เรียนต่อ", wellbeingModules:"บทเรียนสุขภาพใจ", topicsCount:"4 หัวข้อ", navHome:"หน้าแรก", navLearn:"เรียนรู้", navCheckin:"เช็คอิน", navProfile:"โปรไฟล์", quickCheck:"แบบทดสอบสั้นๆ", chooseAnswer:"เลือกคำตอบ", finishModule:"จบบทเรียน", wellbeingModuleLabel:"บทเรียนสุขภาพใจ", next:"ถัดไป", skipForNow:"ข้ามไปก่อน", listenInstead:"ฟังแทนการอ่าน", dailyCheckin:"เช็คอินประจำวัน", checkinQuestion:"ตอนนี้คุณรู้สึกอย่างไร?", checkinSub:"มีเพียงคุณเท่านั้นที่เห็นสิ่งนี้ ซื่อสัตย์กับตัวเองนะ", checkinLoggedTitle:"ดีใจที่ได้ยินแบบนั้น ทำแบบนี้ต่อไปนะ", checkinLoggedSub:"บันทึกการเช็คอินวันนี้แล้ว พบกันพรุ่งนี้", counsellorNote:"คุณไม่ต้องแบกรับเรื่องนี้คนเดียว สายด่วนวิกฤต 24 ชั่วโมงของ HealthServe พูดคุยกับคุณเป็นภาษาของคุณได้ทุกเวลา อย่างเป็นความลับ", talkToCounsellor:"โทรสายด่วนวิกฤต 24 ชั่วโมง — +65 3129 5000", availabilityNote:"ให้บริการตลอด 24 ชั่วโมงทุกวัน · เป็นความลับทั้งหมด ไม่แบ่งปันกับนายจ้างของคุณ", myProgress:"ความคืบหน้าของฉัน", dayStreak:"วันต่อเนื่อง", modulesDone:"บทเรียนที่จบแล้ว", checkins:"จำนวนเช็คอิน", badges:"ตราสัญลักษณ์", badge7day:"ต่อเนื่อง 7 วัน", badgeFirstModule:"บทเรียนแรก", badgeAllTopics:"ครบทั้ง 4 หัวข้อ", languageRow:"ภาษา", notifications:"การแจ้งเตือน", privacyData:"ความเป็นส่วนตัวและข้อมูล", helpFaq:"ช่วยเหลือและคำถามที่พบบ่อย", moodGreat:"ดีมาก", moodOkay:"โอเค", moodTired:"เหนื่อย", moodStressed:"เครียด", moodStruggling:"ลำบาก", statusStart:"เริ่ม", statusInProgress:"กำลังทำ", statusDone:"เสร็จแล้ว", stepsSuffix:"ขั้นตอน", notStarted:"ยังไม่เริ่ม", completed:"เสร็จสมบูรณ์", stepOf:"ขั้นตอนที่ {n} จาก {total}", minLeft:"นาทีที่เหลือ", todayLabel:"วันนี้", yourCheckins:"ประวัติการเช็คอินของคุณ", noCheckinsYet:"ยังไม่มีการเช็คอิน", changeEntry:"เปลี่ยน" },
-    my: { tagline:"သင့်အလုပ်အချိန်ဇယားနှင့် ကိုက်ညီပြီး သင့်ဘာသာစကားဖြင့် စိတ်ကျန်းမာရေးအထောက်အပံ့။", chooseLanguage:"သင့်ဘာသာစကားကို ရွေးချယ်ပါ", audioNote:"စိတ်ကျန်းမာရေး သင်ခန်းစာများကို အသံထွက်ဖတ်ပြနိုင်ပါတယ် — ဒါတွေအတွက် စာဖတ်စရာမလိုပါ။", continue:"ရှေ့ဆက်ရန်", footerNote:"AGOV ၏ စီမံကိန်းတစ်ခု · ကိုယ်ရေးကိုယ်တာနှင့် လျှို့ဝှက်ချက်", getStarted:"စတင်ရန်", voucherTitle:"S$10 EZ-Link ဘောင်ချာ ရယူပါ", voucherSub:"သင့်စာရင်းသွင်းမှု အတည်ပြုပြီးနောက် ပေးအပ်မည်", mobileLabel:"မိုဘိုင်းဖုန်းနံပါတ်", finLabel:"အလုပ်သမားကတ် / FIN — နောက်ဆုံး ၄ လုံး", privacyNote:"သင့်အချက်အလက်များကို HealthServe တွင်သာ ထားရှိမည်ဖြစ်သည်။ သင့်အလုပ်ရှင် သို့မဟုတ် အေဂျင့်နှင့် ဝေမျှမည်မဟုတ်ပါ။", verifyContinue:"အတည်ပြုပြီး ရှေ့ဆက်ရန်", greetingWord:"မင်္ဂလာပါ", moodQuestion:"ဒီနေ့ သင်ဘယ်လိုခံစားရလဲ?", moodSub:"တစ်ချက်နှိပ်လိုက်ရုံပါပဲ", moodGoodTitle:"ကြားရတာ ဝမ်းသာပါတယ်။ ဆက်လုပ်ပါ။", moodEscalateTitle:"စိတ်မကောင်းဖြစ်နေတာလည်း အဆင်ပြေပါတယ်။", moodEscalateSub:"ဒါကို သင်တစ်ယောက်တည်း ထမ်းစရာမလိုပါ။ လျှို့ဝှက်အကူအညီကို တစ်ချက်နှိပ်ရုံနဲ့ ရနိုင်ပါတယ်။", whatsappCta:"သို့မဟုတ် Samaritans of Singapore (SOS) ကို WhatsApp ဖြင့် ဆက်သွယ်ပါ — +65 9151 1767", continueLearning:"ဆက်လက်သင်ယူရန်", wellbeingModules:"စိတ်ကျန်းမာရေး သင်ခန်းစာများ", topicsCount:"ခေါင်းစဉ် ၄ ခု", navHome:"ပင်မစာမျက်နှာ", navLearn:"သင်ယူရန်", navCheckin:"စစ်ဆေးမှတ်တမ်း", navProfile:"ကိုယ်ရေးအချက်အလက်", quickCheck:"အမြန်စစ်ဆေးမှု", chooseAnswer:"အဖြေတစ်ခုရွေးပါ", finishModule:"သင်ခန်းစာပြီးဆုံးရန်", wellbeingModuleLabel:"စိတ်ကျန်းမာရေး သင်ခန်းစာ", next:"ရှေ့ဆက်ရန်", skipForNow:"အခုလောလောဆယ် ကျော်ရန်", listenInstead:"ဖတ်မည့်အစား နားထောင်ပါ", dailyCheckin:"နေ့စဉ် စစ်ဆေးမှတ်တမ်း", checkinQuestion:"လက်ရှိ သင်ဘယ်လိုခံစားရလဲ?", checkinSub:"သင်တစ်ယောက်တည်းသာ ဒါကိုမြင်နိုင်ပါတယ်။ ကိုယ့်ကိုယ်ကို ရိုးသားပါ။", checkinLoggedTitle:"ကြားရတာ ဝမ်းသာပါတယ်။ ဆက်လုပ်ပါ။", checkinLoggedSub:"ယနေ့၏ စစ်ဆေးမှတ်တမ်းကို မှတ်တမ်းတင်ပြီးပါပြီ။ မနက်ဖြန် တွေ့ကြမယ်။", counsellorNote:"ဒါကို သင်တစ်ယောက်တည်း ထမ်းစရာမလိုပါ။ HealthServe ၏ ၂၄ နာရီ အရေးပေါ်အကူအညီလိုင်းသည် သင့်ဘာသာစကားဖြင့် အချိန်မရွေး၊ လျှို့ဝှက်စွာ စကားပြောနိုင်ပါတယ်။", talkToCounsellor:"၂၄ နာရီ အရေးပေါ်အကူအညီလိုင်းကို ခေါ်ဆိုပါ — +65 3129 5000", availabilityNote:"၂၄ နာရီ နေ့စဉ် ရရှိနိုင်ပါတယ် · လုံးဝလျှို့ဝှက်ပြီး သင့်အလုပ်ရှင်နှင့် မမျှဝေပါ", myProgress:"ကျွန်ုပ်၏ တိုးတက်မှု", dayStreak:"ဆက်တိုက်ရက်များ", modulesDone:"ပြီးစီးသည့် သင်ခန်းစာများ", checkins:"စစ်ဆေးမှတ်တမ်းအကြိမ်ရေ", badges:"တံဆိပ်များ", badge7day:"ဆက်တိုက် ၇ ရက်", badgeFirstModule:"ပထမဆုံးသင်ခန်းစာ", badgeAllTopics:"ခေါင်းစဉ် ၄ ခုလုံး", languageRow:"ဘာသာစကား", notifications:"အသိပေးချက်များ", privacyData:"ကိုယ်ရေးလုံခြုံမှုနှင့် ဒေတာ", helpFaq:"အကူအညီနှင့် မေးလေ့ရှိသောမေးခွန်းများ", moodGreat:"အရမ်းကောင်းတယ်", moodOkay:"အဆင်ပြေတယ်", moodTired:"ပင်ပန်းတယ်", moodStressed:"စိတ်ဖိစီးမှုရှိတယ်", moodStruggling:"ခက်ခဲနေတယ်", statusStart:"စတင်ရန်", statusInProgress:"လုပ်ဆောင်နေဆဲ", statusDone:"ပြီးပါပြီ", stepsSuffix:"အဆင့်", notStarted:"မစတင်ရသေး", completed:"ပြီးစီးပါပြီ", stepOf:"အဆင့် {n} / {total}", minLeft:"မိနစ် ကျန်", todayLabel:"ယနေ့", yourCheckins:"သင့်စစ်ဆေးမှတ်တမ်းများ", noCheckinsYet:"စစ်ဆေးမှတ်တမ်း မရှိသေးပါ။", changeEntry:"ပြောင်းရန်" }
+    en: { tagline:"Wellbeing support that fits around your shift, in your language.", chooseLanguage:"Choose your language", audioNote:"Wellbeing lessons can be read aloud to you — no reading needed for those.", continue:"Continue", footerNote:"An initiative by AGOV · Private & confidential", getStarted:"Get started", voucherTitle:"Get a S$10 EZ-Link voucher", voucherSub:"Paid once your sign-up is verified", mobileLabel:"Mobile number", finLabel:"Work Permit / FIN — last 4 digits", privacyNote:"Your details stay with HealthServe. We never share this with your employer or agent.", verifyContinue:"Verify & continue", greetingWord:"Hello", moodQuestion:"How are you feeling today?", moodSub:"One tap, right here", moodGoodTitle:"Good to hear. Keep it up.", moodEscalateTitle:"It's okay to not be okay.", moodEscalateSub:"You don't have to carry this alone. Confidential support is a tap away.", whatsappCta:"Or WhatsApp Samaritans of Singapore (SOS) — +65 9151 1767", continueLearning:"Continue learning", wellbeingModules:"Wellbeing modules", topicsCount:"4 topics", navHome:"Home", navLearn:"Learn", navCheckin:"Check-in", navProfile:"Profile", quickCheck:"Quick check", chooseAnswer:"Choose an answer", finishModule:"Finish module", wellbeingModuleLabel:"Wellbeing module", next:"Next", skipForNow:"Skip for now", listenInstead:"Listen instead of reading", dailyCheckin:"Daily check-in", checkinQuestion:"How are you feeling right now?", checkinSub:"Only you can see this. Be honest with yourself.", checkinLoggedTitle:"Good to hear. Keep it up.", checkinLoggedSub:"We've logged today's check-in. See you tomorrow.", counsellorNote:"You don't have to carry this alone. HealthServe's 24-hour crisis helpline can talk with you in your language, any time, in confidence.", talkToCounsellor:"Call 24-hr Crisis Helpline — +65 3129 5000", availabilityNote:"Available 24 hours a day, every day · Fully confidential, not shared with your employer", myProgress:"My progress", dayStreak:"Day streak", modulesDone:"Modules done", checkins:"Check-ins", badges:"Badges", badge7day:"7-day streak", badgeFirstModule:"First module", badgeAllTopics:"All 4 topics", languageRow:"Language", notifications:"Notifications", privacyData:"Privacy & data", helpFaq:"Help & FAQ", moodGreat:"Great", moodOkay:"Okay", moodTired:"Tired", moodStressed:"Stressed", moodStruggling:"Struggling", statusStart:"Start", statusInProgress:"In progress", statusDone:"Done", stepsSuffix:"steps", notStarted:"Not started", completed:"Completed", stepOf:"Step {n} of {total}", minLeft:"min left", todayLabel:"Today", yourCheckins:"Your check-ins", noCheckinsYet:"No check-ins yet.", changeEntry:"Change", chapterOf:"Chapter {n} of {total}", nextChapter:"Next chapter", takeTheQuiz:"Take the quiz", viewAllChapters:"View all chapters", bookmarkedTag:"Bookmarked" },
+    ta: { tagline:"உங்கள் ஷிப்ட் நேரத்திற்கு ஏற்ப, உங்கள் மொழியில் நல்வாழ்வு ஆதரவு.", chooseLanguage:"உங்கள் மொழியைத் தேர்ந்தெடுக்கவும்", audioNote:"நல்வாழ்வு பாடங்களை சத்தமாக கேட்கவும் முடியும் — அதற்கு வாசிப்பது அவசியமில்லை.", continue:"தொடரவும்", footerNote:"AGOV இன் ஒரு முயற்சி · தனிப்பட்டது மற்றும் இரகசியமானது", getStarted:"தொடங்குவோம்", voucherTitle:"S$10 EZ-Link வவுச்சர் பெறுங்கள்", voucherSub:"உங்கள் பதிவு உறுதிப்படுத்தப்பட்டவுடன் வழங்கப்படும்", mobileLabel:"மொபைல் எண்", finLabel:"Work Permit / FIN — கடைசி 4 இலக்கங்கள்", privacyNote:"உங்கள் விவரங்கள் HealthServe இடம் மட்டுமே இருக்கும். உங்கள் முதலாளி அல்லது ஏஜென்ட்டுடன் இதை நாங்கள் பகிர மாட்டோம்.", verifyContinue:"சரிபார்த்து தொடரவும்", greetingWord:"வணக்கம்", moodQuestion:"இன்று நீங்கள் எப்படி உணர்கிறீர்கள்?", moodSub:"ஒரே தட்டலில், இங்கேயே", moodGoodTitle:"கேட்க நல்லா இருக்கு. தொடருங்கள்.", moodEscalateTitle:"பரவாயில்லை, எப்போதும் நலமாக உணர வேண்டியதில்லை.", moodEscalateSub:"இதை நீங்கள் தனியாக சுமக்க வேண்டியதில்லை. இரகசியமான ஆதரவு ஒரு தட்டலில் உள்ளது.", whatsappCta:"அல்லது Samaritans of Singapore (SOS) அமைப்பிற்கு WhatsApp செய்யுங்கள் — +65 9151 1767", continueLearning:"கற்றலைத் தொடரவும்", wellbeingModules:"நல்வாழ்வு பாடங்கள்", topicsCount:"4 தலைப்புகள்", navHome:"முகப்பு", navLearn:"கற்க", navCheckin:"செக்-இன்", navProfile:"சுயவிவரம்", quickCheck:"விரைவு சோதனை", chooseAnswer:"ஒரு பதிலைத் தேர்ந்தெடுக்கவும்", finishModule:"பாடத்தை முடிக்கவும்", wellbeingModuleLabel:"நல்வாழ்வு பாடம்", next:"அடுத்து", skipForNow:"இப்போது தவிர்க்கவும்", listenInstead:"படிப்பதற்கு பதிலாக கேளுங்கள்", dailyCheckin:"தினசரி செக்-இன்", checkinQuestion:"இப்போது நீங்கள் எப்படி உணர்கிறீர்கள்?", checkinSub:"இதை நீங்கள் மட்டுமே பார்க்க முடியும். உங்களிடம் நேர்மையாக இருங்கள்.", checkinLoggedTitle:"கேட்க நல்லா இருக்கு. தொடருங்கள்.", checkinLoggedSub:"இன்றைய செக்-இன் பதிவு செய்யப்பட்டது. நாளை சந்திப்போம்.", counsellorNote:"இதை நீங்கள் தனியாக சுமக்க வேண்டியதில்லை. HealthServe இன் 24 மணி நேர நெருக்கடி உதவி எண் உங்கள் மொழியில், எந்த நேரத்திலும், இரகசியமாக பேசும்.", talkToCounsellor:"24 மணி நேர நெருக்கடி உதவி எண்ணை அழைக்கவும் — +65 3129 5000", availabilityNote:"நாள் முழுவதும், தினமும் கிடைக்கும் · முழுமையாக இரகசியமானது, உங்கள் முதலாளியுடன் பகிரப்படாது", myProgress:"எனது முன்னேற்றம்", dayStreak:"நாள் தொடர்ச்சி", modulesDone:"முடிந்த பாடங்கள்", checkins:"செக்-இன்கள்", badges:"பேட்ஜ்கள்", badge7day:"7-நாள் தொடர்ச்சி", badgeFirstModule:"முதல் பாடம்", badgeAllTopics:"அனைத்து 4 தலைப்புகளும்", languageRow:"மொழி", notifications:"அறிவிப்புகள்", privacyData:"தனியுரிமை & தரவு", helpFaq:"உதவி & கேள்விகள்", moodGreat:"மிகச் சிறப்பு", moodOkay:"சரி", moodTired:"களைப்பு", moodStressed:"மன அழுத்தம்", moodStruggling:"சிரமம்", statusStart:"தொடங்கு", statusInProgress:"நடைபெறுகிறது", statusDone:"முடிந்தது", stepsSuffix:"படிகள்", notStarted:"தொடங்கவில்லை", completed:"முடிந்தது", stepOf:"படி {n} / {total}", minLeft:"நிமிடம் மீதம்", todayLabel:"இன்று", yourCheckins:"உங்கள் செக்-இன்கள்", noCheckinsYet:"இன்னும் செக்-இன்கள் இல்லை.", changeEntry:"மாற்று", chapterOf:"அத்தியாயம் {n} / {total}", nextChapter:"அடுத்த அத்தியாயம்", takeTheQuiz:"வினாடி வினா எடுக்கவும்", viewAllChapters:"அனைத்து அத்தியாயங்களையும் காண்க", bookmarkedTag:"புக்மார்க் செய்யப்பட்டது" },
+    bn: { tagline:"আপনার শিফট অনুযায়ী, আপনার ভাষায় সুস্থতা সহায়তা।", chooseLanguage:"আপনার ভাষা বেছে নিন", audioNote:"সুস্থতা পাঠগুলো জোরে পড়ে শোনানো যায় — সেগুলোর জন্য পড়তে জানার দরকার নেই।", continue:"চালিয়ে যান", footerNote:"AGOV-এর একটি উদ্যোগ · ব্যক্তিগত ও গোপনীয়", getStarted:"শুরু করুন", voucherTitle:"S$10 EZ-Link ভাউচার পান", voucherSub:"আপনার সাইন-আপ যাচাই হলে দেওয়া হবে", mobileLabel:"মোবাইল নম্বর", finLabel:"Work Permit / FIN — শেষ ৪ সংখ্যা", privacyNote:"আপনার তথ্য শুধু HealthServe-এর কাছে থাকবে। আমরা এটি আপনার নিয়োগকর্তা বা এজেন্টের সাথে শেয়ার করি না।", verifyContinue:"যাচাই করে চালিয়ে যান", greetingWord:"নমস্কার", moodQuestion:"আজ আপনি কেমন অনুভব করছেন?", moodSub:"এক ট্যাপেই, এখানেই", moodGoodTitle:"শুনে ভালো লাগল। এভাবেই চালিয়ে যান।", moodEscalateTitle:"ভালো না লাগাটাও ঠিক আছে।", moodEscalateSub:"এটা একা বহন করতে হবে না। গোপনীয় সহায়তা এক ট্যাপ দূরে।", whatsappCta:"অথবা Samaritans of Singapore (SOS)-কে হোয়াটসঅ্যাপ করুন — +65 9151 1767", continueLearning:"শেখা চালিয়ে যান", wellbeingModules:"সুস্থতা মডিউল", topicsCount:"৪টি বিষয়", navHome:"হোম", navLearn:"শিখুন", navCheckin:"চেক-ইন", navProfile:"প্রোফাইল", quickCheck:"দ্রুত পরীক্ষা", chooseAnswer:"একটি উত্তর বেছে নিন", finishModule:"মডিউল শেষ করুন", wellbeingModuleLabel:"সুস্থতা মডিউল", next:"পরবর্তী", skipForNow:"এখন বাদ দিন", listenInstead:"পড়ার বদলে শুনুন", dailyCheckin:"দৈনিক চেক-ইন", checkinQuestion:"এই মুহূর্তে আপনি কেমন অনুভব করছেন?", checkinSub:"এটা শুধু আপনিই দেখতে পাবেন। নিজের সাথে সৎ থাকুন।", checkinLoggedTitle:"শুনে ভালো লাগল। এভাবেই চালিয়ে যান।", checkinLoggedSub:"আজকের চেক-ইন রেকর্ড করা হয়েছে। কাল দেখা হবে।", counsellorNote:"এটা একা বহন করতে হবে না। HealthServe-এর ২৪ ঘণ্টার ক্রাইসিস হেল্পলাইন আপনার ভাষায়, যেকোনো সময়, গোপনীয়ভাবে কথা বলতে পারে।", talkToCounsellor:"২৪ ঘণ্টার ক্রাইসিস হেল্পলাইনে কল করুন — +65 3129 5000", availabilityNote:"দিনে ২৪ ঘণ্টা, প্রতিদিন উপলব্ধ · সম্পূর্ণ গোপনীয়, আপনার নিয়োগকর্তার সাথে শেয়ার করা হয় না", myProgress:"আমার অগ্রগতি", dayStreak:"দিনের ধারা", modulesDone:"সম্পন্ন মডিউল", checkins:"চেক-ইন", badges:"ব্যাজ", badge7day:"৭-দিনের ধারা", badgeFirstModule:"প্রথম মডিউল", badgeAllTopics:"সব ৪টি বিষয়", languageRow:"ভাষা", notifications:"বিজ্ঞপ্তি", privacyData:"গোপনীয়তা ও তথ্য", helpFaq:"সাহায্য ও প্রশ্ন", moodGreat:"দারুণ", moodOkay:"ঠিক আছে", moodTired:"ক্লান্ত", moodStressed:"চাপে আছি", moodStruggling:"কষ্টে আছি", statusStart:"শুরু করুন", statusInProgress:"চলছে", statusDone:"সম্পন্ন", stepsSuffix:"ধাপ", notStarted:"শুরু হয়নি", completed:"সম্পন্ন", stepOf:"ধাপ {n} / {total}", minLeft:"মিনিট বাকি", todayLabel:"আজ", yourCheckins:"আপনার চেক-ইনগুলো", noCheckinsYet:"এখনো কোনো চেক-ইন নেই।", changeEntry:"পরিবর্তন করুন", chapterOf:"অধ্যায় {n} / {total}", nextChapter:"পরবর্তী অধ্যায়", takeTheQuiz:"কুইজ দিন", viewAllChapters:"সব অধ্যায় দেখুন", bookmarkedTag:"বুকমার্ক করা হয়েছে" },
+    zh: { tagline:"不论上哪个班次,都能用您熟悉的语言获得贴心的身心健康支持。", chooseLanguage:"选择您的语言", audioNote:"身心健康课程都能读给您听,不用阅读也可以。", continue:"继续", footerNote:"AGOV 发起的项目 · 私密保密", getStarted:"开始", voucherTitle:"可获得 S$10 EZ-Link 礼券", voucherSub:"完成注册验证后发放", mobileLabel:"手机号码", finLabel:"工作准证 / FIN — 后4位数字", privacyNote:"您的资料由 HealthServe 保密保管,绝不透露给您的雇主或中介。", verifyContinue:"验证并继续", greetingWord:"你好", moodQuestion:"你今天感觉怎么样?", moodSub:"点一下就好,就在这里", moodGoodTitle:"很高兴听到,请继续保持。", moodEscalateTitle:"感觉不好也没关系。", moodEscalateSub:"你不必独自承受,一键就能获得保密支持。", whatsappCta:"或通过WhatsApp联系新加坡援人协会(SOS)— +65 9151 1767", continueLearning:"继续学习", wellbeingModules:"身心健康课程", topicsCount:"4个主题", navHome:"首页", navLearn:"学习", navCheckin:"签到", navProfile:"我的", quickCheck:"快速测验", chooseAnswer:"请选择一个答案", finishModule:"完成课程", wellbeingModuleLabel:"身心健康课程", next:"下一步", skipForNow:"暂时跳过", listenInstead:"用听的,不用阅读", dailyCheckin:"每日签到", checkinQuestion:"此刻你感觉怎么样?", checkinSub:"只有你看得到,对自己诚实就好。", checkinLoggedTitle:"很高兴听到,请继续保持。", checkinLoggedSub:"今天的签到已记录。明天见。", counsellorNote:"你不必独自承受,HealthServe的24小时危机热线能随时用你的语言,保密地与你交谈。", talkToCounsellor:"拨打24小时危机热线 — +65 3129 5000", availabilityNote:"24小时全天候提供 · 完全保密,绝不告诉你的雇主", myProgress:"我的进度", dayStreak:"连续打卡", modulesDone:"已完成课程", checkins:"签到次数", badges:"徽章", badge7day:"连续签到7天", badgeFirstModule:"完成首个课程", badgeAllTopics:"完成所有4个主题", languageRow:"语言", notifications:"通知", privacyData:"隐私与数据", helpFaq:"帮助与常见问题", moodGreat:"很好", moodOkay:"还好", moodTired:"累了", moodStressed:"有压力", moodStruggling:"很难受", statusStart:"开始", statusInProgress:"进行中", statusDone:"已完成", stepsSuffix:"步骤", notStarted:"未开始", completed:"已完成", stepOf:"第 {n} 步,共 {total} 步", minLeft:"分钟", todayLabel:"今天", yourCheckins:"您的签到记录", noCheckinsYet:"还没有签到记录。", changeEntry:"更改", chapterOf:"第 {n} 章,共 {total} 章", nextChapter:"下一章", takeTheQuiz:"开始测验", viewAllChapters:"查看所有章节", bookmarkedTag:"已收藏" },
+    th: { tagline:"การดูแลสุขภาพใจที่เข้าใจตารางกะงานของคุณ และพูดภาษาเดียวกับคุณ", chooseLanguage:"เลือกภาษาของคุณ", audioNote:"บทเรียนสุขภาพใจสามารถอ่านออกเสียงให้ฟังได้ ไม่จำเป็นต้องอ่านเอง", continue:"ดำเนินการต่อ", footerNote:"โครงการโดย AGOV · เป็นส่วนตัวและเป็นความลับ", getStarted:"เริ่มต้น", voucherTitle:"รับบัตรกำนัล EZ-Link มูลค่า S$10", voucherSub:"จ่ายเมื่อการสมัครของคุณได้รับการยืนยัน", mobileLabel:"หมายเลขโทรศัพท์มือถือ", finLabel:"Work Permit / FIN — 4 หลักสุดท้าย", privacyNote:"ข้อมูลของคุณจะอยู่กับ HealthServe เท่านั้น เราจะไม่แบ่งปันกับนายจ้างหรือเอเจนต์ของคุณ", verifyContinue:"ยืนยันและดำเนินการต่อ", greetingWord:"สวัสดี", moodQuestion:"วันนี้คุณรู้สึกอย่างไร?", moodSub:"แตะเพียงครั้งเดียว ตรงนี้เลย", moodGoodTitle:"ดีใจที่ได้ยินแบบนั้น ทำแบบนี้ต่อไปนะ", moodEscalateTitle:"ไม่เป็นไรถ้ารู้สึกไม่โอเค", moodEscalateSub:"คุณไม่ต้องแบกรับเรื่องนี้คนเดียว การสนับสนุนที่เป็นความลับอยู่แค่ปลายนิ้ว", whatsappCta:"หรือแอด WhatsApp หา Samaritans of Singapore (SOS) — +65 9151 1767", continueLearning:"เรียนต่อ", wellbeingModules:"บทเรียนสุขภาพใจ", topicsCount:"4 หัวข้อ", navHome:"หน้าแรก", navLearn:"เรียนรู้", navCheckin:"เช็คอิน", navProfile:"โปรไฟล์", quickCheck:"แบบทดสอบสั้นๆ", chooseAnswer:"เลือกคำตอบ", finishModule:"จบบทเรียน", wellbeingModuleLabel:"บทเรียนสุขภาพใจ", next:"ถัดไป", skipForNow:"ข้ามไปก่อน", listenInstead:"ฟังแทนการอ่าน", dailyCheckin:"เช็คอินประจำวัน", checkinQuestion:"ตอนนี้คุณรู้สึกอย่างไร?", checkinSub:"มีเพียงคุณเท่านั้นที่เห็นสิ่งนี้ ซื่อสัตย์กับตัวเองนะ", checkinLoggedTitle:"ดีใจที่ได้ยินแบบนั้น ทำแบบนี้ต่อไปนะ", checkinLoggedSub:"บันทึกการเช็คอินวันนี้แล้ว พบกันพรุ่งนี้", counsellorNote:"คุณไม่ต้องแบกรับเรื่องนี้คนเดียว สายด่วนวิกฤต 24 ชั่วโมงของ HealthServe พูดคุยกับคุณเป็นภาษาของคุณได้ทุกเวลา อย่างเป็นความลับ", talkToCounsellor:"โทรสายด่วนวิกฤต 24 ชั่วโมง — +65 3129 5000", availabilityNote:"ให้บริการตลอด 24 ชั่วโมงทุกวัน · เป็นความลับทั้งหมด ไม่แบ่งปันกับนายจ้างของคุณ", myProgress:"ความคืบหน้าของฉัน", dayStreak:"วันต่อเนื่อง", modulesDone:"บทเรียนที่จบแล้ว", checkins:"จำนวนเช็คอิน", badges:"ตราสัญลักษณ์", badge7day:"ต่อเนื่อง 7 วัน", badgeFirstModule:"บทเรียนแรก", badgeAllTopics:"ครบทั้ง 4 หัวข้อ", languageRow:"ภาษา", notifications:"การแจ้งเตือน", privacyData:"ความเป็นส่วนตัวและข้อมูล", helpFaq:"ช่วยเหลือและคำถามที่พบบ่อย", moodGreat:"ดีมาก", moodOkay:"โอเค", moodTired:"เหนื่อย", moodStressed:"เครียด", moodStruggling:"ลำบาก", statusStart:"เริ่ม", statusInProgress:"กำลังทำ", statusDone:"เสร็จแล้ว", stepsSuffix:"ขั้นตอน", notStarted:"ยังไม่เริ่ม", completed:"เสร็จสมบูรณ์", stepOf:"ขั้นตอนที่ {n} จาก {total}", minLeft:"นาทีที่เหลือ", todayLabel:"วันนี้", yourCheckins:"ประวัติการเช็คอินของคุณ", noCheckinsYet:"ยังไม่มีการเช็คอิน", changeEntry:"เปลี่ยน", chapterOf:"บทที่ {n} จาก {total}", nextChapter:"บทถัดไป", takeTheQuiz:"ทำแบบทดสอบ", viewAllChapters:"ดูบทเรียนทั้งหมด", bookmarkedTag:"บันทึกไว้แล้ว" },
+    my: { tagline:"သင့်အလုပ်အချိန်ဇယားနှင့် ကိုက်ညီပြီး သင့်ဘာသာစကားဖြင့် စိတ်ကျန်းမာရေးအထောက်အပံ့။", chooseLanguage:"သင့်ဘာသာစကားကို ရွေးချယ်ပါ", audioNote:"စိတ်ကျန်းမာရေး သင်ခန်းစာများကို အသံထွက်ဖတ်ပြနိုင်ပါတယ် — ဒါတွေအတွက် စာဖတ်စရာမလိုပါ။", continue:"ရှေ့ဆက်ရန်", footerNote:"AGOV ၏ စီမံကိန်းတစ်ခု · ကိုယ်ရေးကိုယ်တာနှင့် လျှို့ဝှက်ချက်", getStarted:"စတင်ရန်", voucherTitle:"S$10 EZ-Link ဘောင်ချာ ရယူပါ", voucherSub:"သင့်စာရင်းသွင်းမှု အတည်ပြုပြီးနောက် ပေးအပ်မည်", mobileLabel:"မိုဘိုင်းဖုန်းနံပါတ်", finLabel:"အလုပ်သမားကတ် / FIN — နောက်ဆုံး ၄ လုံး", privacyNote:"သင့်အချက်အလက်များကို HealthServe တွင်သာ ထားရှိမည်ဖြစ်သည်။ သင့်အလုပ်ရှင် သို့မဟုတ် အေဂျင့်နှင့် ဝေမျှမည်မဟုတ်ပါ။", verifyContinue:"အတည်ပြုပြီး ရှေ့ဆက်ရန်", greetingWord:"မင်္ဂလာပါ", moodQuestion:"ဒီနေ့ သင်ဘယ်လိုခံစားရလဲ?", moodSub:"တစ်ချက်နှိပ်လိုက်ရုံပါပဲ", moodGoodTitle:"ကြားရတာ ဝမ်းသာပါတယ်။ ဆက်လုပ်ပါ။", moodEscalateTitle:"စိတ်မကောင်းဖြစ်နေတာလည်း အဆင်ပြေပါတယ်။", moodEscalateSub:"ဒါကို သင်တစ်ယောက်တည်း ထမ်းစရာမလိုပါ။ လျှို့ဝှက်အကူအညီကို တစ်ချက်နှိပ်ရုံနဲ့ ရနိုင်ပါတယ်။", whatsappCta:"သို့မဟုတ် Samaritans of Singapore (SOS) ကို WhatsApp ဖြင့် ဆက်သွယ်ပါ — +65 9151 1767", continueLearning:"ဆက်လက်သင်ယူရန်", wellbeingModules:"စိတ်ကျန်းမာရေး သင်ခန်းစာများ", topicsCount:"ခေါင်းစဉ် ၄ ခု", navHome:"ပင်မစာမျက်နှာ", navLearn:"သင်ယူရန်", navCheckin:"စစ်ဆေးမှတ်တမ်း", navProfile:"ကိုယ်ရေးအချက်အလက်", quickCheck:"အမြန်စစ်ဆေးမှု", chooseAnswer:"အဖြေတစ်ခုရွေးပါ", finishModule:"သင်ခန်းစာပြီးဆုံးရန်", wellbeingModuleLabel:"စိတ်ကျန်းမာရေး သင်ခန်းစာ", next:"ရှေ့ဆက်ရန်", skipForNow:"အခုလောလောဆယ် ကျော်ရန်", listenInstead:"ဖတ်မည့်အစား နားထောင်ပါ", dailyCheckin:"နေ့စဉ် စစ်ဆေးမှတ်တမ်း", checkinQuestion:"လက်ရှိ သင်ဘယ်လိုခံစားရလဲ?", checkinSub:"သင်တစ်ယောက်တည်းသာ ဒါကိုမြင်နိုင်ပါတယ်။ ကိုယ့်ကိုယ်ကို ရိုးသားပါ။", checkinLoggedTitle:"ကြားရတာ ဝမ်းသာပါတယ်။ ဆက်လုပ်ပါ။", checkinLoggedSub:"ယနေ့၏ စစ်ဆေးမှတ်တမ်းကို မှတ်တမ်းတင်ပြီးပါပြီ။ မနက်ဖြန် တွေ့ကြမယ်။", counsellorNote:"ဒါကို သင်တစ်ယောက်တည်း ထမ်းစရာမလိုပါ။ HealthServe ၏ ၂၄ နာရီ အရေးပေါ်အကူအညီလိုင်းသည် သင့်ဘာသာစကားဖြင့် အချိန်မရွေး၊ လျှို့ဝှက်စွာ စကားပြောနိုင်ပါတယ်။", talkToCounsellor:"၂၄ နာရီ အရေးပေါ်အကူအညီလိုင်းကို ခေါ်ဆိုပါ — +65 3129 5000", availabilityNote:"၂၄ နာရီ နေ့စဉ် ရရှိနိုင်ပါတယ် · လုံးဝလျှို့ဝှက်ပြီး သင့်အလုပ်ရှင်နှင့် မမျှဝေပါ", myProgress:"ကျွန်ုပ်၏ တိုးတက်မှု", dayStreak:"ဆက်တိုက်ရက်များ", modulesDone:"ပြီးစီးသည့် သင်ခန်းစာများ", checkins:"စစ်ဆေးမှတ်တမ်းအကြိမ်ရေ", badges:"တံဆိပ်များ", badge7day:"ဆက်တိုက် ၇ ရက်", badgeFirstModule:"ပထမဆုံးသင်ခန်းစာ", badgeAllTopics:"ခေါင်းစဉ် ၄ ခုလုံး", languageRow:"ဘာသာစကား", notifications:"အသိပေးချက်များ", privacyData:"ကိုယ်ရေးလုံခြုံမှုနှင့် ဒေတာ", helpFaq:"အကူအညီနှင့် မေးလေ့ရှိသောမေးခွန်းများ", moodGreat:"အရမ်းကောင်းတယ်", moodOkay:"အဆင်ပြေတယ်", moodTired:"ပင်ပန်းတယ်", moodStressed:"စိတ်ဖိစီးမှုရှိတယ်", moodStruggling:"ခက်ခဲနေတယ်", statusStart:"စတင်ရန်", statusInProgress:"လုပ်ဆောင်နေဆဲ", statusDone:"ပြီးပါပြီ", stepsSuffix:"အဆင့်", notStarted:"မစတင်ရသေး", completed:"ပြီးစီးပါပြီ", stepOf:"အဆင့် {n} / {total}", minLeft:"မိနစ် ကျန်", todayLabel:"ယနေ့", yourCheckins:"သင့်စစ်ဆေးမှတ်တမ်းများ", noCheckinsYet:"စစ်ဆေးမှတ်တမ်း မရှိသေးပါ။", changeEntry:"ပြောင်းရန်", chapterOf:"အခန်း {n} / {total}", nextChapter:"နောက်အခန်း", takeTheQuiz:"စစ်ဆေးမှု လုပ်ရန်", viewAllChapters:"အခန်းအားလုံးကို ကြည့်ရန်", bookmarkedTag:"မှတ်သားထားသည်" }
   };
   function t(key){
     var d = STRINGS[pickedLang] || STRINGS.en;
@@ -589,17 +628,187 @@
   // ===================== MODULES (4 topics, EN/TA/BN full content; other langs fall back to EN for long-form copy) =====================
   var MODULES = {
     stress: {
-      steps: 5, status: 'in-progress', currentStep: 2,
+      steps: 5, status: 'in-progress', currentStep: 1,
       iconPath: 'M12 21s-7.5-4.6-9-9.1C1.5 8.4 3.3 5 7 5c1.9 0 3.3 1 5 3 1.7-2 3.1-3 5-3 3.7 0 5.5 3.4 4 6.9C19.5 16.4 12 21 12 21z', iconBg:'#FDEFD9', iconColorSmall:'#B9791F', iconColorBig:'#0E5C55',
       titles: { en:'Managing Stress at Work', ta:'வேலையில் மன அழுத்தத்தை நிர்வகித்தல்', bn:'কাজে মানসিক চাপ সামলানো', zh:'应对工作压力', my:'အလုပ်တွင် စိတ်ဖိစီးမှု စီမံခန့်ခွဲခြင်း', th:'การจัดการความเครียดในที่ทำงาน' },
-      body: {
-        en:{ headline:"You are not alone in feeling this way.", text:"Many workers feel tense or tired after long shifts. This is a normal response to pressure — not a weakness. Small, simple actions can help your body and mind settle, even on a busy day." },
-        ta:{ headline:"இப்படி உணர்வது நீங்கள் மட்டும் அல்ல.", text:"நீண்ட ஷிப்ட் வேலைக்குப் பிறகு பல தொழிலாளர்கள் பதற்றமாகவோ அல்லது சோர்வாகவோ உணர்கிறார்கள். இது அழுத்தத்திற்கான இயல்பான எதிர்வினை — பலவீனம் அல்ல. சிறிய, எளிய செயல்கள் பரபரப்பான நாளிலும் உங்கள் உடலையும் மனதையும் அமைதிப்படுத்த உதவும்." },
-        bn:{ headline:"এভাবে অনুভব করা আপনি একা নন।", text:"দীর্ঘ শিফটের পর অনেক শ্রমিকই উত্তেজনা বা ক্লান্তি অনুভব করেন। এটি চাপের একটি স্বাভাবিক প্রতিক্রিয়া — দুর্বলতা নয়। ছোট ছোট সহজ পদক্ষেপ ব্যস্ত দিনেও আপনার শরীর ও মনকে শান্ত করতে সাহায্য করতে পারে।" },
-        zh:{ headline:"会有这种感觉的不只是你一个人。", text:"许多工人在长时间轮班后会感到紧绷或疲惫。这是面对压力时很正常的反应,不是软弱。即使是忙碌的一天,一些简单的小动作也能帮助身体和心情慢慢平静下来。" },
-        th:{ headline:"คุณไม่ได้รู้สึกแบบนี้อยู่คนเดียว", text:"คนทำงานหลายคนรู้สึกตึงเครียดหรือเหนื่อยล้าหลังจากทำงานกะยาวๆ นี่เป็นปฏิกิริยาปกติต่อความกดดัน ไม่ใช่ความอ่อนแอ การทำสิ่งเล็กๆ ง่ายๆ สามารถช่วยให้ร่างกายและจิตใจสงบลงได้ แม้ในวันที่ยุ่งมาก" },
-        my:{ headline:"ဒီလိုခံစားရတာ သင်တစ်ယောက်တည်း မဟုတ်ပါဘူး။", text:"အလုပ်သမား အများစုဟာ အလုပ်ချိန်ရှည်ကြာပြီးနောက် စိတ်တင်းမာမှု သို့မဟုတ် ပင်ပန်းမှုကို ခံစားရလေ့ရှိပါတယ်။ ဒါဟာ ဖိစီးမှုအပေါ် ပုံမှန်တုံ့ပြန်မှုတစ်ခုသာဖြစ်ပြီး အားနည်းချက်မဟုတ်ပါဘူး။ အလုပ်များတဲ့ နေ့မှာတောင် သေးငယ်တဲ့ လွယ်ကူတဲ့ လုပ်ဆောင်ချက်လေးတွေက ခန္ဓာကိုယ်နဲ့ စိတ်ကို တည်ငြိမ်အောင် ကူညီပေးနိုင်ပါတယ်။" }
+      chapters: [
+  {
+    "shortTitle": {
+      "en": "You're Not Alone",
+      "ta": "நீங்கள் தனியாக இல்லை",
+      "bn": "আপনি একা নন",
+      "zh": "你并不孤单",
+      "th": "คุณไม่ได้อยู่คนเดียว",
+      "my": "သင်တစ်ယောက်တည်း မဟုတ်ပါ"
+    },
+    "description": {
+      "en": "Why feeling tense or tired after a shift is normal, not a weakness.",
+      "ta": "ஒரு ஷிப்ட் முடிந்த பிறகு பதற்றமாகவோ சோர்வாகவோ உணர்வது இயல்பானது, பலவீனம் அல்ல.",
+      "bn": "শিফটের পর টানটান বা ক্লান্ত অনুভব করা স্বাভাবিক, দুর্বলতা নয়।",
+      "zh": "下班后感到紧张或疲惫是正常的,不是软弱的表现。",
+      "th": "ทำไมการรู้สึกตึงเครียดหรือเหนื่อยหลังเลิกกะจึงเป็นเรื่องปกติ ไม่ใช่ความอ่อนแอ",
+      "my": "အလုပ်ချိန်ပြီးနောက် စိတ်ဖိစီးခြင်း သို့မဟုတ် ပင်ပန်းခြင်းက ပုံမှန်ဖြစ်ပြီး အားနည်းချက်မဟုတ်ပါ။"
+    },
+    "body": {
+      "en": {
+        "headline": "You are not alone in feeling this way.",
+        "text": "Many workers feel tense or tired after long shifts. This is a normal response to pressure — not a weakness. Small, simple actions can help your body and mind settle, even on a busy day."
       },
+      "ta": {
+        "headline": "இப்படி உணர்வது நீங்கள் மட்டும் அல்ல.",
+        "text": "நீண்ட ஷிப்ட் வேலைக்குப் பிறகு பல தொழிலாளர்கள் பதற்றமாகவோ அல்லது சோர்வாகவோ உணர்கிறார்கள். இது அழுத்தத்திற்கான இயல்பான எதிர்வினை — பலவீனம் அல்ல. சிறிய, எளிய செயல்கள் பரபரப்பான நாளிலும் உங்கள் உடலையும் மனதையும் அமைதிப்படுத்த உதவும்."
+      },
+      "bn": {
+        "headline": "এভাবে অনুভব করা আপনি একা নন।",
+        "text": "দীর্ঘ শিফটের পর অনেক শ্রমিকই উত্তেজনা বা ক্লান্তি অনুভব করেন। এটি চাপের একটি স্বাভাবিক প্রতিক্রিয়া — দুর্বলতা নয়। ছোট ছোট সহজ পদক্ষেপ ব্যস্ত দিনেও আপনার শরীর ও মনকে শান্ত করতে সাহায্য করতে পারে।"
+      },
+      "zh": {
+        "headline": "会有这种感觉的不只是你一个人。",
+        "text": "许多工人在长时间轮班后会感到紧绷或疲惫。这是面对压力时很正常的反应,不是软弱。即使是忙碌的一天,一些简单的小动作也能帮助身体和心情慢慢平静下来。"
+      },
+      "th": {
+        "headline": "คุณไม่ได้รู้สึกแบบนี้อยู่คนเดียว",
+        "text": "คนทำงานหลายคนรู้สึกตึงเครียดหรือเหนื่อยล้าหลังจากทำงานกะยาวๆ นี่เป็นปฏิกิริยาปกติต่อความกดดัน ไม่ใช่ความอ่อนแอ การทำสิ่งเล็กๆ ง่ายๆ สามารถช่วยให้ร่างกายและจิตใจสงบลงได้ แม้ในวันที่ยุ่งมาก"
+      },
+      "my": {
+        "headline": "ဒီလိုခံစားရတာ သင်တစ်ယောက်တည်း မဟုတ်ပါဘူး။",
+        "text": "အလုပ်သမား အများစုဟာ အလုပ်ချိန်ရှည်ကြာပြီးနောက် စိတ်တင်းမာမှု သို့မဟုတ် ပင်ပန်းမှုကို ခံစားရလေ့ရှိပါတယ်။ ဒါဟာ ဖိစီးမှုအပေါ် ပုံမှန်တုံ့ပြန်မှုတစ်ခုသာဖြစ်ပြီး အားနည်းချက်မဟုတ်ပါဘူး။ အလုပ်များတဲ့ နေ့မှာတောင် သေးငယ်တဲ့ လွယ်ကူတဲ့ လုပ်ဆောင်ချက်လေးတွေက ခန္ဓာကိုယ်နဲ့ စိတ်ကို တည်ငြိမ်အောင် ကူညီပေးနိုင်ပါတယ်။"
+      }
+    }
+  },
+  {
+    "shortTitle": {
+      "en": "Spotting the Signs",
+      "ta": "அறிகுறிகளை கவனிப்பது",
+      "bn": "লক্ষণ চিনে নেওয়া",
+      "zh": "留意身心信号",
+      "th": "สังเกตสัญญาณเตือน",
+      "my": "လက္ခဏာများကို သတိထားမိခြင်း"
+    },
+    "description": {
+      "en": "Learn to notice early signs of stress in your body and mind",
+      "ta": "உடலிலும் மனதிலும் மன அழுத்த அறிகுறிகளை முன்கூட்டியே கவனியுங்கள்",
+      "bn": "শরীর ও মনে মানসিক চাপের প্রাথমিক লক্ষণগুলো চিনতে শিখুন",
+      "zh": "学会及早察觉身体和情绪上的压力信号",
+      "th": "เรียนรู้ที่จะสังเกตสัญญาณความเครียดทางร่างกายและจิตใจตั้งแต่เนิ่นๆ",
+      "my": "စိတ်ဖိစီးမှု၏ ကိုယ်ခန္ဓာနှင့် စိတ်ပိုင်းဆိုင်ရာ လက္ခဏာများကို စောစီးစွာ သတိထားမိအောင် လေ့လာပါ"
+    },
+    "body": {
+      "en": {
+        "headline": "Your body often tells you before your mind does.",
+        "text": "Stress can show up as tight shoulders, a sore neck, or trouble falling asleep. You might feel irritable with friends, or notice your thoughts racing even when you try to rest. Noticing these signs early does not mean something is wrong with you — it means your body is asking for a little care. The sooner you notice, the easier it is to feel better."
+      },
+      "ta": {
+        "headline": "மனதை விட உடல் தான் முதலில் உங்களிடம் சொல்லும்.",
+        "text": "மன அழுத்தம் இறுக்கமான தோள்கள், கழுத்து வலி, அல்லது தூக்கம் வராமல் இருப்பதாக தெரியலாம். நண்பர்களிடம் எரிச்சல் ஏற்படலாம், அல்லது ஓய்வெடுக்க முயலும்போதும் எண்ணங்கள் வேகமாக ஓடலாம். இந்த அறிகுறிகளை முன்கூட்டியே கவனிப்பது உங்களுக்கு ஏதோ தவறு இருக்கிறது என்று அர்த்தமில்லை — உங்கள் உடல் கொஞ்சம் கவனிப்பு கேட்கிறது என்று அர்த்தம். எவ்வளவு சீக்கிரம் கவனிக்கிறீர்களோ, அவ்வளவு எளிதாக நல்லது உணர்வீர்கள்."
+      },
+      "bn": {
+        "headline": "মন বোঝার আগেই শরীর অনেক সময় জানিয়ে দেয়।",
+        "text": "মানসিক চাপ কাঁধে টান, ঘাড়ে ব্যথা, বা ঘুম না আসার মতো অনুভূতি দিয়ে প্রকাশ পেতে পারে। বন্ধুদের সাথে হঠাৎ রাগ হতে পারে, বা বিশ্রাম নেওয়ার চেষ্টা করলেও মাথায় চিন্তা ঘুরতেই থাকতে পারে। এই লক্ষণগুলো আগেভাগে খেয়াল করার মানে এই নয় যে আপনার কিছু ভুল আছে — এর মানে আপনার শরীর একটু যত্ন চাইছে। যত তাড়াতাড়ি খেয়াল করবেন, তত সহজে ভালো বোধ করবেন।"
+      },
+      "zh": {
+        "headline": "身体往往比心更早告诉你答案。",
+        "text": "压力大时,肩膀会发紧,脖子会酸痛,晚上也可能睡不好。有时会莫名对朋友发脾气,或者明明想休息,脑子里却转个不停。及早发现这些信号,不代表你哪里出了问题,而是身体在提醒你该多照顾自己一点。越早察觉,就越容易调整过来。"
+      },
+      "th": {
+        "headline": "บางทีร่างกายก็บอกเราก่อนที่ใจจะรู้ตัว",
+        "text": "ความเครียดอาจแสดงออกมาเป็นอาการไหล่ตึง ปวดคอ หรือนอนไม่หลับ บางครั้งอาจหงุดหงิดง่ายกับเพื่อน หรือรู้สึกว่าความคิดฟุ้งซ่านแม้ตอนที่พยายามพักผ่อน การสังเกตเห็นสัญญาณเหล่านี้แต่เนิ่นๆ ไม่ได้แปลว่าคุณมีอะไรผิดปกติ แต่หมายความว่าร่างกายกำลังขอให้คุณดูแลตัวเองสักนิด ยิ่งสังเกตเร็วเท่าไร ก็ยิ่งรู้สึกดีขึ้นได้ง่ายเท่านั้น"
+      },
+      "my": {
+        "headline": "စိတ်မသိခင် ခန္ဓာကိုယ်က အရင်ပြောတတ်ပါတယ်။",
+        "text": "စိတ်ဖိစီးမှုကြောင့် ပခုံးတင်းမာခြင်း၊ လည်ပင်းနာခြင်း သို့မဟုတ် အိပ်ပျက်ခြင်းတို့ ဖြစ်တတ်ပါတယ်။ သူငယ်ချင်းတွေနဲ့ စိတ်တို လွယ်တတ်ပြီး၊ အနားယူချင်တောင်မှ စိတ်ကူးတွေ အမြန်ပြေးနေတတ်ပါတယ်။ ဒီလက္ခဏာတွေကို စောစီးစွာ သတိထားမိခြင်းဟာ သင့်မှာ တစ်ခုခု မှားနေတာကို မဆိုလိုပါဘူး — သင့်ခန္ဓာကိုယ်က ဂရုစိုက်ပေးဖို့ တောင်းဆိုနေတာပါ။ ဘယ်လောက်စောစော သတိထားမိလေ၊ ပိုမိုအဆင်ပြေစွာ ကောင်းလာနိုင်လေပါပဲ။"
+      }
+    }
+  },
+  {
+    "shortTitle": {
+      "en": "Quick Resets",
+      "ta": "விரைவு நிவாரணங்கள்",
+      "bn": "দ্রুত স্বস্তির উপায়",
+      "zh": "即时放松法",
+      "th": "วิธีผ่อนคลายด่วน",
+      "my": "အမြန်သက်သာရာ နည်းလမ်းများ"
+    },
+    "description": {
+      "en": "Simple techniques you can use during a shift to feel calmer fast",
+      "ta": "பணி நேரத்தில் விரைவாக அமைதி பெற உதவும் எளிய வழிமுறைகள்",
+      "bn": "শিফটের মধ্যেই দ্রুত শান্ত হতে সাহায্য করে এমন সহজ পদ্ধতি",
+      "zh": "在值班时也能用的简单方法,帮你快速平静下来",
+      "th": "เทคนิคง่ายๆ ที่ใช้ได้ระหว่างกะงาน ช่วยให้ใจสงบลงได้เร็ว",
+      "my": "အလုပ်ချိန်အတွင်း မြန်မြန်ဆန်ဆန် စိတ်အေးအောင် သုံးနိုင်သည့် ရိုးရှင်းနည်းလမ်းများ"
+    },
+    "body": {
+      "en": {
+        "headline": "A few quiet breaths can change how the next hour feels.",
+        "text": "Try breathing in slowly for 4 counts, holding for 4, and breathing out for 4 — repeat a few times. Roll your shoulders, stretch your arms, or shake out your hands for a quick physical reset. If you can, step outside for a short walk, drink some water, or simply notice five things around you. These small resets take less than a minute but can help you feel steadier."
+      },
+      "ta": {
+        "headline": "சில அமைதியான மூச்சுகள் அடுத்த ஒரு மணி நேரத்தையே மாற்றும்.",
+        "text": "4 எண்ணிக்கை மூச்சை மெதுவாக இழுத்து, 4 எண்ணிக்கை நிறுத்தி வைத்து, 4 எண்ணிக்கையில் வெளியே விடுங்கள் — இதை சில முறை செய்யுங்கள். தோள்களை சுழற்றுங்கள், கைகளை நீட்டுங்கள், அல்லது கைகளை உதறி விரைவாக உடலை தளர்த்துங்கள். முடிந்தால் கொஞ்சம் வெளியே நடந்து வாருங்கள், தண்ணீர் குடியுங்கள், அல்லது சுற்றியுள்ள ஐந்து பொருட்களை கவனியுங்கள். இந்த சிறிய வழிமுறைகள் ஒரு நிமிடத்திற்கும் குறைவான நேரம் எடுத்தாலும் உங்களை மிகவும் நிலைகுலையாமல் இருக்க உதவும்."
+      },
+      "bn": {
+        "headline": "কয়েকটা শান্ত নিঃশ্বাসই পরের এক ঘণ্টা বদলে দিতে পারে।",
+        "text": "৪ গুনতে গুনতে ধীরে শ্বাস নিন, ৪ গুনতে ধরে রাখুন, আবার ৪ গুনতে ছেড়ে দিন — এভাবে কয়েকবার করুন। কাঁধ ঘোরান, হাত টানটান করুন, বা হাত ঝাঁকিয়ে শরীরকে একটু ঝরঝরে করে নিন। সম্ভব হলে একটু বাইরে হাঁটুন, পানি খান, বা চারপাশের পাঁচটা জিনিস লক্ষ্য করুন। এই ছোট ছোট কাজগুলো এক মিনিটও লাগে না, কিন্তু মনকে অনেকটা শান্ত করতে পারে।"
+      },
+      "zh": {
+        "headline": "几次深呼吸,就能让接下来的一小时不一样。",
+        "text": "可以试试数4秒慢慢吸气,屏住4秒,再用4秒慢慢呼出,重复几次。转转肩膀、伸展手臂,或甩甩手,让身体放松一下。如果方便的话,出去走几步、喝点水,或者留意一下周围五样东西。这些小动作花不到一分钟,却能让你感觉安定不少。"
+      },
+      "th": {
+        "headline": "แค่หายใจเบาๆ สักไม่กี่ครั้ง ก็เปลี่ยนชั่วโมงถัดไปได้",
+        "text": "ลองหายใจเข้าช้าๆ นับ 4 จังหวะ กลั้นไว้ 4 จังหวะ แล้วหายใจออกนับ 4 จังหวะ ทำซ้ำสักสองสามรอบ หมุนไหล่ ยืดแขน หรือสะบัดมือเบาๆ เพื่อผ่อนคลายร่างกายอย่างรวดเร็ว ถ้าทำได้ ลองออกไปเดินเล่นสักครู่ ดื่มน้ำสักแก้ว หรือลองสังเกตสิ่งรอบตัวสักห้าอย่าง วิธีเล็กๆ เหล่านี้ใช้เวลาไม่ถึงนาที แต่ช่วยให้รู้สึกมั่นคงขึ้นได้จริง"
+      },
+      "my": {
+        "headline": "တိတ်ဆိတ်စွာ ရှူလိုက်ရုံနဲ့ နောက်တစ်နာရီ ပြောင်းသွားနိုင်ပါတယ်။",
+        "text": "၄ စက္ကန့် ဖြည်းဖြည်းရှူသွင်း၊ ၄ စက္ကန့် ရပ်ထား၊ ၄ စက္ကန့် ရှူထုတ်တာကို ကြိမ်ဖန်များစွာ လုပ်ကြည့်ပါ။ ပခုံးလှည့်တာ၊ လက်မောင်းဆန့်တာ၊ သို့မဟုတ် လက်ခါတာတွေနဲ့ ခန္ဓာကိုယ်ကို အမြန်သက်သာအောင် လုပ်ပါ။ အခွင့်ရလျှင် အပြင်ထွက်ပြီး အနည်းငယ် လမ်းလျှောက်ပါ၊ ရေသောက်ပါ၊ သို့မဟုတ် ပတ်ဝန်းကျင်က အရာငါးခုကို သတိထားကြည့်ပါ။ ဒီသေးငယ်တဲ့ နည်းလမ်းလေးတွေဟာ တစ်မိနစ်ထက်တောင် မကြာပေမယ့် ပိုတည်ငြိမ်အောင် ကူညီပေးနိုင်ပါတယ်။"
+      }
+    }
+  },
+  {
+    "shortTitle": {
+      "en": "Asking for Support",
+      "ta": "உதவி கேட்பது",
+      "bn": "সাহায্য চাওয়া",
+      "zh": "主动寻求支持",
+      "th": "การขอความช่วยเหลือ",
+      "my": "အကူအညီတောင်းခံခြင်း"
+    },
+    "description": {
+      "en": "Why reaching out early to someone you trust can help before things get hard",
+      "ta": "கடினமாகும் முன்பே நம்பகமானவரிடம் பேசுவது ஏன் உதவும் என்பது",
+      "bn": "পরিস্থিতি কঠিন হওয়ার আগেই কেন বিশ্বস্ত কারো সাথে কথা বলা ভালো",
+      "zh": "为什么在事情变得难以承受之前,就该找信任的人聊聊",
+      "th": "ทำไมการพูดคุยกับคนที่ไว้ใจได้ตั้งแต่เนิ่นๆ จึงช่วยได้ก่อนที่จะหนักเกินไป",
+      "my": "အခက်အခဲမကြီးထွားခင် ယုံကြည်ရသူကို စောစီးစွာ ပြောပြခြင်း၏ အကျိုးကျေးဇူး"
+    },
+    "body": {
+      "en": {
+        "headline": "You don't have to wait until it's too much to talk to someone.",
+        "text": "Talking to a trusted friend, a peer leader, or a counsellor is a sign of strength, not weakness. You don't need to wait until you feel overwhelmed — sharing how you feel early can make things easier to carry. Many people find it helpful just to talk things through with someone who listens. Reaching out is a normal part of taking care of yourself, not a last resort."
+      },
+      "ta": {
+        "headline": "தாங்க முடியாத அளவுக்கு காத்திருக்க வேண்டிய அவசியமில்லை.",
+        "text": "நம்பகமான நண்பர், சக தொழிலாளர் தலைவர், அல்லது ஆலோசகரிடம் பேசுவது பலவீனம் அல்ல, அது ஒரு வலிமையின் அடையாளம். நீங்கள் மிகவும் சோர்வடையும் வரை காத்திருக்க வேண்டியதில்லை — ஆரம்பத்திலேயே உங்கள் உணர்வுகளை பகிர்ந்து கொள்வது சுமையை இலகுவாக்கும். பலர் தங்கள் மனதில் உள்ளதை ஒருவரிடம் பேசுவதே பெரிய ஆறுதலாக இருப்பதை உணர்கிறார்கள். உதவி கேட்பது கடைசி வழி அல்ல, உங்களை கவனித்துக்கொள்வதன் ஒரு இயல்பான பகுதி."
+      },
+      "bn": {
+        "headline": "সহ্যের বাইরে চলে যাওয়া পর্যন্ত অপেক্ষা করার দরকার নেই।",
+        "text": "বিশ্বস্ত বন্ধু, সহকর্মী নেতা, বা কাউন্সেলরের সাথে কথা বলা দুর্বলতা নয়, বরং এটা শক্তির লক্ষণ। একেবারে কাবু হয়ে যাওয়া পর্যন্ত অপেক্ষা করার দরকার নেই — আগেভাগে মনের কথা শেয়ার করলে বোঝাটা অনেক হালকা মনে হয়। অনেকেই দেখেছেন, শুধু কারো সাথে মন খুলে কথা বললেই অনেকটা ভালো লাগে। সাহায্য চাওয়া নিজের যত্ন নেওয়ার একটা স্বাভাবিক অংশ, এটা শেষ উপায় নয়।"
+      },
+      "zh": {
+        "headline": "不必等到撑不下去,才去找人说说话。",
+        "text": "找信任的朋友、同伴领袖或辅导员聊聊,是一种勇气的表现,而不是软弱。不用等到压力大到受不了才开口——早一点说出自己的感受,心里的担子会轻松很多。很多人都发现,光是找个愿意倾听的人说说话,心情就能好不少。主动求助是照顾好自己的正常一步,不是走投无路才做的事。"
+      },
+      "th": {
+        "headline": "ไม่จำเป็นต้องรอจนทนไม่ไหวถึงจะพูดกับใครสักคน",
+        "text": "การพูดคุยกับเพื่อนที่ไว้ใจได้ หัวหน้ากลุ่มเพื่อน หรือที่ปรึกษา เป็นสัญญาณของความเข้มแข็ง ไม่ใช่ความอ่อนแอ ไม่จำเป็นต้องรอจนรู้สึกท่วมท้นเกินรับไหว การเล่าความรู้สึกตั้งแต่เนิ่นๆ จะช่วยให้แบกรับได้ง่ายขึ้น หลายคนพบว่าแค่ได้พูดคุยกับคนที่รับฟังก็ช่วยได้มากแล้ว การขอความช่วยเหลือเป็นเรื่องปกติของการดูแลตัวเอง ไม่ใช่ทางเลือกสุดท้าย"
+      },
+      "my": {
+        "headline": "မခံနိုင်လောက်အောင် ဖြစ်မှ တစ်စုံတစ်ယောက်ကို ပြောပြဖို့ မလိုပါဘူး။",
+        "text": "ယုံကြည်ရသော သူငယ်ချင်း၊ လုပ်ဖော်ကိုင်ဖက်ခေါင်းဆောင် သို့မဟုတ် အတိုင်ပင်ခံတစ်ဦးနှင့် စကားပြောခြင်းသည် အားနည်းမှု မဟုတ်ဘဲ ခွန်အားရှိမှု၏ လက္ခဏာတစ်ခု ဖြစ်ပါတယ်။ လွန်ကဲစွာ ခံစားရသည်အထိ စောင့်ဖို့ မလိုပါဘူး — သင့်ခံစားချက်ကို စောစီးစွာ မျှဝေခြင်းက ထမ်းရသောဝန်ကို ပေါ့ပါးစေနိုင်ပါတယ်။ လူများစွာက နားထောင်ပေးမယ့်သူတစ်ဦးနှင့် ဖွင့်ပြောရုံနဲ့ပဲ သက်သာသွားတတ်ကြောင်း တွေ့ရှိကြပါတယ်။ အကူအညီတောင်းခံခြင်းသည် နောက်ဆုံးရွေးချယ်စရာ မဟုတ်ဘဲ ကိုယ့်ကိုယ်ကို ဂရုစိုက်ခြင်း၏ ပုံမှန်အစိတ်အပိုင်းတစ်ခု ဖြစ်ပါတယ်။"
+      }
+    }
+  }
+],
       quiz: {
         en:{ question:"What can help most when you feel stressed at work?", options:["Ignore it and keep working through the shift","Take a short breath, drink water, talk to a friend or peer leader","Keep worries to yourself so no one finds out"], correct:1, wrongFeedback:"Not quite — carrying it alone or pushing through usually makes it harder on your body. Try another answer.", correctFeedback:"That's right. Small steps like these really do help your body calm down." },
         ta:{ question:"வேலையில் மன அழுத்தமாக உணரும்போது எது மிகவும் உதவும்?", options:["அதை புறக்கணித்து ஷிப்ட் முழுவதும் வேலை செய்தல்","சிறிது மூச்சு விடுதல், தண்ணீர் குடித்தல், ஒரு நண்பர் அல்லது பீர் லீடருடன் பேசுதல்","யாருக்கும் தெரியாமல் கவலைகளை தனக்குள்ளேயே வைத்துக்கொள்ளுதல்"], correct:1, wrongFeedback:"சரியில்லை — தனியாக சுமப்பது அல்லது தொடர்ந்து தள்ளுவது பொதுவாக உடலுக்கு மேலும் கடினமாக்கும். வேறு பதிலை முயற்சிக்கவும்.", correctFeedback:"சரி. இதுபோன்ற சிறிய படிகள் உங்கள் உடலை அமைதிப்படுத்த உண்மையிலேயே உதவும்." },
@@ -610,17 +819,187 @@
       }
     },
     sleep: {
-      steps: 4, status: 'not-started', currentStep: 0,
+      steps: 5, status: 'not-started', currentStep: 0,
       iconPath: 'M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z', iconBg:'#E3EFEC', iconColorSmall:'#0E5C55', iconColorBig:'#0E5C55',
       titles: { en:'Sleep & Rest', ta:'தூக்கம் & ஓய்வு', bn:'ঘুম ও বিশ্রাম', zh:'睡眠与休息', my:'အိပ်စက်ခြင်းနှင့် အနားယူခြင်း', th:'การนอนหลับและการพักผ่อน' },
-      body: {
-        en:{ headline:"Good rest helps your body recover.", text:"Shift work can make sleep hard to get right. Even short, better-quality rest can leave you feeling steadier the next day. Try to keep a regular sleep time where you can, and keep your room dark and quiet before bed." },
-        ta:{ headline:"நல்ல ஓய்வு உங்கள் உடலை மீட்க உதவுகிறது.", text:"ஷிப்ட் வேலை தூக்கத்தை சரியாகப் பெறுவதை கடினமாக்கும். குறுகிய ஆனால் தரமான ஓய்வு கூட, அடுத்த நாள் உங்களை நிலையாக உணர வைக்கும். முடிந்தவரை ஒரே நேரத்தில் தூங்கவும், படுக்கைக்கு முன் அறையை இருட்டாகவும் அமைதியாகவும் வைக்கவும்." },
-        bn:{ headline:"ভালো বিশ্রাম আপনার শরীরকে সুস্থ হতে সাহায্য করে।", text:"শিফটের কাজ ঘুমকে ঠিকমতো পাওয়া কঠিন করে তুলতে পারে। অল্প সময়ের ভালো মানের বিশ্রামও পরদিন আপনাকে স্থির অনুভব করাতে পারে। যতটা সম্ভব নিয়মিত সময়ে ঘুমানোর চেষ্টা করুন এবং ঘুমানোর আগে ঘর অন্ধকার ও শান্ত রাখুন।" },
-        zh:{ headline:"好好休息,身体才能恢复元气。", text:"轮班工作常常打乱睡眠节奏。即使睡眠时间不长,只要睡得安稳,隔天也会感觉比较有精神。尽量固定每天的睡觉时间,睡前把房间弄暗、安静下来。" },
-        th:{ headline:"การพักผ่อนที่ดีช่วยให้ร่างกายฟื้นตัว", text:"การทำงานเป็นกะอาจทำให้นอนหลับได้ยาก แม้จะนอนไม่นานแต่ถ้าหลับสนิท ก็อาจทำให้รู้สึกมั่นคงขึ้นในวันถัดไป พยายามนอนให้เป็นเวลาเท่าที่ทำได้ และทำให้ห้องมืดและเงียบก่อนนอน" },
-        my:{ headline:"ကောင်းမွန်တဲ့ အနားယူမှုက ခန္ဓာကိုယ်ကို ပြန်လည်နာလန်ထူစေပါတယ်။", text:"အလုပ်အလှည့်ကျ လုပ်ရတာက အိပ်စက်ဖို့ ခက်ခဲစေနိုင်ပါတယ်။ ခဏလေးပဲ အိပ်ရတောင် အရည်အသွေးကောင်းရင် နောက်နေ့မှာ ပိုတည်ငြိမ်စွာ ခံစားရနိုင်ပါတယ်။ တတ်နိုင်သလောက် ပုံမှန်အိပ်ချိန် ထားပြီး အိပ်ခါနီးမှာ အခန်းကို မှောင်မှောင်၊ တိတ်ဆိတ်အောင် ထားပါ။" }
+      chapters: [
+  {
+    "shortTitle": {
+      "en": "Why Rest Matters",
+      "ta": "ஓய்வு ஏன் முக்கியம்",
+      "bn": "কেন বিশ্রাম গুরুত্বপূর্ণ",
+      "zh": "为什么休息很重要",
+      "th": "ทำไมการพักผ่อนจึงสำคัญ",
+      "my": "အနားယူခြင်း အရေးကြီးရသည့်အကြောင်း"
+    },
+    "description": {
+      "en": "How good-quality rest, even if short, helps your body recover.",
+      "ta": "குறுகியதாக இருந்தாலும் தரமான ஓய்வு உடலுக்கு மீட்சி அளிக்கும் விதம்.",
+      "bn": "ছোট হলেও ভালো মানের বিশ্রাম কীভাবে শরীরকে পুনরুদ্ধার করতে সাহায্য করে।",
+      "zh": "即使时间短,高质量的休息也能帮助身体恢复。",
+      "th": "การพักผ่อนที่มีคุณภาพแม้เพียงช่วงสั้นๆ ช่วยให้ร่างกายฟื้นตัวได้อย่างไร",
+      "my": "တိုတောင်းသော်လည်း အရည်အသွေးကောင်းသော အနားယူမှုက ခန္ဓာကိုယ်ကို ပြန်လည်နာလန်ထူစေပုံ။"
+    },
+    "body": {
+      "en": {
+        "headline": "Good rest helps your body recover.",
+        "text": "Shift work can make sleep hard to get right. Even short, better-quality rest can leave you feeling steadier the next day. Try to keep a regular sleep time where you can, and keep your room dark and quiet before bed."
       },
+      "ta": {
+        "headline": "நல்ல ஓய்வு உங்கள் உடலை மீட்க உதவுகிறது.",
+        "text": "ஷிப்ட் வேலை தூக்கத்தை சரியாகப் பெறுவதை கடினமாக்கும். குறுகிய ஆனால் தரமான ஓய்வு கூட, அடுத்த நாள் உங்களை நிலையாக உணர வைக்கும். முடிந்தவரை ஒரே நேரத்தில் தூங்கவும், படுக்கைக்கு முன் அறையை இருட்டாகவும் அமைதியாகவும் வைக்கவும்."
+      },
+      "bn": {
+        "headline": "ভালো বিশ্রাম আপনার শরীরকে সুস্থ হতে সাহায্য করে।",
+        "text": "শিফটের কাজ ঘুমকে ঠিকমতো পাওয়া কঠিন করে তুলতে পারে। অল্প সময়ের ভালো মানের বিশ্রামও পরদিন আপনাকে স্থির অনুভব করাতে পারে। যতটা সম্ভব নিয়মিত সময়ে ঘুমানোর চেষ্টা করুন এবং ঘুমানোর আগে ঘর অন্ধকার ও শান্ত রাখুন।"
+      },
+      "zh": {
+        "headline": "好好休息,身体才能恢复元气。",
+        "text": "轮班工作常常打乱睡眠节奏。即使睡眠时间不长,只要睡得安稳,隔天也会感觉比较有精神。尽量固定每天的睡觉时间,睡前把房间弄暗、安静下来。"
+      },
+      "th": {
+        "headline": "การพักผ่อนที่ดีช่วยให้ร่างกายฟื้นตัว",
+        "text": "การทำงานเป็นกะอาจทำให้นอนหลับได้ยาก แม้จะนอนไม่นานแต่ถ้าหลับสนิท ก็อาจทำให้รู้สึกมั่นคงขึ้นในวันถัดไป พยายามนอนให้เป็นเวลาเท่าที่ทำได้ และทำให้ห้องมืดและเงียบก่อนนอน"
+      },
+      "my": {
+        "headline": "ကောင်းမွန်တဲ့ အနားယူမှုက ခန္ဓာကိုယ်ကို ပြန်လည်နာလန်ထူစေပါတယ်။",
+        "text": "အလုပ်အလှည့်ကျ လုပ်ရတာက အိပ်စက်ဖို့ ခက်ခဲစေနိုင်ပါတယ်။ ခဏလေးပဲ အိပ်ရတောင် အရည်အသွေးကောင်းရင် နောက်နေ့မှာ ပိုတည်ငြိမ်စွာ ခံစားရနိုင်ပါတယ်။ တတ်နိုင်သလောက် ပုံမှန်အိပ်ချိန် ထားပြီး အိပ်ခါနီးမှာ အခန်းကို မှောင်မှောင်၊ တိတ်ဆိတ်အောင် ထားပါ။"
+      }
+    }
+  },
+  {
+    "shortTitle": {
+      "en": "Building a Wind-Down Routine",
+      "ta": "தூங்கும் முன் ஓய்வு பழக்கம்",
+      "bn": "ঘুমের আগে প্রশান্তির রুটিন",
+      "zh": "养成睡前放松习惯",
+      "th": "สร้างกิจวัตรผ่อนคลายก่อนนอน",
+      "my": "အိပ်ရာမဝင်မီ အနားယူမှုအလေ့အကျင့်"
+    },
+    "description": {
+      "en": "Simple habits before bed that help your body relax and sleep better.",
+      "ta": "தூங்குவதற்கு முன் உடலை தளர்த்த உதவும் எளிய பழக்கங்கள்.",
+      "bn": "ঘুমানোর আগের সহজ অভ্যাস যা শরীরকে শান্ত ও প্রস্তুত করে।",
+      "zh": "睡前的小习惯,帮助身体放松,睡得更安稳。",
+      "th": "นิสัยง่ายๆ ก่อนนอนที่ช่วยให้ร่างกายผ่อนคลายและหลับสบายขึ้น",
+      "my": "ခန္ဓာကိုယ်ကို ပြေလျော့စေပြီး ပိုကောင်းအောင်အိပ်စေမယ့် ရိုးရှင်းသောအလေ့အကျင့်များ။"
+    },
+    "body": {
+      "en": {
+        "headline": "A simple wind-down routine can help you fall asleep faster.",
+        "text": "Your body needs a signal that it's time to slow down. Try dimming the lights, putting your phone away, and doing something calming like light stretching before bed. Avoid heavy meals, caffeine, or sugary drinks close to bedtime, as these can keep you awake. A short routine, done the same way each night, can make it easier to drift off."
+      },
+      "ta": {
+        "headline": "தூங்கும் முன் சில பழக்கங்களை பின்பற்றினால் விரைவாக தூக்கம் வரும்.",
+        "text": "ஓய்வெடுக்க வேண்டிய நேரம் வந்துவிட்டது என்பதை உடலுக்கு உணர்த்த வேண்டும். விளக்குகளை மங்களாக்குவது, மொபைலை ஒதுக்கி வைப்பது, லேசான நீட்சி பயிற்சி போன்ற அமைதியான செயல்களைச் செய்வது உதவும். தூங்கும் நேரத்திற்கு முன் அதிக உணவு, காபி அல்லது இனிப்பு பானங்களைத் தவிர்க்கவும், இவை தூக்கத்தைத் தடுக்கலாம். ஒவ்வொரு நாளும் ஒரே முறையில் செய்யும் சிறிய பழக்கம் தூங்குவதை எளிதாக்கும்."
+      },
+      "bn": {
+        "headline": "ঘুমানোর আগে কিছু অভ্যাস মেনে চললে দ্রুত ঘুম আসতে পারে।",
+        "text": "শরীরকে বুঝতে হয় যে এখন বিশ্রামের সময়। আলো কমিয়ে দেওয়া, ফোন সরিয়ে রাখা, আর হালকা স্ট্রেচিংয়ের মতো শান্ত কিছু করা সাহায্য করতে পারে। ঘুমানোর ঠিক আগে ভারী খাবার, কফি বা মিষ্টি পানীয় এড়িয়ে চলুন, কারণ এগুলো ঘুম আসতে বাধা দিতে পারে। প্রতিদিন একইভাবে ছোট্ট একটা রুটিন মেনে চললে ঘুমিয়ে পড়া সহজ হয়ে যায়।"
+      },
+      "zh": {
+        "headline": "睡前做一点准备,能帮你更快入睡。",
+        "text": "身体需要一些信号,才知道该放松了。睡前可以试着调暗灯光、放下手机,做一些让自己平静下来的事,比如简单拉伸一下。临睡前应避免吃太饱、喝咖啡或含糖饮料,这些都会让你更难入睡。每天晚上用同样的方式放松,久而久之会更容易入睡。"
+      },
+      "th": {
+        "headline": "กิจวัตรผ่อนคลายก่อนนอนช่วยให้หลับได้ง่ายขึ้น",
+        "text": "ร่างกายต้องการสัญญาณบอกว่าถึงเวลาพักผ่อนแล้ว ลองหรี่ไฟ วางมือถือไว้ไกลตัว และทำกิจกรรมที่ช่วยให้ใจสงบ เช่น ยืดเส้นยืดสายเบาๆ ก่อนนอน ควรเลี่ยงอาหารมื้อหนัก กาแฟ หรือเครื่องดื่มรสหวานใกล้เวลานอน เพราะอาจทำให้หลับยากขึ้น การทำกิจวัตรสั้นๆ แบบเดิมทุกคืนจะช่วยให้หลับง่ายขึ้นเรื่อยๆ"
+      },
+      "my": {
+        "headline": "အိပ်ရာမဝင်မီ လေ့ကျင့်မှုလေးတွေလုပ်ရင် ပိုမြန်မြန်အိပ်ပျော်နိုင်ပါတယ်။",
+        "text": "အနားယူရမယ့်အချိန်ဖြစ်ကြောင်း ခန္ဓာကိုယ်ကို အချက်ပြပေးဖို့လိုပါတယ်။ မီးကိုမှိန်ထားခြင်း၊ ဖုန်းကိုဝေးဝေးထားခြင်း၊ ခန္ဓာကိုယ်ကိုပြေပြစ်အောင်ဆန့်ခြင်းလိုမျိုး စိတ်ငြိမ်စေမယ့်အရာလေးတွေကို ကြိုးစားလုပ်ကြည့်ပါ။ အိပ်ရာမဝင်မီ အစားများများစားခြင်း၊ ကော်ဖီသို့မဟုတ် ချိုသောသောက်စရာများကို ရှောင်ကြဉ်သင့်ပါတယ်၊ ဒါတွေက အိပ်ပျော်ဖို့ ခက်ခဲစေနိုင်ပါတယ်။ ညတိုင်း တစ်ပုံစံတည်း လုပ်နေတဲ့ လေ့ကျင့်မှုလေးဟာ အိပ်ပျော်ဖို့ ပိုလွယ်စေပါတယ်။"
+      }
+    }
+  },
+  {
+    "shortTitle": {
+      "en": "Sleeping Around Shift Changes",
+      "ta": "ஷிப்ட் மாற்றத்தில் தூக்கம்",
+      "bn": "শিফট বদলের সময় ঘুম",
+      "zh": "应对轮班与夜班睡眠",
+      "th": "นอนหลับเมื่อกะงานเปลี่ยนบ่อย",
+      "my": "ဆိုင်းအပြောင်းအလဲနှင့် အိပ်စက်ခြင်း"
+    },
+    "description": {
+      "en": "Tips for resting well when your work shifts change often.",
+      "ta": "ஷிப்ட் அடிக்கடி மாறும்போது நன்றாக ஓய்வெடுக்க உதவும் குறிப்புகள்.",
+      "bn": "শিফট ঘন ঘন বদলালে ভালো বিশ্রামের জন্য কিছু পরামর্শ।",
+      "zh": "班次经常变动时,如何更好地安排睡眠。",
+      "th": "เคล็ดลับพักผ่อนให้ดีเมื่อเวลาทำงานเปลี่ยนไปเรื่อยๆ",
+      "my": "အလုပ်ချိန်မကြာခဏပြောင်းနေရင် ပိုကောင်းအောင်နားနေနိုင်မယ့် အကြံပြုချက်များ။"
+    },
+    "body": {
+      "en": {
+        "headline": "Good sleep is still possible, even with changing shifts.",
+        "text": "Sleeping during the day can be hard when it's bright and noisy around you. A sleep mask or thick curtains, and ear plugs, can help block out light and sound. Let your roommates know your sleep hours so they can keep things quiet for you. If you're working a night shift, a short nap beforehand can also help you feel more alert."
+      },
+      "ta": {
+        "headline": "ஷிப்ட் மாறினாலும் நல்ல தூக்கம் சாத்தியமே.",
+        "text": "சுற்றிலும் வெளிச்சமும் சத்தமும் இருக்கும்போது பகலில் தூங்குவது கடினமாக இருக்கும். கண் முக்காடு அல்லது தடிமனான திரைச்சீலை, காது அடைப்பான் ஆகியவை வெளிச்சத்தையும் சத்தத்தையும் தடுக்க உதவும். நீங்கள் தூங்கும் நேரத்தை உங்கள் அறை தோழர்களிடம் தெரிவித்தால் அவர்கள் அமைதியாக இருக்க உதவுவார்கள். இரவு ஷிப்டுக்கு முன் சிறிது நேரம் தூங்குவதும் உங்களை புத்துணர்ச்சியாக வைக்க உதவும்."
+      },
+      "bn": {
+        "headline": "শিফট বদলালেও ভালো ঘুম সম্ভব।",
+        "text": "চারপাশে আলো আর শব্দ থাকলে দিনে ঘুমানো কঠিন হতে পারে। স্লিপ মাস্ক বা মোটা পর্দা, আর কানের প্লাগ ব্যবহার করলে আলো ও শব্দ আটকাতে সাহায্য করে। আপনার ঘুমের সময়টা রুমমেটদের জানিয়ে রাখুন, যাতে তারা সেই সময় শান্ত থাকার চেষ্টা করে। রাতের শিফটের আগে একটু ঘুমিয়ে নিলে সেটাও আপনাকে বেশি সতেজ রাখতে পারে।"
+      },
+      "zh": {
+        "headline": "即使班次常常变动,也能睡得好。",
+        "text": "白天睡觉时,周围又亮又吵,确实不容易。可以用眼罩或厚窗帘遮光,耳塞挡住噪音。提前告诉室友你的休息时间,请他们尽量保持安静。如果要上夜班,班前先小睡一会儿,也能让你更有精神。"
+      },
+      "th": {
+        "headline": "ถึงกะทำงานจะเปลี่ยนบ่อย ก็ยังนอนหลับดีได้",
+        "text": "การนอนตอนกลางวันอาจยากเพราะรอบตัวทั้งสว่างทั้งเสียงดัง ผ้าปิดตาหรือผ้าม่านหนาๆ รวมถึงที่อุดหู จะช่วยกันแสงและเสียงได้ บอกเพื่อนร่วมห้องให้รู้เวลานอนของคุณ เพื่อให้เขาช่วยรักษาความเงียบในช่วงนั้น หากต้องทำงานกะดึก การงีบสั้นๆ ก่อนเข้ากะก็ช่วยให้รู้สึกสดชื่นขึ้นได้เช่นกัน"
+      },
+      "my": {
+        "headline": "အလုပ်ချိန်အမြဲပြောင်းနေရင်တောင် အိပ်ချိန်ကောင်းကောင်းရနိုင်ပါတယ်။",
+        "text": "ပတ်ဝန်းကျင်မှာအလင်းရောင်နဲ့ဆူညံသံများနေရင် နေ့ခင်းအိပ်ရတာ ခက်ခဲနိုင်ပါတယ်။ မျက်နှာဖုံးအဝတ်သို့မဟုတ် ထူထဲသောကန့်လန့်ကာနဲ့ နားကြပ်များသုံးရင် အလင်းရောင်နဲ့ဆူညံသံကို ကာကွယ်နိုင်ပါတယ်။ သင့်အိပ်ချိန်ကို အခန်းဖော်များကို ကြိုတင်ပြောထားပါ၊ သူတို့လည်း ဆိတ်ငြိမ်အောင် ကူညီနိုင်ပါတယ်။ ညဆိုင်းအလုပ်ဝင်ရမယ်ဆိုရင် မဝင်ခင် အနည်းငယ်တစ်ခဏအိပ်ထားတာလည်း ပိုသတိရှိစေနိုင်ပါတယ်။"
+      }
+    }
+  },
+  {
+    "shortTitle": {
+      "en": "When You Need More Support",
+      "ta": "அதிக உதவி தேவைப்படும்போது",
+      "bn": "যখন আরও সহায়তা দরকার",
+      "zh": "睡眠问题需要更多帮助时",
+      "th": "เมื่อต้องการความช่วยเหลือเพิ่มเติม",
+      "my": "ပိုမိုအကူအညီလိုအပ်သောအခါ"
+    },
+    "description": {
+      "en": "Recognizing when sleep trouble is more than ordinary tiredness.",
+      "ta": "வழக்கமான சோர்வுக்கு அப்பால் தூக்க பிரச்சனை இருப்பதை அறிதல்.",
+      "bn": "সাধারণ ক্লান্তির চেয়ে বেশি ঘুমের সমস্যা চেনার উপায়।",
+      "zh": "了解什么时候睡眠困扰已超出普通的疲惫。",
+      "th": "รู้จักสังเกตเมื่อปัญหาการนอนมากกว่าความเหนื่อยทั่วไป",
+      "my": "ပုံမှန်ပင်ပန်းမှုထက်ကျော်လွန်သော အိပ်ရေးပြဿနာကို သိရှိခြင်း။"
+    },
+    "body": {
+      "en": {
+        "headline": "It's okay to ask for help if sleep keeps feeling impossible.",
+        "text": "Sometimes tiredness goes beyond what a good routine can fix. If you've been sleeping very little for weeks, or feel so exhausted that it affects your safety, mood, or work, this is worth taking seriously. You don't have to manage this alone or push through quietly. Talking to someone you trust, or someone who can help, is a sign of strength, not weakness."
+      },
+      "ta": {
+        "headline": "தூக்கம் சிக்கலாகவே இருந்தால், உதவி கேட்பது தவறில்லை.",
+        "text": "சில நேரங்களில் சோர்வு, வழக்கமான ஓய்வு முறைகளால் மட்டும் சரியாகாது. பல வாரங்களாக சரியாக தூங்காமல் இருந்தால், அல்லது சோர்வு உங்கள் பாதுகாப்பு, மனநிலை அல்லது வேலையை பாதிக்குமளவு இருந்தால், இதை கவனமாக எடுத்துக் கொள்ள வேண்டும். இதை தனியாக சமாளிக்க வேண்டிய அவசியமில்லை, மௌனமாக சகித்துக் கொள்ளவும் தேவையில்லை. நம்பிக்கையான ஒருவரிடம் பேசுவது அல்லது உதவி தேடுவது பலவீனம் அல்ல, தைரியத்தின் அடையாளம்."
+      },
+      "bn": {
+        "headline": "ঘুমের সমস্যা চলতে থাকলে সাহায্য চাওয়া ঠিক আছে।",
+        "text": "কখনো কখনো ক্লান্তি শুধু একটা ভালো রুটিন দিয়ে ঠিক হয় না। যদি কয়েক সপ্তাহ ধরে প্রায় ঘুমই না হয়, বা ক্লান্তি এতটাই বেশি হয় যে তা আপনার নিরাপত্তা, মন বা কাজকে প্রভাবিত করে, তাহলে এটা গুরুত্ব দিয়ে দেখা দরকার। এটা একা সামলানোর বা চুপচাপ সহ্য করার দরকার নেই। যাকে বিশ্বাস করেন তার সাথে কথা বলা, বা সাহায্য চাওয়া, দুর্বলতা নয় বরং সাহসের লক্ষণ।"
+      },
+      "zh": {
+        "headline": "如果一直睡不好,寻求帮助是可以的。",
+        "text": "有时候,疲惫已经不是靠调整作息就能解决的了。如果你已经好几个星期几乎睡不着,或者累到影响了安全、情绪或工作,这就需要认真对待了。你不必独自硬撑,也不必默默忍受。和信任的人聊聊,或寻求帮助,这是勇敢的表现,不是软弱。"
+      },
+      "th": {
+        "headline": "ถ้านอนไม่หลับเรื้อรัง การขอความช่วยเหลือไม่ใช่เรื่องผิด",
+        "text": "บางครั้งความเหนื่อยล้าก็ไม่ใช่แค่เรื่องที่กิจวัตรดีๆ จะแก้ได้ หากคุณนอนแทบไม่หลับมาหลายสัปดาห์ หรือเหนื่อยล้าจนกระทบความปลอดภัย อารมณ์ หรือการทำงาน นี่เป็นเรื่องที่ควรใส่ใจอย่างจริงจัง คุณไม่จำเป็นต้องแบกรับเรื่องนี้ไว้คนเดียวหรือฝืนทนเงียบๆ การพูดคุยกับคนที่คุณไว้ใจ หรือขอความช่วยเหลือ คือสัญญาณของความกล้าหาญ ไม่ใช่ความอ่อนแอ"
+      },
+      "my": {
+        "headline": "အိပ်စက်ရခက်ခဲမှုဆက်ဖြစ်နေရင် အကူအညီတောင်းတာ မှားတာမဟုတ်ပါဘူး။",
+        "text": "တစ်ခါတစ်ရံ ပင်ပန်းနွမ်းနယ်မှုဟာ လေ့ကျင့်မှုကောင်းကောင်းလေးနဲ့တင် ပြေလည်သွားတာမျိုးမဟုတ်ပါဘူး။ ရက်သတ္တပတ်များစွာ အိပ်မရသလောက်ဖြစ်နေရင် သို့မဟုတ် ပင်ပန်းနွမ်းနယ်မှုက သင့်ဘေးကင်းမှု၊ စိတ်ခံစားချက် သို့မဟုတ် အလုပ်ကို ထိခိုက်လောက်အောင်ဖြစ်နေရင် ဒါကိုအလေးထားစဉ်းစားသင့်ပါတယ်။ ဒါကို တစ်ယောက်တည်းခံစားနေစရာ၊ ဆိတ်ဆိတ်သည်းခံနေစရာမလိုပါဘူး။ သင်ယုံကြည်ရသူတစ်ဦးနဲ့ပြောတာ၊ အကူအညီတောင်းတာဟာ အားနည်းခြင်းမဟုတ်ဘဲ သတ္တိရှိခြင်းပဲ ဖြစ်ပါတယ်။"
+      }
+    }
+  }
+],
       quiz: {
         en:{ question:"What can help you sleep better after a night shift?", options:["Drink coffee or tea right before sleeping","Keep the room dark and cool, and sleep around the same time each day","Use your phone in bed until you feel tired"], correct:1, wrongFeedback:"Not quite — that can actually make it harder for your body to fall asleep. Try another answer.", correctFeedback:"That's right. A dark, quiet room and a steady sleep time help your body rest properly." },
         ta:{ question:"இரவு ஷிப்ட்டுக்குப் பிறகு நன்றாக தூங்க எது உதவும்?", options:["தூங்குவதற்கு முன் காபி அல்லது தேநீர் குடித்தல்","அறையை இருட்டாகவும் குளிர்ச்சியாகவும் வைத்து, தினமும் ஒரே நேரத்தில் தூங்குதல்","படுக்கையில் தூக்கம் வரும் வரை போனைப் பயன்படுத்துதல்"], correct:1, wrongFeedback:"சரியில்லை — அது உண்மையில் உங்கள் உடலுக்கு தூங்குவதை கடினமாக்கும். வேறு பதிலை முயற்சிக்கவும்.", correctFeedback:"சரி. இருண்ட, அமைதியான அறையும் நிலையான தூக்க நேரமும் உங்கள் உடலை சரியாக ஓய்வெடுக்க உதவும்." },
@@ -631,17 +1010,187 @@
       }
     },
     homesick: {
-      steps: 3, status: 'not-started', currentStep: 0,
+      steps: 5, status: 'not-started', currentStep: 0,
       iconPath: 'M20.8 4.6a5 5 0 00-7.1 0L12 6.3l-1.7-1.7a5 5 0 10-7.1 7.1L12 20.4l8.8-8.7a5 5 0 000-7.1z', iconBg:'#E3EFEC', iconColorSmall:'#0E5C55', iconColorBig:'#0E5C55',
       titles: { en:'Homesickness & Staying Connected', ta:'வீட்டை நினைத்து ஏங்குதல் & தொடர்பில் இருத்தல்', bn:'বাড়ির জন্য মন খারাপ ও যোগাযোগ রাখা', zh:'思乡与保持联系', my:'ပြည်တွင်းကို လွမ်းခြင်းနှင့် ဆက်သွယ်မှုထိန်းသိမ်းခြင်း', th:'ความคิดถึงบ้านและการรักษาการติดต่อ' },
-      body: {
-        en:{ headline:"Missing home is a sign you care, not a weakness.", text:"Being far from family and friends is hard, especially during festivals or important days back home. Staying connected — even with a short message or call — can help you feel less alone." },
-        ta:{ headline:"வீட்டை நினைத்து ஏங்குவது அக்கறையின் அடையாளம், பலவீனம் அல்ல.", text:"குடும்பம் மற்றும் நண்பர்களை விட்டு தூரமாக இருப்பது கடினம், குறிப்பாக பண்டிகைகள் அல்லது முக்கியமான நாட்களில். ஒரு சிறிய செய்தி அல்லது அழைப்பு மூலமாவது தொடர்பில் இருப்பது தனிமையை குறைக்க உதவும்." },
-        bn:{ headline:"বাড়ির জন্য মন খারাপ হওয়া মানে আপনি যত্নশীল, দুর্বল নন।", text:"পরিবার ও বন্ধুদের থেকে দূরে থাকা কঠিন, বিশেষ করে উৎসব বা বাড়ির গুরুত্বপূর্ণ দিনগুলোতে। একটি ছোট বার্তা বা ফোন কলের মাধ্যমে যোগাযোগ রাখলেও একাকীত্ব কম অনুভব হতে পারে।" },
-        zh:{ headline:"想家,说明你是个重感情的人,不是软弱。", text:"远离家人朋友本来就不容易,尤其是在家乡过节或遇到重要日子的时候。哪怕只是发一条短信或打个电话,保持联系都能让你不那么孤单。" },
-        th:{ headline:"การคิดถึงบ้านแสดงว่าคุณเป็นคนที่มีความรัก ไม่ใช่ความอ่อนแอ", text:"การอยู่ไกลจากครอบครัวและเพื่อนเป็นเรื่องยาก โดยเฉพาะช่วงเทศกาลหรือวันสำคัญที่บ้าน การติดต่อกัน แม้เพียงข้อความสั้นๆ หรือโทรศัพท์ ก็ช่วยให้รู้สึกโดดเดี่ยวน้อยลงได้" },
-        my:{ headline:"ပြည်တွင်းကို လွမ်းဆွတ်တာက ဂရုစိုက်မှု ရှိကြောင်း ပြသနေတာပါ၊ အားနည်းချက်မဟုတ်ပါဘူး။", text:"မိသားစုနဲ့ သူငယ်ချင်းတွေနဲ့ ဝေးကွာနေရတာက ခက်ခဲပါတယ်၊ အထူးသဖြင့် ပွဲတော်များ သို့မဟုတ် ပြည်တွင်းက အရေးကြီးနေ့များမှာ။ စာတိုလေးတစ်စောင် သို့မဟုတ် ဖုန်းခေါ်ဆိုမှုတစ်ခုနဲ့တောင် ဆက်သွယ်နေခြင်းက အထီးကျန်မှုကို လျော့ချပေးနိုင်ပါတယ်။" }
+      chapters: [
+  {
+    "shortTitle": {
+      "en": "Missing Home is Okay",
+      "ta": "வீட்டை நினைப்பது பரவாயில்லை",
+      "bn": "বাড়ির জন্য মন খারাপ করা ঠিক আছে",
+      "zh": "想家没有关系",
+      "th": "คิดถึงบ้านเป็นเรื่องปกติ",
+      "my": "အိမ်လွမ်းခြင်းက ကိစ္စမရှိပါ"
+    },
+    "description": {
+      "en": "Why homesickness is a sign you care, not something to hide.",
+      "ta": "வீட்டு ஏக்கம் நீங்கள் அக்கறை கொண்டிருப்பதற்கான அடையாளம், மறைக்க வேண்டியது அல்ல.",
+      "bn": "বাড়ির জন্য মন খারাপ হওয়া আপনার যত্নের প্রমাণ, লুকানোর কিছু নয়।",
+      "zh": "思乡是你重情重义的表现,不是需要隐藏的事。",
+      "th": "ความคิดถึงบ้านเป็นสัญญาณว่าคุณใส่ใจ ไม่ใช่สิ่งที่ต้องปิดบัง",
+      "my": "အိမ်လွမ်းခြင်းက သင့်ဂရုစိုက်မှု၏ လက္ခဏာဖြစ်ပြီး ဖုံးကွယ်ထားစရာမဟုတ်ပါ။"
+    },
+    "body": {
+      "en": {
+        "headline": "Missing home is a sign you care, not a weakness.",
+        "text": "Being far from family and friends is hard, especially during festivals or important days back home. Staying connected — even with a short message or call — can help you feel less alone."
       },
+      "ta": {
+        "headline": "வீட்டை நினைத்து ஏங்குவது அக்கறையின் அடையாளம், பலவீனம் அல்ல.",
+        "text": "குடும்பம் மற்றும் நண்பர்களை விட்டு தூரமாக இருப்பது கடினம், குறிப்பாக பண்டிகைகள் அல்லது முக்கியமான நாட்களில். ஒரு சிறிய செய்தி அல்லது அழைப்பு மூலமாவது தொடர்பில் இருப்பது தனிமையை குறைக்க உதவும்."
+      },
+      "bn": {
+        "headline": "বাড়ির জন্য মন খারাপ হওয়া মানে আপনি যত্নশীল, দুর্বল নন।",
+        "text": "পরিবার ও বন্ধুদের থেকে দূরে থাকা কঠিন, বিশেষ করে উৎসব বা বাড়ির গুরুত্বপূর্ণ দিনগুলোতে। একটি ছোট বার্তা বা ফোন কলের মাধ্যমে যোগাযোগ রাখলেও একাকীত্ব কম অনুভব হতে পারে।"
+      },
+      "zh": {
+        "headline": "想家,说明你是个重感情的人,不是软弱。",
+        "text": "远离家人朋友本来就不容易,尤其是在家乡过节或遇到重要日子的时候。哪怕只是发一条短信或打个电话,保持联系都能让你不那么孤单。"
+      },
+      "th": {
+        "headline": "การคิดถึงบ้านแสดงว่าคุณเป็นคนที่มีความรัก ไม่ใช่ความอ่อนแอ",
+        "text": "การอยู่ไกลจากครอบครัวและเพื่อนเป็นเรื่องยาก โดยเฉพาะช่วงเทศกาลหรือวันสำคัญที่บ้าน การติดต่อกัน แม้เพียงข้อความสั้นๆ หรือโทรศัพท์ ก็ช่วยให้รู้สึกโดดเดี่ยวน้อยลงได้"
+      },
+      "my": {
+        "headline": "ပြည်တွင်းကို လွမ်းဆွတ်တာက ဂရုစိုက်မှု ရှိကြောင်း ပြသနေတာပါ၊ အားနည်းချက်မဟုတ်ပါဘူး။",
+        "text": "မိသားစုနဲ့ သူငယ်ချင်းတွေနဲ့ ဝေးကွာနေရတာက ခက်ခဲပါတယ်၊ အထူးသဖြင့် ပွဲတော်များ သို့မဟုတ် ပြည်တွင်းက အရေးကြီးနေ့များမှာ။ စာတိုလေးတစ်စောင် သို့မဟုတ် ဖုန်းခေါ်ဆိုမှုတစ်ခုနဲ့တောင် ဆက်သွယ်နေခြင်းက အထီးကျန်မှုကို လျော့ချပေးနိုင်ပါတယ်။"
+      }
+    }
+  },
+  {
+    "shortTitle": {
+      "en": "Staying Connected",
+      "ta": "தொடர்பில் இருங்கள்",
+      "bn": "যোগাযোগ রাখুন",
+      "zh": "保持联系",
+      "th": "รักษาการติดต่อ",
+      "my": "ဆက်သွယ်မှု ထိန်းသိမ်းခြင်း"
+    },
+    "description": {
+      "en": "Simple ways to stay close to family and friends back home.",
+      "ta": "வீட்டில் உள்ளவர்களுடன் நெருக்கமாக இருக்க எளிய வழிகள்.",
+      "bn": "দূরে থেকেও বাড়ির মানুষের কাছাকাছি থাকার সহজ উপায়।",
+      "zh": "一些简单的方法,让你和家人朋友的心更近。",
+      "th": "วิธีง่ายๆ ในการรักษาความสัมพันธ์กับครอบครัวที่บ้าน",
+      "my": "အိမ်က မိသားစုနှင့် နီးကပ်စွာနေနိုင်ရန် ရိုးရှင်းသော နည်းလမ်းများ။"
+    },
+    "body": {
+      "en": {
+        "headline": "A short call can still mean a lot.",
+        "text": "You don't need a long conversation to feel close — a quick video call, a voice message, or a few photos can help your family feel like you're still part of their everyday life. Try to connect regularly, even if it's just for a few minutes between shifts. If there's a festival or celebration back home, a video call during the event can help you feel part of it, even from far away. It's okay if calls are short sometimes — what matters is staying in touch, not how long you talk."
+      },
+      "ta": {
+        "headline": "ஒரு குறுகிய அழைப்பும் நிறைய அர்த்தமுள்ளதாக இருக்கும்.",
+        "text": "நீண்ட நேரம் பேச வேண்டிய அவசியமில்லை — ஒரு சிறிய வீடியோ அழைப்பு, குரல் செய்தி, அல்லது சில புகைப்படங்கள் கூட உங்கள் குடும்பத்திற்கு நீங்கள் இன்னும் அவர்களுடன் இருக்கிறீர்கள் என்ற உணர்வைத் தரும். வேலை நேரங்களுக்கு இடையே சிறிது நேரமே கிடைத்தாலும், அடிக்கடி தொடர்பில் இருக்க முயற்சி செய்யுங்கள். வீட்டில் ஒரு பண்டிகை அல்லது கொண்டாட்டம் நடக்கும்போது, அந்த நேரத்தில் ஒரு வீடியோ அழைப்பு செய்தால், தூரத்திலிருந்தே நீங்களும் அதில் பங்கேற்பது போல உணரலாம். சில நேரங்களில் அழைப்பு குறுகியதாக இருந்தாலும் பரவாயில்லை — எவ்வளவு நேரம் பேசுகிறீர்கள் என்பதல்ல, தொடர்பில் இருப்பதே முக்கியம்."
+      },
+      "bn": {
+        "headline": "একটা ছোট কলও অনেক কিছু বোঝাতে পারে।",
+        "text": "কাছাকাছি থাকার জন্য লম্বা কথা বলার দরকার নেই — একটা ছোট ভিডিও কল, একটা ভয়েস মেসেজ বা কয়েকটা ছবিই আপনার পরিবারকে বুঝিয়ে দিতে পারে যে আপনি এখনও তাদের দৈনন্দিন জীবনের অংশ। কাজের ফাঁকে অল্প সময়ের জন্য হলেও নিয়মিত যোগাযোগ রাখার চেষ্টা করুন। বাড়িতে কোনো উৎসব বা অনুষ্ঠান হলে, সেই সময় একটা ভিডিও কল করলে আপনি দূরে থেকেও তার অংশ হতে পারেন। মাঝে মাঝে কল ছোট হলেও কোনো সমস্যা নেই — কত সময় কথা বললেন সেটা বড় কথা নয়, যোগাযোগ রাখাটাই আসল।"
+      },
+      "zh": {
+        "headline": "一通简短的电话,也能传递满满的关心。",
+        "text": "想要让家人感觉你一直在身边,不一定要长谈——一个简短的视频通话、一条语音留言,或者几张照片,就能让他们觉得你还在参与他们的日常生活。即使只有轮班间隙的几分钟,也尽量常联系。家里有节日或喜庆的日子时,在那个时刻拨个视频电话过去,就算人不在场,心也能一起热闹。有时候电话很短没关系,重要的不是聊了多久,而是你们一直有联系。"
+      },
+      "th": {
+        "headline": "แค่โทรสั้นๆ ก็มีความหมายมากกว่าที่คิด",
+        "text": "ไม่จำเป็นต้องคุยนาน ๆ ถึงจะรู้สึกใกล้ชิดกัน แค่วิดีโอคอลสั้น ๆ ข้อความเสียง หรือรูปถ่ายไม่กี่รูป ก็ช่วยให้ครอบครัวรู้สึกว่าคุณยังเป็นส่วนหนึ่งในชีวิตประจำวันของพวกเขา พยายามติดต่อกันบ่อย ๆ แม้จะมีเวลาแค่ไม่กี่นาทีระหว่างกะงาน ถ้าที่บ้านมีเทศกาลหรือวันสำคัญ ลองวิดีโอคอลในช่วงเวลานั้น จะช่วยให้รู้สึกเหมือนได้ร่วมฉลองด้วย ถึงจะอยู่ไกลกันก็ตาม บางครั้งโทรสั้น ๆ ก็ไม่เป็นไร สิ่งสำคัญคือการได้ติดต่อกัน ไม่ใช่ว่าคุยกันนานแค่ไหน"
+      },
+      "my": {
+        "headline": "အချိန်တိုတိုဖုန်းဆက်ခြင်းကပင် အများကြီးအဓိပ္ပာယ်ရှိနိုင်သည်။",
+        "text": "နီးကပ်နေရန် အချိန်ကြာကြာ စကားပြောစရာမလိုပါ — ဗွီဒီယိုကောလ်တိုတို၊ အသံစာတိုတစ်ခု၊ သို့မဟုတ် ဓာတ်ပုံအနည်းငယ်ကပင် သင့်မိသားစုအား သင်သည် သူတို့၏ နေ့စဉ်ဘဝထဲတွင် ဆက်လက်ပါဝင်နေသည်ဟု ခံစားစေနိုင်သည်။ အလုပ်အပြောင်းအလဲကြားက အချိန်ငယ်ပေမယ့် မှန်မှန်ဆက်သွယ်ဖို့ ကြိုးစားပါ။ အိမ်မှာ ပွဲတော်တစ်ခု သို့မဟုတ် အထူးရက်တစ်ရက်ရှိနေရင် အဲ့အချိန်မှာ ဗွီဒီယိုကောလ်ဆက်လိုက်ခြင်းက ဝေးကွာနေပေမယ့် အဲ့ပွဲတော်ထဲမှာ ပါဝင်နေသလိုခံစားစေနိုင်ပါတယ်။ တစ်ခါတစ်ရံ ဖုန်းခေါ်ဆိုမှု တိုတောင်းနေရင်လည်း ကိစ္စမရှိပါ — ဘယ်လောက်ကြာကြာပြောသလဲဆိုတာ မဟုတ်ဘဲ ဆက်သွယ်မှုရှိနေတာက အရေးကြီးတာပါ။"
+      }
+    }
+  },
+  {
+    "shortTitle": {
+      "en": "Finding Community Here",
+      "ta": "இங்கே நட்பு வட்டம்",
+      "bn": "এখানে সম্প্রদায় খুঁজুন",
+      "zh": "在这里找到归属",
+      "th": "หาชุมชนที่นี่",
+      "my": "ဒီမှာ အသိုင်းအဝိုင်းရှာခြင်း"
+    },
+    "description": {
+      "en": "Building friendships and support in Singapore, right where you are.",
+      "ta": "சிங்கப்பூரில் நண்பர்களையும் ஆதரவையும் உருவாக்குதல்.",
+      "bn": "সিঙ্গাপুরে বন্ধুত্ব আর সহায়তার বৃত্ত তৈরি করা।",
+      "zh": "在新加坡结交朋友,建立属于自己的支持圈子。",
+      "th": "สร้างมิตรภาพและเครือข่ายสนับสนุนในสิงคโปร์",
+      "my": "စင်္ကာပူတွင် မိတ်ဆွေများနှင့် အားကိုးရာများ တည်ဆောက်ခြင်း။"
+    },
+    "body": {
+      "en": {
+        "headline": "You don't have to build your life here alone.",
+        "text": "Having people around you in Singapore who understand what you're going through can make a big difference. Look out for friends from your hometown, friendly colleagues, or community and religious groups that welcome workers like you. Simple things — a shared meal on your rest day, a walk, or joining a cultural gathering — can help you feel less isolated. Building a few good connections here doesn't replace home, but it can make daily life feel warmer."
+      },
+      "ta": {
+        "headline": "இங்கே உங்கள் வாழ்க்கையை தனியாக கட்ட வேண்டியதில்லை.",
+        "text": "உங்களைப் புரிந்துகொள்ளும் மக்கள் சுற்றியிருப்பது சிங்கப்பூரில் பெரிய மாற்றத்தை ஏற்படுத்தும். உங்கள் ஊரைச் சேர்ந்த நண்பர்கள், நட்பான சக பணியாளர்கள், அல்லது உங்களை வரவேற்கும் சமூக மற்றும் மத அமைப்புகளைத் தேடுங்கள். ஓய்வு நாளில் ஒன்றாக சாப்பிடுவது, நடைபயிற்சி செல்வது, அல்லது கலாச்சார நிகழ்வில் கலந்துகொள்வது போன்ற சிறிய விஷயங்கள் தனிமை உணர்வைக் குறைக்க உதவும். இங்கே சில நல்ல நட்புகளை வளர்த்துக்கொள்வது வீட்டிற்கு மாற்றாக இல்லாவிட்டாலும், தினசரி வாழ்க்கையை இன்னும் சூடாக உணர வைக்கும்."
+      },
+      "bn": {
+        "headline": "এখানে আপনাকে একা জীবন গড়তে হবে না।",
+        "text": "চারপাশে এমন মানুষ থাকা যারা আপনার অবস্থা বোঝেন, সিঙ্গাপুরে অনেক পার্থক্য তৈরি করতে পারে। নিজের দেশের বন্ধু, বন্ধুসুলভ সহকর্মী, অথবা আপনাকে স্বাগত জানায় এমন সামাজিক বা ধর্মীয় দলের সন্ধান করুন। ছুটির দিনে একসাথে খাওয়া, হাঁটতে যাওয়া, বা কোনো সাংস্কৃতিক অনুষ্ঠানে যোগ দেওয়ার মতো ছোট ছোট কাজ একাকীত্ব কমাতে সাহায্য করতে পারে। এখানে কিছু ভালো সম্পর্ক গড়ে তোলা বাড়ির বিকল্প নয়, কিন্তু এটা প্রতিদিনের জীবনকে একটু বেশি উষ্ণ করে তুলতে পারে।"
+      },
+      "zh": {
+        "headline": "在这里生活,你不必一个人扛。",
+        "text": "身边有理解你处境的人,会让在新加坡的生活大不一样。多留意来自家乡的朋友、相处融洽的同事,或是愿意接纳你的社群和宗教团体。休息日一起吃顿饭、散散步,或者参加一次文化聚会,这些看似简单的事都能让你少一点孤单。在这里结识几个谈得来的朋友,代替不了家,但能让日子过得更有温度。"
+      },
+      "th": {
+        "headline": "คุณไม่ต้องสร้างชีวิตที่นี่เพียงลำพัง",
+        "text": "การมีคนรอบตัวที่เข้าใจสิ่งที่คุณกำลังเผชิญ ช่วยให้ชีวิตในสิงคโปร์ดีขึ้นได้มาก ลองมองหาเพื่อนจากบ้านเกิด เพื่อนร่วมงานที่เป็นมิตร หรือกลุ่มชุมชนและศาสนาที่ยินดีต้อนรับคนอย่างคุณ เรื่องง่าย ๆ อย่างการกินข้าวด้วยกันในวันหยุด เดินเล่น หรือไปร่วมงานทางวัฒนธรรม ก็ช่วยลดความรู้สึกโดดเดี่ยวได้ การมีเพื่อนดี ๆ สักสองสามคนที่นี่ไม่ได้มาแทนบ้าน แต่ช่วยให้ชีวิตประจำวันอบอุ่นขึ้นได้"
+      },
+      "my": {
+        "headline": "ဒီမှာ သင့်ဘဝကို တစ်ယောက်တည်း တည်ဆောက်ဖို့မလိုပါ။",
+        "text": "သင့်အခြေအနေကို နားလည်ပေးသော လူများ ပတ်ဝန်းကျင်တွင်ရှိခြင်းက စင်္ကာပူရဲ့ ဘဝကို ကွာခြားစေနိုင်ပါတယ်။ မိမိရပ်ရွာက မိတ်ဆွေများ၊ ရင်းနှီးသော လုပ်ဖော်ကိုင်ဖက်များ၊ သို့မဟုတ် သင့်ကို ကြိုဆိုသော အသိုင်းအဝိုင်း သို့မဟုတ် ဘာသာရေးအဖွဲ့များကို ရှာကြည့်ပါ။ အနားယူရက်တွင် အတူစားသောက်ခြင်း၊ လမ်းလျှောက်ခြင်း၊ သို့မဟုတ် ယဉ်ကျေးမှုဆိုင်ရာ စုဝေးပွဲတစ်ခုတွင် ပါဝင်ခြင်းကဲ့သို့ ရိုးရှင်းသောအရာများက တစ်ယောက်တည်းဆန်သည့် ခံစားချက်ကို လျှော့ချပေးနိုင်ပါတယ်။ ဒီမှာ မိတ်ဆွေကောင်းအနည်းငယ် ရှာတွေ့ခြင်းက အိမ်ကို အစားထိုးလို့ မရပေမယ့် နေ့စဉ်ဘဝကို ပိုနွေးထွေးစေနိုင်ပါတယ်။"
+      }
+    }
+  },
+  {
+    "shortTitle": {
+      "en": "When It Feels Heavier",
+      "ta": "கனமாக உணரும்போது",
+      "bn": "যখন এটা ভারী মনে হয়",
+      "zh": "当思乡变得沉重",
+      "th": "เมื่อความคิดถึงหนักเกินไป",
+      "my": "ပိုမိုလေးလံစွာ ခံစားရချိန်"
+    },
+    "description": {
+      "en": "Recognising when homesickness runs deeper, and that help is okay.",
+      "ta": "வீட்டு ஏக்கம் ஆழமாகும்போது கவனிப்பதும், உதவி கேட்பதும் பரவாயில்லை.",
+      "bn": "বাড়ির জন্য মন খারাপ গভীর হলে বোঝা এবং সাহায্য চাওয়া ঠিক আছে।",
+      "zh": "认识思乡情绪加深的信号,明白寻求帮助并不丢人。",
+      "th": "สังเกตเมื่อความคิดถึงบ้านลึกซึ้งขึ้น และรู้ว่าการขอความช่วยเหลือไม่ใช่เรื่องผิด",
+      "my": "အိမ်လွမ်းခြင်း နက်ရှိုင်းလာချိန်ကို သိရှိပြီး အကူအညီတောင်းဖို့ ကိစ္စမရှိကြောင်း နားလည်ခြင်း။"
+    },
+    "body": {
+      "en": {
+        "headline": "If missing home starts to feel too heavy, you don't have to carry it alone.",
+        "text": "It's normal to feel sad or homesick sometimes, but if that feeling doesn't go away, or you start losing interest in things you usually enjoy, or feel stuck most days, it may be more than ordinary homesickness. This doesn't mean something is wrong with you — it happens to many people living far from home. Talking to someone you trust, like a friend, colleague, or counsellor, can help lighten the weight. You deserve support, and reaching out is a sign of strength, not weakness."
+      },
+      "ta": {
+        "headline": "வீட்டு ஏக்கம் தாங்க முடியாததாக உணர்ந்தால், அதை தனியாக சுமக்க வேண்டாம்.",
+        "text": "சில நேரங்களில் வருத்தமாகவோ வீட்டை நினைத்து ஏங்கவோ உணர்வது இயல்பானதுதான், ஆனால் அந்த உணர்வு மறையாமல் தொடர்ந்தால், அல்லது நீங்கள் விரும்பும் விஷயங்களில் ஆர்வம் குறைந்தால், அல்லது பெரும்பாலான நாட்களில் முடக்கப்பட்டது போல உணர்ந்தால், அது சாதாரண வீட்டு ஏக்கத்தை விட அதிகமாக இருக்கலாம். இது உங்களுக்கு ஏதோ தவறு என்று அர்த்தமல்ல — வீட்டை விட்டு தூரத்தில் வாழும் பலருக்கும் இது நடக்கிறது. நீங்கள் நம்பும் ஒருவரிடம், நண்பர், சக பணியாளர், அல்லது ஆலோசகரிடம் பேசுவது அந்த சுமையைக் குறைக்க உதவும். உதவி பெறுவது உங்களுக்கு உரிமை, மேலும் உதவி கேட்பது பலவீனம் அல்ல, அது வலிமையின் அடையாளம்."
+      },
+      "bn": {
+        "headline": "বাড়ির জন্য মন খারাপ যদি খুব ভারী মনে হয়, সেটা একা বহন করতে হবে না।",
+        "text": "মাঝে মাঝে মন খারাপ হওয়া বা বাড়ির জন্য মন কেমন করা স্বাভাবিক, কিন্তু সেই অনুভূতি যদি দূর না হয়, বা আপনার ভালো লাগার জিনিসগুলোতে আগ্রহ কমে যায়, বা বেশিরভাগ দিন আটকে পড়া মনে হয়, তাহলে সেটা সাধারণ হোমসিকনেসের চেয়ে বেশি কিছু হতে পারে। এর মানে এই নয় যে আপনার মধ্যে কিছু ভুল আছে — বাড়ি থেকে দূরে থাকা অনেকের সাথেই এমনটা হয়। যাকে বিশ্বাস করেন, এমন কারো সাথে — বন্ধু, সহকর্মী বা কাউন্সেলরের সাথে — কথা বললে মনের ভার কিছুটা হালকা হতে পারে। সাহায্য পাওয়ার অধিকার আপনার আছে, আর সাহায্য চাওয়া দুর্বলতা নয়, বরং শক্তির লক্ষণ।"
+      },
+      "zh": {
+        "headline": "如果想家的感觉变得太沉重,你不需要一个人扛着。",
+        "text": "偶尔感到难过或想家很正常,但如果这种情绪一直挥之不去,或者你开始对平时喜欢的事提不起兴趣,或者大部分日子都觉得走不出来,那可能已经不只是普通的想家了。这并不代表你哪里出了问题——很多远离家乡生活的人都经历过这样的时刻。找一个你信得过的人聊聊,比如朋友、同事,或是辅导员,心里的负担会轻一些。你值得被支持,开口求助不是软弱,反而是一种勇气。"
+      },
+      "th": {
+        "headline": "ถ้าความคิดถึงบ้านเริ่มหนักเกินจะแบกไหว คุณไม่ต้องแบกมันคนเดียว",
+        "text": "การรู้สึกเศร้าหรือคิดถึงบ้านเป็นครั้งคราวถือเป็นเรื่องปกติ แต่ถ้าความรู้สึกนั้นไม่หายไป หรือคุณเริ่มไม่สนใจสิ่งที่เคยชอบ หรือรู้สึกเหมือนติดอยู่กับที่เกือบทุกวัน นั่นอาจเป็นมากกว่าความคิดถึงบ้านธรรมดา สิ่งนี้ไม่ได้แปลว่าคุณมีอะไรผิดปกติ เพราะหลายคนที่ใช้ชีวิตไกลบ้านก็เคยเจอแบบนี้เช่นกัน การพูดคุยกับคนที่คุณไว้ใจ ไม่ว่าจะเป็นเพื่อน เพื่อนร่วมงาน หรือที่ปรึกษา จะช่วยให้ความรู้สึกหนักอึ้งนั้นเบาลงได้ คุณสมควรได้รับการสนับสนุน และการขอความช่วยเหลือไม่ใช่ความอ่อนแอ แต่เป็นสัญญาณของความเข้มแข็ง"
+      },
+      "my": {
+        "headline": "အိမ်လွမ်းခြင်းက သယ်ဖို့ မလွယ်လောက်အောင် လေးလံလာရင် တစ်ယောက်တည်း မခံစားရပါဘူး။",
+        "text": "တစ်ခါတစ်ရံ စိတ်မကောင်းဖြစ်ခြင်း သို့မဟုတ် အိမ်လွမ်းခြင်းက ပုံမှန်ပါပဲ၊ ဒါပေမယ့် အဲ့ခံစားချက်က မပျောက်ဘဲ ဆက်နေခဲ့ရင်၊ သို့မဟုတ် ပုံမှန်နှစ်သက်တဲ့အရာတွေမှာ စိတ်ဝင်စားမှု လျော့သွားရင်၊ သို့မဟုတ် နေ့အများစုမှာ ရှေ့မတိုးနိုင်ဘဲ ရပ်နေသလို ခံစားရရင် ဒါက သာမန်အိမ်လွမ်းခြင်းထက် ပိုနက်ရှိုင်းနေနိုင်ပါတယ်။ ဒါက သင့်မှာ တစ်ခုခုမှားနေလို့ မဟုတ်ပါဘူး — အိမ်နှင့်ဝေးကွာစွာနေထိုင်ကြသူ အများစုမှာ ဖြစ်တတ်တဲ့အရာပါ။ သင်ယုံကြည်ရသူ မိတ်ဆွေ၊ လုပ်ဖော်ကိုင်ဖက်၊ သို့မဟုတ် အကြံပေးပညာရှင်တစ်ဦးနှင့် စကားပြောခြင်းက အဲ့ဝန်ထုပ်ကို ပေါ့ပါးစေနိုင်ပါတယ်။ သင်သည် အားပေးမှုခံထိုက်ပါတယ်၊ ပြီးတော့ အကူအညီတောင်းခြင်းက အားနည်းခြင်းမဟုတ်ဘဲ ခွန်အားရှိခြင်းရဲ့ လက္ခဏာပါ။"
+      }
+    }
+  }
+],
       quiz: {
         en:{ question:"What can help when you are missing home?", options:["Avoid talking about it so it hurts less","Call or message family, or talk to a friend or peer leader about it","Keep it to yourself and work longer hours to distract yourself"], correct:1, wrongFeedback:"Not quite — keeping it inside usually makes the feeling heavier, not lighter. Try another answer.", correctFeedback:"That's right. Staying connected and talking about it can really help." },
         ta:{ question:"வீட்டை நினைத்து ஏங்கும்போது எது உதவும்?", options:["குறைவாக வலிக்க, அதைப் பற்றி பேசாமல் தவிர்த்தல்","குடும்பத்தை அழைத்தல் அல்லது செய்தி அனுப்புதல், அல்லது நண்பர் அல்லது பீர் லீடருடன் பேசுதல்","அதை தனக்குள் வைத்துக்கொண்டு, கவனத்தைத் திசை திருப்ப அதிக நேரம் வேலை செய்தல்"], correct:1, wrongFeedback:"சரியில்லை — உள்ளேயே வைத்துக்கொள்வது பொதுவாக உணர்வை இலகுவாக்காமல் கனமாக்கும். வேறு பதிலை முயற்சிக்கவும்.", correctFeedback:"சரி. தொடர்பில் இருப்பதும் அதைப் பற்றி பேசுவதும் உண்மையிலேயே உதவும்." },
@@ -652,17 +1201,187 @@
       }
     },
     money: {
-      steps: 4, status: 'done', currentStep: 4,
+      steps: 5, status: 'done', currentStep: 5,
       iconPath: 'M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6', iconBg:'#E7F2EB', iconColorSmall:'#0E5C55', iconColorBig:'#0E5C55',
       titles: { en:'Money Worries & Remittances', ta:'பண கவலைகள் & பணம் அனுப்புதல்', bn:'অর্থ চিন্তা ও রেমিট্যান্স', zh:'金钱烦恼与汇款', my:'ငွေကြေးစိုးရိမ်မှုနှင့် ငွေလွှဲခြင်း', th:'ความกังวลเรื่องเงินและการโอนเงิน' },
-      body: {
-        en:{ headline:"Money stress is common — you're not alone.", text:"Supporting family back home while managing your own costs here can feel heavy. Planning your spending and knowing where to ask for help can make it easier to manage." },
-        ta:{ headline:"பண அழுத்தம் பொதுவானது — நீங்கள் மட்டும் இல்லை.", text:"இங்கே உங்கள் சொந்த செலவுகளை நிர்வகிக்கும்போதே வீட்டில் உள்ள குடும்பத்தை ஆதரிப்பது சுமையாக உணரலாம். உங்கள் செலவுகளை திட்டமிடுவதும், உதவி எங்கே கேட்பது என்று தெரிந்துகொள்வதும் இதை எளிதாக்கும்." },
-        bn:{ headline:"অর্থ নিয়ে দুশ্চিন্তা সাধারণ ব্যাপার — আপনি একা নন।", text:"এখানে নিজের খরচ সামলানোর পাশাপাশি বাড়ির পরিবারকে সাহায্য করা কঠিন মনে হতে পারে। আপনার খরচের পরিকল্পনা করা এবং কোথায় সাহায্য চাইতে হবে তা জানা এটি সহজ করে তুলতে পারে।" },
-        zh:{ headline:"为钱烦恼很常见——不是只有你这样。", text:"一边要寄钱照顾家里,一边还要应付自己在这里的开销,压力自然不小。提前规划好自己的开销,并清楚知道遇到困难时可以向谁求助,会让事情容易处理得多。" },
-        th:{ headline:"ความกังวลเรื่องเงินเป็นเรื่องปกติ คุณไม่ได้เผชิญอยู่คนเดียว", text:"การส่งเงินช่วยเหลือครอบครัวที่บ้าน ในขณะที่ต้องดูแลค่าใช้จ่ายของตัวเองที่นี่ อาจรู้สึกเป็นภาระหนัก การวางแผนการใช้จ่ายและรู้ว่าจะขอความช่วยเหลือจากที่ไหนได้ จะช่วยให้จัดการได้ง่ายขึ้น" },
-        my:{ headline:"ငွေကြေး စိုးရိမ်မှုက အများသုံးပါပဲ — သင်တစ်ယောက်တည်း မဟုတ်ပါဘူး။", text:"ဒီမှာ ကိုယ်ပိုင်အသုံးစရိတ်တွေကို စီမံနေရင်း ပြည်တွင်းက မိသားစုကို ထောက်ပံ့နေရတာက ဝန်လေးနိုင်ပါတယ်။ အသုံးစရိတ်ကို စီစဉ်ထားခြင်းနဲ့ ဘယ်မှာ အကူအညီတောင်းရမလဲ သိထားခြင်းက ပိုစီမံလွယ်အောင် ကူညီနိုင်ပါတယ်။" }
+      chapters: [
+  {
+    "shortTitle": {
+      "en": "You're Not Alone",
+      "ta": "நீங்கள் தனியாக இல்லை",
+      "bn": "আপনি একা নন",
+      "zh": "你并不孤单",
+      "th": "คุณไม่ได้อยู่คนเดียว",
+      "my": "သင်တစ်ယောက်တည်း မဟုတ်ပါ"
+    },
+    "description": {
+      "en": "Why money stress is common, and how a little planning can help.",
+      "ta": "பண அழுத்தம் ஏன் பொதுவானது, சிறிய திட்டமிடல் எப்படி உதவும்.",
+      "bn": "কেন টাকার চাপ সাধারণ, আর একটু পরিকল্পনা কীভাবে সাহায্য করতে পারে।",
+      "zh": "为什么经济压力很常见,一点点规划如何能帮上忙。",
+      "th": "ทำไมความเครียดเรื่องเงินจึงพบได้ทั่วไป และการวางแผนเล็กน้อยช่วยได้อย่างไร",
+      "my": "ငွေကြေးဖိစီးမှုက အဘယ်ကြောင့် သာမန်ဖြစ်ပြီး အနည်းငယ် စီစဉ်ခြင်းက မည်သို့ အထောက်အကူဖြစ်နိုင်ကြောင်း။"
+    },
+    "body": {
+      "en": {
+        "headline": "Money stress is common — you're not alone.",
+        "text": "Supporting family back home while managing your own costs here can feel heavy. Planning your spending and knowing where to ask for help can make it easier to manage."
       },
+      "ta": {
+        "headline": "பண அழுத்தம் பொதுவானது — நீங்கள் மட்டும் இல்லை.",
+        "text": "இங்கே உங்கள் சொந்த செலவுகளை நிர்வகிக்கும்போதே வீட்டில் உள்ள குடும்பத்தை ஆதரிப்பது சுமையாக உணரலாம். உங்கள் செலவுகளை திட்டமிடுவதும், உதவி எங்கே கேட்பது என்று தெரிந்துகொள்வதும் இதை எளிதாக்கும்."
+      },
+      "bn": {
+        "headline": "অর্থ নিয়ে দুশ্চিন্তা সাধারণ ব্যাপার — আপনি একা নন।",
+        "text": "এখানে নিজের খরচ সামলানোর পাশাপাশি বাড়ির পরিবারকে সাহায্য করা কঠিন মনে হতে পারে। আপনার খরচের পরিকল্পনা করা এবং কোথায় সাহায্য চাইতে হবে তা জানা এটি সহজ করে তুলতে পারে।"
+      },
+      "zh": {
+        "headline": "为钱烦恼很常见——不是只有你这样。",
+        "text": "一边要寄钱照顾家里,一边还要应付自己在这里的开销,压力自然不小。提前规划好自己的开销,并清楚知道遇到困难时可以向谁求助,会让事情容易处理得多。"
+      },
+      "th": {
+        "headline": "ความกังวลเรื่องเงินเป็นเรื่องปกติ คุณไม่ได้เผชิญอยู่คนเดียว",
+        "text": "การส่งเงินช่วยเหลือครอบครัวที่บ้าน ในขณะที่ต้องดูแลค่าใช้จ่ายของตัวเองที่นี่ อาจรู้สึกเป็นภาระหนัก การวางแผนการใช้จ่ายและรู้ว่าจะขอความช่วยเหลือจากที่ไหนได้ จะช่วยให้จัดการได้ง่ายขึ้น"
+      },
+      "my": {
+        "headline": "ငွေကြေး စိုးရိမ်မှုက အများသုံးပါပဲ — သင်တစ်ယောက်တည်း မဟုတ်ပါဘူး။",
+        "text": "ဒီမှာ ကိုယ်ပိုင်အသုံးစရိတ်တွေကို စီမံနေရင်း ပြည်တွင်းက မိသားစုကို ထောက်ပံ့နေရတာက ဝန်လေးနိုင်ပါတယ်။ အသုံးစရိတ်ကို စီစဉ်ထားခြင်းနဲ့ ဘယ်မှာ အကူအညီတောင်းရမလဲ သိထားခြင်းက ပိုစီမံလွယ်အောင် ကူညီနိုင်ပါတယ်။"
+      }
+    }
+  },
+  {
+    "shortTitle": {
+      "en": "Planning Your Spending",
+      "ta": "செலவைத் திட்டமிடுங்கள்",
+      "bn": "খরচের পরিকল্পনা করুন",
+      "zh": "规划你的开支",
+      "th": "วางแผนการใช้จ่าย",
+      "my": "ကုန်ကျစရိတ် စီစဉ်ခြင်း"
+    },
+    "description": {
+      "en": "A simple way to split essentials, savings, and money sent home.",
+      "ta": "தேவைகள், சேமிப்பு, வீட்டிற்கு அனுப்பும் பணத்தைப் பிரிக்கும் எளிய வழி.",
+      "bn": "প্রয়োজনীয় খরচ, সঞ্চয় আর বাড়িতে পাঠানো টাকা ভাগ করার সহজ উপায়।",
+      "zh": "一个简单方法,把日常开销、储蓄和寄回家的钱分清楚。",
+      "th": "วิธีง่ายๆ ในการแบ่งเงินสำหรับค่าใช้จ่าย เงินออม และเงินส่งกลับบ้าน",
+      "my": "လိုအပ်ချက်၊ စုငွေနှင့် အိမ်ကိုပို့ငွေကို ခွဲခြားသိရှိရန် ရိုးရှင်းသောနည်းလမ်း။"
+    },
+    "body": {
+      "en": {
+        "headline": "A little planning each month can ease a lot of worry.",
+        "text": "Try keeping your pay separate in your mind: money for essentials (food, transport, phone), money you plan to send home, and a small amount set aside for emergencies. You don't need a complicated system — even a simple note on your phone listing these three groups helps. Having even a small emergency buffer, like a few days' worth of expenses, means an unexpected cost doesn't throw everything off balance. Review your rough plan each payday so it stays realistic."
+      },
+      "ta": {
+        "headline": "ஒவ்வொரு மாதமும் சிறிது திட்டமிடுவது பல கவலைகளைக் குறைக்கும்.",
+        "text": "உங்கள் சம்பளத்தை மனதளவில் பிரித்து வையுங்கள்: அத்தியாவசியங்களுக்கான பணம் (உணவு, போக்குவரத்து, போன்), வீட்டிற்கு அனுப்ப திட்டமிட்ட பணம், மற்றும் அவசரகாலத்திற்காக சிறிது தொகை. சிக்கலான முறை தேவையில்லை — உங்கள் போனில் இந்த மூன்று பிரிவுகளை எழுதி வைப்பது கூட உதவும். சில நாட்களுக்கான செலவுக்கு சமமான ஒரு சிறிய அவசரகால இருப்பு இருந்தாலும், எதிர்பாராத செலவு உங்கள் திட்டத்தைக் குலைக்காது. உங்கள் தோராயமான திட்டம் யதார்த்தமாக இருக்க ஒவ்வொரு சம்பள நாளிலும் அதை மறுபார்வை செய்யுங்கள்."
+      },
+      "bn": {
+        "headline": "প্রতি মাসে একটু পরিকল্পনা অনেক দুশ্চিন্তা কমাতে পারে।",
+        "text": "আপনার বেতনকে মনে মনে ভাগ করে রাখার চেষ্টা করুন: প্রয়োজনীয় খরচের টাকা (খাবার, যাতায়াত, ফোন), বাড়িতে পাঠানোর জন্য রাখা টাকা, আর জরুরি অবস্থার জন্য একটু আলাদা করে রাখা টাকা। জটিল কোনো পদ্ধতির দরকার নেই — ফোনে এই তিনটি ভাগ লিখে রাখলেই যথেষ্ট সাহায্য হয়। কয়েকদিনের খরচের সমান একটা ছোট জরুরি তহবিল থাকলে, হঠাৎ কোনো খরচ এলেও পুরো পরিকল্পনা ভেঙে পড়ে না। বেতনের দিন প্রতিবার এই পরিকল্পনাটা একটু দেখে নিন, যাতে এটা বাস্তবসম্মত থাকে।"
+      },
+      "zh": {
+        "headline": "每个月稍微规划一下,能省去不少烦恼。",
+        "text": "可以试着在心里把工资分成几份:日常必需开销(吃饭、交通、电话费)、打算寄回家的钱,还有留一小部分应急。不需要多复杂的系统——哪怕只是手机备忘录里列出这三项,也很有帮助。哪怕只是攒够几天开销的应急金,也能让突发状况不至于打乱整个计划。每次发薪水时花点时间看看这个大致的计划是否还合理。"
+      },
+      "th": {
+        "headline": "วางแผนเล็กๆ น้อยๆ ทุกเดือน ช่วยลดความกังวลได้มาก",
+        "text": "ลองแบ่งเงินเดือนในใจเป็นส่วนๆ เงินสำหรับค่าใช้จ่ายจำเป็น (อาหาร ค่าเดินทาง ค่าโทรศัพท์) เงินที่ตั้งใจจะส่งกลับบ้าน และเงินสำรองเล็กน้อยไว้ใช้ยามฉุกเฉิน ไม่จำเป็นต้องใช้ระบบที่ซับซ้อน แค่จดบันทึกสามส่วนนี้ไว้ในโทรศัพท์ก็ช่วยได้มากแล้ว การมีเงินสำรองฉุกเฉินแม้เพียงเล็กน้อย เท่ากับค่าใช้จ่ายไม่กี่วัน ก็ช่วยให้ค่าใช้จ่ายที่ไม่คาดคิดไม่ทำให้แผนทั้งหมดพังลง ลองทบทวนแผนคร่าวๆ นี้ทุกครั้งที่ได้รับเงินเดือน เพื่อให้มันยังสมเหตุสมผลอยู่เสมอ"
+      },
+      "my": {
+        "headline": "လစဉ် အနည်းငယ် စီစဉ်ခြင်းက စိုးရိမ်မှု အများကြီးကို လျှော့ချပေးနိုင်ပါတယ်။",
+        "text": "သင့်လစာကို စိတ်ထဲမှာ ခွဲခြားထားကြည့်ပါ— မရှိမဖြစ်လိုအပ်ချက်အတွက်ငွေ (အစားအစာ၊ သွားလာရေး၊ ဖုန်း)၊ အိမ်ကိုပို့ရန် စီစဉ်ထားသောငွေ၊ ပြီးတော့ အရေးပေါ်အတွက် သီးသန့်ချန်ထားသော ငွေအနည်းငယ်။ ရှုပ်ထွေးသောစနစ်မလိုအပ်ပါ — ဖုန်းမှာ ဒီအုပ်စုသုံးခုကို မှတ်ချက်တွေရေးထားရုံနဲ့ပင် အထောက်အကူဖြစ်ပါတယ်။ ရက်အနည်းငယ်စာကုန်ကျစရိတ်နှင့်ညီမျှသော အရေးပေါ်သုံးငွေအနည်းငယ်ရှိနေရုံနဲ့ပင် မမျှော်လင့်ထားသော ကုန်ကျစရိတ်က အစီအစဉ်တစ်ခုလုံးကို မပျက်ပြယ်စေပါဘူး။ သင့်ရိုးရှင်းသောအစီအစဉ်က လက်တွေ့ကျဆဲရှိနေအောင် လစာရသည့်အကြိမ်တိုင်း ပြန်လည်သုံးသပ်ပါ။"
+      }
+    }
+  },
+  {
+    "shortTitle": {
+      "en": "Sending Money Safely",
+      "ta": "பாதுகாப்பாக பணம் அனுப்புதல்",
+      "bn": "নিরাপদে টাকা পাঠানো",
+      "zh": "安全地汇款",
+      "th": "ส่งเงินอย่างปลอดภัย",
+      "my": "ဘေးကင်းစွာ ငွေပေးပို့ခြင်း"
+    },
+    "description": {
+      "en": "Choosing trusted services and avoiding hidden fees or scams.",
+      "ta": "நம்பகமான சேவைகளைத் தேர்ந்தெடுத்து மறைமுக கட்டணங்களைத் தவிர்த்தல்.",
+      "bn": "বিশ্বস্ত সেবা বেছে নিন, লুকানো ফি আর প্রতারণা এড়ান।",
+      "zh": "选择可靠的汇款渠道,避开隐藏费用和诈骗。",
+      "th": "เลือกบริการที่เชื่อถือได้ และหลีกเลี่ยงค่าธรรมเนียมแอบแฝงหรือการโกง",
+      "my": "ယုံကြည်စိတ်ချရသော ဝန်ဆောင်မှုများ ရွေးချယ်ပြီး ငွေပမာဏဝှက်ကြေးများနှင့် လိမ်လည်မှုများကို ရှောင်ကြဉ်ခြင်း။"
+    },
+    "body": {
+      "en": {
+        "headline": "Taking a little time to check a service can protect your hard-earned money.",
+        "text": "Always use licensed money transfer services or banks to send money home, rather than informal agents who may not be trustworthy. Before sending, compare the fees and exchange rates between a couple of services — they can vary more than you'd expect. Keep your receipts or transaction records until you confirm the money has arrived safely. If someone offers an unusually good deal to send money through them personally, be cautious — it's safer to use a proper, licensed channel even if it feels slightly slower."
+      },
+      "ta": {
+        "headline": "ஒரு சேவையை சரிபார்க்க சிறிது நேரம் செலவிடுவது உங்கள் கடின உழைப்பின் பணத்தைப் பாதுகாக்கும்.",
+        "text": "வீட்டிற்கு பணம் அனுப்ப எப்போதும் உரிமம் பெற்ற பண அனுப்பும் சேவைகள் அல்லது வங்கிகளைப் பயன்படுத்துங்கள், நம்பகத்தன்மை இல்லாத முறைசாரா ஏஜெண்டுகளை அல்ல. அனுப்பும் முன், இரண்டு மூன்று சேவைகளுக்கு இடையே கட்டணங்களையும் மாற்று விகிதங்களையும் ஒப்பிடுங்கள் — அவை எதிர்பார்ப்பதை விட வேறுபடலாம். பணம் பாதுகாப்பாக வந்து சேர்ந்ததை உறுதிசெய்யும் வரை உங்கள் ரசீதுகள் அல்லது பரிவர்த்தனை பதிவுகளை வைத்திருங்கள். யாராவது தனிப்பட்ட முறையில் பணம் அனுப்ப அசாதாரணமாக நல்ல ஒப்பந்தத்தை வழங்கினால், கவனமாக இருங்கள் — சிறிது மெதுவாக இருந்தாலும் முறையான, உரிமம் பெற்ற வழியைப் பயன்படுத்துவது பாதுகாப்பானது."
+      },
+      "bn": {
+        "headline": "একটু সময় নিয়ে সেবাটি যাচাই করলে আপনার কষ্টার্জিত টাকা সুরক্ষিত থাকবে।",
+        "text": "বাড়িতে টাকা পাঠাতে সবসময় লাইসেন্সপ্রাপ্ত মানি ট্রান্সফার সেবা বা ব্যাংক ব্যবহার করুন, অবিশ্বস্ত হতে পারে এমন অনানুষ্ঠানিক এজেন্টদের নয়। পাঠানোর আগে দুই-তিনটি সেবার ফি আর বিনিময় হার তুলনা করুন — এগুলো আপনার ধারণার চেয়ে বেশি পার্থক্য হতে পারে। টাকা নিরাপদে পৌঁছেছে কিনা নিশ্চিত হওয়া পর্যন্ত রসিদ বা লেনদেনের প্রমাণ রেখে দিন। কেউ যদি ব্যক্তিগতভাবে টাকা পাঠিয়ে দেওয়ার অস্বাভাবিক ভালো প্রস্তাব দেয়, সতর্ক থাকুন — একটু ধীরে হলেও সঠিক, লাইসেন্সপ্রাপ্ত মাধ্যম ব্যবহার করা বেশি নিরাপদ।"
+      },
+      "zh": {
+        "headline": "花点时间核实汇款渠道,能保护你辛苦赚来的钱。",
+        "text": "寄钱回家时,务必使用持牌的汇款服务或银行,而不是信不过的非正规中介。汇款前,比较一下两三家服务的手续费和汇率——差异可能比你想象的大。保留好收据或交易记录,直到确认款项安全到账。如果有人提出私下帮忙汇款、条件好得不寻常,一定要多留心——哪怕稍微慢一点,使用正规持牌渠道会更安全。"
+      },
+      "th": {
+        "headline": "ใช้เวลาสักนิดตรวจสอบบริการ ช่วยปกป้องเงินที่หามาอย่างยากลำบากของคุณ",
+        "text": "ควรใช้บริการโอนเงินที่มีใบอนุญาตหรือธนาคารเสมอในการส่งเงินกลับบ้าน แทนที่จะใช้ตัวแทนที่ไม่เป็นทางการซึ่งอาจไม่น่าเชื่อถือ ก่อนส่งเงิน ลองเปรียบเทียบค่าธรรมเนียมและอัตราแลกเปลี่ยนระหว่างสองสามบริการ เพราะอาจแตกต่างกันมากกว่าที่คิด เก็บใบเสร็จหรือหลักฐานการทำธุรกรรมไว้จนกว่าจะยืนยันว่าเงินถึงปลายทางอย่างปลอดภัย หากมีใครเสนอข้อตกลงที่ดีเกินจริงในการช่วยส่งเงินให้เป็นการส่วนตัว ควรระมัดระวัง การใช้ช่องทางที่ถูกต้องมีใบอนุญาตจะปลอดภัยกว่า แม้จะช้ากว่าเล็กน้อยก็ตาม"
+      },
+      "my": {
+        "headline": "ဝန်ဆောင်မှုတစ်ခုကို အချိန်အနည်းငယ်ယူပြီး စစ်ဆေးခြင်းက သင့်ရင်းနှီးစွာရှာဖွေရသော ငွေကို ကာကွယ်ပေးနိုင်ပါတယ်။",
+        "text": "အိမ်ကိုငွေပို့ရာတွင် ယုံကြည်စိတ်ချရမှုမရှိနိုင်သော မသမာအေးဂျင့်များထက် လိုင်စင်ရငွေလွှဲဝန်ဆောင်မှုများ သို့မဟုတ် ဘဏ်များကိုသာ အမြဲသုံးပါ။ ငွေမပို့မီ ဝန်ဆောင်မှုနှစ်ခုသုံးခုကြား ကြေးနှင့် ငွေလဲနှုန်းများကို နှိုင်းယှဉ်ကြည့်ပါ — မျှော်လင့်ထားသည်ထက် ကွာခြားနေနိုင်ပါတယ်။ ငွေ ဘေးကင်းစွာ ရောက်ရှိကြောင်း အတည်ပြုသည်အထိ ပြေစာများ သို့မဟုတ် ငွေလွှဲမှတ်တမ်းများကို သိမ်းထားပါ။ တစ်စုံတစ်ယောက်က ပုဂ္ဂိုလ်ရေးအရ ငွေလွှဲပေးမည်ဟု ထူးဆန်းစွာ ကောင်းသော အခွင့်အရေးပေးလျှင် သတိထားပါ — အနည်းငယ် နှေးနေသော်လည်း သင့်လျော်သော၊ လိုင်စင်ရ ချန်နယ်ကို သုံးခြင်းက ပိုဘေးကင်းပါတယ်။"
+      }
+    }
+  },
+  {
+    "shortTitle": {
+      "en": "Where to Find Help",
+      "ta": "உதவி பெற எங்கே",
+      "bn": "কোথায় সাহায্য পাবেন",
+      "zh": "哪里可以寻求帮助",
+      "th": "หาความช่วยเหลือได้ที่ไหน",
+      "my": "အကူအညီ ရှာနိုင်ရာ နေရာ"
+    },
+    "description": {
+      "en": "It's okay to ask for help with money stress — and how to stay safe doing it.",
+      "ta": "பண அழுத்தத்திற்கு உதவி கேட்பது பரவாயில்லை — பாதுகாப்பாக அதைச் செய்வது எப்படி.",
+      "bn": "টাকা নিয়ে চাপের জন্য সাহায্য চাওয়া ঠিক আছে — নিরাপদে কীভাবে করবেন।",
+      "zh": "因为钱而焦虑时寻求帮助没有问题,也要注意安全。",
+      "th": "การขอความช่วยเหลือเรื่องความเครียดด้านการเงินไม่ใช่เรื่องผิด และวิธีทำอย่างปลอดภัย",
+      "my": "ငွေကြေးဖိစီးမှုအတွက် အကူအညီတောင်းခြင်းက ကိစ္စမရှိပါ — ဘေးကင်းစွာ လုပ်ဆောင်နည်း။"
+    },
+    "body": {
+      "en": {
+        "headline": "Money worries are common — you don't have to face them alone.",
+        "text": "If money stress is weighing on you, it's okay to talk about it, whether with a trusted colleague, friend, or an organisation that supports workers like you, such as HealthServe. Avoid unlicensed moneylenders, especially ones who approach you directly or promise very easy loans — these often come with unfair terms that make things worse. If you're ever unsure whether a loan or financial offer is safe, it's worth asking someone you trust or a support organisation before agreeing to anything. Asking for guidance early can prevent a small problem from becoming a bigger one."
+      },
+      "ta": {
+        "headline": "பண கவலைகள் பொதுவானவை — நீங்கள் அவற்றை தனியாக எதிர்கொள்ள வேண்டியதில்லை.",
+        "text": "பண அழுத்தம் உங்களை பாதித்தால், நம்பகமான சக பணியாளர், நண்பர், அல்லது ஹெல்த்சர்வ் போன்ற உங்களை ஆதரிக்கும் அமைப்புடன் அதைப் பற்றி பேசுவது பரவாயில்லை. உரிமம் இல்லாத கடன் வழங்குநர்களை தவிர்க்கவும், குறிப்பாக நேரடியாக உங்களை அணுகுபவர்கள் அல்லது மிக எளிதான கடன்களை வாக்குறுதி அளிப்பவர்கள் — இவை பெரும்பாலும் நியாயமற்ற நிபந்தனைகளுடன் வந்து நிலைமையை மோசமாக்கும். ஒரு கடன் அல்லது நிதி சலுகை பாதுகாப்பானதா என்று உங்களுக்கு உறுதியில்லை என்றால், எதையும் ஒப்புக் கொள்ளும் முன் நீங்கள் நம்பும் ஒருவரிடம் அல்லது ஆதரவு அமைப்பிடம் கேட்பது நல்லது. சீக்கிரமே வழிகாட்டுதல் கேட்பது ஒரு சிறிய பிரச்சினை பெரிதாவதைத் தடுக்கும்."
+      },
+      "bn": {
+        "headline": "টাকা নিয়ে দুশ্চিন্তা সাধারণ ব্যাপার — আপনাকে একা এর মোকাবিলা করতে হবে না।",
+        "text": "টাকার চাপ যদি আপনাকে ভারাক্রান্ত করে, বিশ্বস্ত সহকর্মী, বন্ধু, বা হেলথসার্ভের মতো আপনার মতো শ্রমিকদের সহায়তা করা কোনো সংস্থার সাথে এ নিয়ে কথা বলা ঠিক আছে। লাইসেন্সবিহীন ঋণদাতাদের এড়িয়ে চলুন, বিশেষত যারা সরাসরি আপনার কাছে আসে বা খুব সহজ ঋণের প্রতিশ্রুতি দেয় — এগুলোতে প্রায়ই অন্যায্য শর্ত থাকে যা পরিস্থিতি আরও খারাপ করে তোলে। কোনো ঋণ বা আর্থিক প্রস্তাব নিরাপদ কিনা নিশ্চিত না হলে, কিছুতে রাজি হওয়ার আগে বিশ্বস্ত কারো বা সহায়তা সংস্থার কাছে জিজ্ঞাসা করা ভালো। আগেভাগে পরামর্শ চাওয়া একটা ছোট সমস্যাকে বড় হতে বাধা দিতে পারে।"
+      },
+      "zh": {
+        "headline": "钱的烦恼很常见——你不必独自面对。",
+        "text": "如果金钱压力让你喘不过气,和信得过的同事、朋友,或者像HealthServe这样支持像你这样的工人的机构聊一聊,是完全可以的。要避开没有牌照的放贷人,尤其是主动找上门来、承诺贷款非常容易的那种——这类贷款往往条件苛刻,只会让情况更糟。如果你不确定某笔贷款或金融优惠是否安全,在答应之前,最好先问问信得过的人或求助机构。早一点寻求指导,能避免小问题变成大麻烦。"
+      },
+      "th": {
+        "headline": "ความกังวลเรื่องเงินเป็นเรื่องปกติ คุณไม่จำเป็นต้องเผชิญมันคนเดียว",
+        "text": "หากความเครียดเรื่องเงินหนักใจคุณ การพูดคุยเรื่องนี้กับเพื่อนร่วมงานที่ไว้ใจ เพื่อน หรือองค์กรที่ให้การสนับสนุนคนทำงานอย่างคุณ เช่น HealthServe ถือเป็นเรื่องที่ทำได้ หลีกเลี่ยงผู้ให้กู้เงินที่ไม่มีใบอนุญาต โดยเฉพาะผู้ที่เข้ามาติดต่อคุณโดยตรงหรือสัญญาว่าจะให้กู้ง่ายมาก เพราะมักมาพร้อมเงื่อนไขที่ไม่เป็นธรรมซึ่งทำให้สถานการณ์แย่ลง หากไม่แน่ใจว่าเงินกู้หรือข้อเสนอทางการเงินใดปลอดภัยหรือไม่ ควรปรึกษาคนที่ไว้ใจหรือองค์กรสนับสนุนก่อนตกลงอะไรทั้งนั้น การขอคำแนะนำแต่เนิ่นๆ ช่วยป้องกันไม่ให้ปัญหาเล็กๆ กลายเป็นปัญหาใหญ่"
+      },
+      "my": {
+        "headline": "ငွေကြေးပူပန်မှုများသည် သာမန်အရာပါ — သင်တစ်ယောက်တည်း ရင်ဆိုင်ရန်မလိုပါ။",
+        "text": "ငွေကြေးဖိစီးမှုက သင့်ကို ထိခိုက်နေရင် ယုံကြည်ရသော လုပ်ဖော်ကိုင်ဖက်၊ မိတ်ဆွေ၊ သို့မဟုတ် HealthServe ကဲ့သို့ သင့်လို အလုပ်သမားများကို ကူညီထောက်ပံ့ပေးသော အဖွဲ့အစည်းတစ်ခုနှင့် ဒီအကြောင်းပြောဆိုခြင်းက ကိစ္စမရှိပါ။ လိုင်စင်မရှိသော ချေးငွေပေးသူများကို ရှောင်ကြဉ်ပါ၊ အထူးသဖြင့် သင့်ထံ တိုက်ရိုက်ချဉ်းကပ်သူများ သို့မဟုတ် အလွယ်တကူ ချေးငွေရရှိစေမည်ဟု ကတိပေးသူများ — ဒါတွေက မတရားသော စည်းကမ်းချက်များနှင့်အတူ လာတတ်ပြီး အခြေအနေကို ပိုဆိုးစေတတ်ပါတယ်။ ချေးငွေ သို့မဟုတ် ငွေကြေးဆိုင်ရာ အဆိုပြုချက်တစ်ခု ဘေးကင်းမှုရှိမရှိ မသေချာလျှင် မည်သည့်အရာကိုမျှ သဘောတူမီ သင်ယုံကြည်ရသူ သို့မဟုတ် ထောက်ခံအဖွဲ့အစည်းကို မေးကြည့်သင့်ပါတယ်။ စောစီးစွာ လမ်းညွှန်မှုတောင်းခြင်းက ပြဿနာငယ်တစ်ခုကို ပြဿနာကြီးဖြစ်မလာအောင် ကာကွယ်ပေးနိုင်ပါတယ်။"
+      }
+    }
+  }
+],
       quiz: {
         en:{ question:"What can help you manage money worries?", options:["Borrow from unlicensed moneylenders to cover gaps","Make a simple plan for your pay and ask HealthServe or a peer leader if you need help","Avoid thinking about it until the problem goes away"], correct:1, wrongFeedback:"Not quite — that can create bigger problems later. Try another answer.", correctFeedback:"That's right. A simple plan and asking for help early makes a big difference." },
         ta:{ question:"பண கவலைகளை நிர்வகிக்க எது உதவும்?", options:["இடைவெளிகளை நிரப்ப உரிமம் இல்லாத கடன் வழங்குநர்களிடம் கடன் வாங்குதல்","உங்கள் சம்பளத்திற்கு எளிய திட்டம் தயாரித்து, தேவைப்பட்டால் HealthServe அல்லது பீர் லீடரிடம் உதவி கேட்டல்","பிரச்சனை தானாக போகும் வரை அதைப் பற்றி நினைக்காமல் இருத்தல்"], correct:1, wrongFeedback:"சரியில்லை — அது பின்னர் பெரிய பிரச்சனைகளை உருவாக்கக்கூடும். வேறு பதிலை முயற்சிக்கவும்.", correctFeedback:"சரி. எளிய திட்டமும் சீக்கிரமே உதவி கேட்பதும் பெரிய மாற்றத்தை ஏற்படுத்தும்." },
@@ -698,8 +1417,10 @@
   function loadState(){
     var def = {
       moduleStatus: { stress:'in-progress', sleep:'not-started', homesick:'not-started', money:'done' },
-      moduleStep: { stress:2, sleep:0, homesick:0, money:4 },
+      moduleStep: { stress:1, sleep:0, homesick:0, money:5 },
+      lastChapterIdx: { stress:0, sleep:0, homesick:0, money:3 },
       checkins: seedDemoCheckins(),
+      bookmarks: {}, // key `${moduleId}|${chapterIdx}` -> dateKey() when bookmarked, merged into the check-in journal
       lastOpenedModule: 'stress',
       profile: { phone:'', finLast4:'7421' }
     };
@@ -710,7 +1431,9 @@
         return {
           moduleStatus: Object.assign({}, def.moduleStatus, saved.moduleStatus),
           moduleStep: Object.assign({}, def.moduleStep, saved.moduleStep),
+          lastChapterIdx: Object.assign({}, def.lastChapterIdx, saved.lastChapterIdx),
           checkins: Object.assign({}, saved.checkins), // real history fully replaces the seed once it exists
+          bookmarks: Object.assign({}, saved.bookmarks),
           lastOpenedModule: saved.lastOpenedModule || def.lastOpenedModule,
           profile: Object.assign({}, def.profile, saved.profile)
         };
@@ -728,6 +1451,16 @@
     MODULES[id].currentStep = STATE.moduleStep[id];
   });
   continueLearningId = STATE.lastOpenedModule;
+
+  // ===================== BOOKMARKS =====================
+  function bookmarkKey(moduleId, chapterIdx){ return moduleId + '|' + chapterIdx; }
+  function isBookmarked(moduleId, chapterIdx){ return !!STATE.bookmarks[bookmarkKey(moduleId, chapterIdx)]; }
+  function toggleBookmark(moduleId, chapterIdx){
+    var key = bookmarkKey(moduleId, chapterIdx);
+    if (STATE.bookmarks[key]) delete STATE.bookmarks[key];
+    else STATE.bookmarks[key] = dateKey(new Date());
+    saveState();
+  }
 
   function computeStreak(){
     var dates = Object.keys(STATE.checkins).sort();
@@ -795,37 +1528,64 @@
       escalate.style.display = 'none';
     }
 
-    // History — every other logged day, most recent first.
+    // History — mood check-ins and bookmarked chapters, merged into one
+    // timeline, most recent first (per the user's choice to keep bookmarks
+    // inside this journal rather than a separate notebook screen).
     var historyList = document.getElementById('checkin-history-list');
     var emptyNote = document.getElementById('checkin-history-empty');
     if (!historyList) return; // guard in case this runs before the screen exists
     historyList.innerHTML = '';
-    var dates = Object.keys(STATE.checkins).filter(function(d){ return d !== today; }).sort().reverse();
-    if (!dates.length){
+
+    var entries = [];
+    Object.keys(STATE.checkins).forEach(function(d){
+      if (d === today) return;
+      entries.push({ date: d, type: 'mood', mood: STATE.checkins[d] });
+    });
+    Object.keys(STATE.bookmarks).forEach(function(key){
+      var parts = key.split('|');
+      var moduleId = parts[0], chapterIdx = parseInt(parts[1], 10);
+      if (!MODULES[moduleId] || !MODULES[moduleId].chapters[chapterIdx]) return;
+      entries.push({ date: STATE.bookmarks[key], type: 'bookmark', moduleId: moduleId, chapterIdx: chapterIdx });
+    });
+    entries.sort(function(a, b){ return a.date < b.date ? 1 : (a.date > b.date ? -1 : 0); });
+
+    if (!entries.length){
       emptyNote.style.display = 'block';
       emptyNote.textContent = t('noCheckinsYet');
     } else {
       emptyNote.style.display = 'none';
-      dates.forEach(function(d){
-        var mood = STATE.checkins[d];
+      entries.forEach(function(entry){
         var row = document.createElement('div');
-        row.style.cssText = 'display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;';
-        var dateObj = new Date(d + 'T00:00:00');
+        var dateObj = new Date(entry.date + 'T00:00:00');
         var emojiEl = document.createElement('div');
         emojiEl.style.fontSize = '22px';
-        emojiEl.textContent = MOOD_EMOJI[mood] || '';
         var textWrap = document.createElement('div');
         textWrap.style.flex = '1';
         var labelEl = document.createElement('div');
         labelEl.style.cssText = 'font-weight:600;font-size:13.5px;';
-        labelEl.textContent = t(MOOD_LABEL_KEY[mood]) || mood;
         var dateEl = document.createElement('div');
         dateEl.style.cssText = 'font-size:11.5px;color:var(--muted);margin-top:1px;';
         dateEl.textContent = formatHistoryDate(dateObj);
         textWrap.appendChild(labelEl);
         textWrap.appendChild(dateEl);
-        row.appendChild(emojiEl);
-        row.appendChild(textWrap);
+
+        if (entry.type === 'mood'){
+          row.style.cssText = 'display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;';
+          emojiEl.textContent = MOOD_EMOJI[entry.mood] || '';
+          labelEl.textContent = t(MOOD_LABEL_KEY[entry.mood]) || entry.mood;
+          row.appendChild(emojiEl);
+          row.appendChild(textWrap);
+        } else {
+          var chapter = MODULES[entry.moduleId].chapters[entry.chapterIdx];
+          row.style.cssText = 'display:flex;align-items:center;gap:12px;background:var(--teal-tint);border:1px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;';
+          row.onclick = function(){ openChapter(entry.moduleId, entry.chapterIdx); };
+          emojiEl.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="#0E5C55" stroke="#0E5C55" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>';
+          emojiEl.style.fontSize = '';
+          labelEl.textContent = t('bookmarkedTag') + ' · ' + (chapter.shortTitle[pickedLang] || chapter.shortTitle.en);
+          dateEl.textContent = formatHistoryDate(dateObj) + ' · ' + moduleTitle(entry.moduleId, pickedLang);
+          row.appendChild(emojiEl);
+          row.appendChild(textWrap);
+        }
         historyList.appendChild(row);
       });
     }
@@ -837,8 +1597,10 @@
   }
 
   function moduleTitle(id, lang){ return MODULES[id].titles[lang] || MODULES[id].titles.en; }
-  function moduleBody(id, lang){ return MODULES[id].body[lang] || MODULES[id].body.en; }
   function moduleQuiz(id, lang){ return MODULES[id].quiz[lang] || MODULES[id].quiz.en; }
+  function chapterShortTitle(id, idx, lang){ var c = MODULES[id].chapters[idx]; return c.shortTitle[lang] || c.shortTitle.en; }
+  function chapterDescription(id, idx, lang){ var c = MODULES[id].chapters[idx]; return c.description[lang] || c.description.en; }
+  function chapterBody(id, idx, lang){ var c = MODULES[id].chapters[idx]; return c.body[lang] || c.body.en; }
 
   // ===================== LANGUAGE PICKER =====================
   var langGrid = document.getElementById('lang-grid');
@@ -979,7 +1741,7 @@
       var statusLabel = m.status === 'done' ? t('statusDone') : (m.status === 'in-progress' ? t('statusInProgress') : t('statusStart'));
       var statusBg = m.status === 'done' ? '#E7F2EB' : (m.status === 'in-progress' ? '#FDEFD9' : m.iconBg);
       var statusColor = m.status === 'done' ? '#3F8F6B' : (m.status === 'in-progress' ? '#B9791F' : '#0E5C55');
-      var stepsNote = m.steps + ' ' + t('stepsSuffix') + ' · ' + (m.status === 'done' ? t('completed') : (m.status === 'in-progress' ? t('statusInProgress') : t('notStarted')));
+      var stepsNote = m.chapters.length + ' ' + t('stepsSuffix') + ' · ' + (m.status === 'done' ? t('completed') : (m.status === 'in-progress' ? t('statusInProgress') : t('notStarted')));
       var btn = document.createElement('button');
       btn.onclick = function(){ openModule(id); };
       btn.style.cssText = 'background:var(--card);border:1px solid var(--line);border-radius:16px;padding:13px 14px;display:flex;align-items:center;gap:12px;text-align:left;width:100%;';
@@ -1015,23 +1777,101 @@
     return n + ' ' + t('minLeft');
   }
 
-  // ===================== MODULE SCREEN =====================
+  // ===================== CHAPTER PICKER =====================
+  // Opening a module now lands on a chapter list first, so the visitor can
+  // see what's in each chapter and choose where to go, rather than being
+  // dropped straight into chapter 1 every time.
   var currentModuleId = 'stress';
+  var currentChapterIdx = 0;
+
   function openModule(id){
     currentModuleId = id;
+    renderChapterList(id);
+    go('screen-chapters');
+  }
+
+  // Home's "Continue learning" card is still a one-tap resume — it jumps
+  // straight back into the exact chapter the visitor last had open.
+  function continueLearningCardTap(){
+    openChapter(continueLearningId, STATE.lastChapterIdx[continueLearningId] || 0);
+  }
+
+  function renderChapterList(id){
+    var m = MODULES[id];
+    document.getElementById('chapters-eyebrow').textContent = t('wellbeingModuleLabel');
+    document.getElementById('chapters-title').textContent = moduleTitle(id, pickedLang);
+
+    var list = document.getElementById('chapters-list');
+    list.innerHTML = '';
+    var visitedCount = m.status === 'done' ? m.chapters.length : m.currentStep;
+
+    m.chapters.forEach(function(chapter, idx){
+      var visited = idx < visitedCount;
+      var row = document.createElement('div');
+      row.style.cssText = 'display:flex;align-items:stretch;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;';
+
+      var openBtn = document.createElement('button');
+      openBtn.onclick = function(){ openChapter(id, idx); };
+      openBtn.style.cssText = 'flex:1;text-align:left;background:none;border:none;padding:13px 14px;display:flex;align-items:center;gap:12px;';
+      var badge = visited
+        ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3F8F6B" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>'
+        : (idx + 1);
+      var badgeBg = visited ? '#E7F2EB' : m.iconBg;
+      openBtn.innerHTML =
+        '<div style="width:30px;height:30px;border-radius:50%;background:'+badgeBg+';display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700;font-size:13px;color:'+m.iconColorSmall+';">'+badge+'</div>' +
+        '<div style="flex:1;">' +
+          '<div style="font-weight:600;font-size:14px;">'+chapterShortTitle(id, idx, pickedLang)+'</div>' +
+          '<div style="font-size:12px;color:var(--muted);margin-top:2px;line-height:1.4;">'+chapterDescription(id, idx, pickedLang)+'</div>' +
+        '</div>';
+
+      var bookmarkBtn = document.createElement('button');
+      bookmarkBtn.setAttribute('aria-label', 'Bookmark');
+      bookmarkBtn.onclick = function(){ toggleBookmark(id, idx); renderChapterList(id); };
+      bookmarkBtn.style.cssText = 'width:44px;flex-shrink:0;border:none;background:none;display:flex;align-items:center;justify-content:center;';
+      var marked = isBookmarked(id, idx);
+      bookmarkBtn.innerHTML = '<svg width="19" height="19" viewBox="0 0 24 24" fill="'+(marked ? '#0E5C55' : 'none')+'" stroke="#0E5C55" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>';
+
+      row.appendChild(openBtn);
+      row.appendChild(bookmarkBtn);
+      list.appendChild(row);
+    });
+
+    var quizRow = document.createElement('button');
+    var quizDone = m.status === 'done';
+    quizRow.onclick = function(){ renderQuiz(); go('screen-quiz'); };
+    quizRow.style.cssText = 'text-align:left;background:'+(quizDone ? '#E7F2EB' : 'var(--teal-tint)')+';border:1px solid var(--line);border-radius:16px;padding:13px 14px;display:flex;align-items:center;gap:12px;width:100%;';
+    quizRow.innerHTML =
+      '<div style="width:30px;height:30px;border-radius:50%;background:'+(quizDone ? '#CFE6DB' : '#FFFFFF')+';display:flex;align-items:center;justify-content:center;flex-shrink:0;">' +
+        (quizDone
+          ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3F8F6B" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>'
+          : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0E5C55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 17h.01M12 14a2 2 0 10-2-2"/></svg>') +
+      '</div>' +
+      '<div style="flex:1;font-weight:700;font-size:14px;">'+t('takeTheQuiz')+'</div>';
+    list.appendChild(quizRow);
+  }
+
+  function backToChapters(){
+    renderChapterList(currentModuleId); // bookmark state may have changed on the chapter screen
+    go('screen-chapters');
+  }
+
+  function openChapter(id, chapterIdx){
+    currentModuleId = id;
+    currentChapterIdx = chapterIdx;
     resetQuizState();
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) window.speechSynthesis.cancel();
     playing = false;
     setPlayIcon(false);
 
-    // Opening a module is itself progress — persist it so "Continue learning"
+    // Opening a chapter is itself progress — persist it so "Continue learning"
     // on Home reflects what the visitor actually did last, across visits.
     if (MODULES[id].status === 'not-started'){
       MODULES[id].status = 'in-progress';
-      MODULES[id].currentStep = 1;
     }
+    MODULES[id].currentStep = Math.max(MODULES[id].currentStep, chapterIdx + 1);
     STATE.moduleStatus[id] = MODULES[id].status;
     STATE.moduleStep[id] = MODULES[id].currentStep;
+    STATE.lastChapterIdx[id] = chapterIdx;
     if (MODULES[id].status !== 'done'){
       continueLearningId = id;
       STATE.lastOpenedModule = id;
@@ -1039,29 +1879,48 @@
     saveState();
 
     renderModuleScreen();
-    renderQuiz();
     go('screen-module');
+  }
+
+  function nextChapterOrQuiz(){
+    var m = MODULES[currentModuleId];
+    if (currentChapterIdx < m.chapters.length - 1){
+      openChapter(currentModuleId, currentChapterIdx + 1);
+    } else {
+      renderQuiz();
+      go('screen-quiz');
+    }
+  }
+
+  function toggleCurrentBookmark(){
+    toggleBookmark(currentModuleId, currentChapterIdx);
+    updateModuleBookmarkIcon();
+  }
+
+  function updateModuleBookmarkIcon(){
+    var icon = document.getElementById('module-bookmark-icon');
+    if (!icon) return;
+    icon.setAttribute('fill', isBookmarked(currentModuleId, currentChapterIdx) ? '#0E5C55' : 'none');
   }
 
   function renderModuleScreen(){
     var m = MODULES[currentModuleId];
-    document.getElementById('module-eyebrow').textContent = t('wellbeingModuleLabel');
-    document.getElementById('module-title').textContent = moduleTitle(currentModuleId, pickedLang);
+    var totalChapters = m.chapters.length;
+    document.getElementById('module-eyebrow').textContent = moduleTitle(currentModuleId, pickedLang);
+    document.getElementById('module-title').textContent = chapterShortTitle(currentModuleId, currentChapterIdx, pickedLang);
 
     var dots = document.getElementById('module-dots');
     dots.innerHTML = '';
-    var filled = m.status === 'done' ? m.steps : m.currentStep;
-    for (var i = 0; i < m.steps; i++){
+    for (var i = 0; i < totalChapters; i++){
       var dot = document.createElement('div');
-      dot.style.cssText = 'flex:1;height:6px;border-radius:4px;background:' + (i < filled ? '#0E5C55' : '#E7E1D6') + ';';
+      dot.style.cssText = 'flex:1;height:6px;border-radius:4px;background:' + (i <= currentChapterIdx ? '#0E5C55' : '#E7E1D6') + ';';
       dots.appendChild(dot);
     }
-    var stepLabel = m.status === 'done' ? t('completed') : t('stepOf').replace('{n}', Math.max(m.currentStep,1)).replace('{total}', m.steps);
-    document.getElementById('module-step-label').textContent = stepLabel;
+    document.getElementById('module-step-label').textContent = t('chapterOf').replace('{n}', currentChapterIdx + 1).replace('{total}', totalChapters);
 
     document.getElementById('module-icon-box').innerHTML = '<svg width="76" height="76" viewBox="0 0 24 24" fill="none" stroke="'+m.iconColorBig+'" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"><path d="'+m.iconPath+'"/></svg>';
 
-    var body = moduleBody(currentModuleId, pickedLang);
+    var body = chapterBody(currentModuleId, currentChapterIdx, pickedLang);
     document.getElementById('module-headline').textContent = body.headline;
     document.getElementById('module-body').textContent = body.text;
 
@@ -1069,8 +1928,10 @@
     var langEntry = LANGS.filter(function(l){ return l.id === pickedLang; })[0] || LANGS[1];
     document.getElementById('module-lang-tag').textContent = langEntry.native;
 
-    document.getElementById('module-next-btn').textContent = t('next');
-    document.getElementById('module-skip-btn').textContent = t('skipForNow');
+    document.getElementById('module-next-btn').textContent = currentChapterIdx < totalChapters - 1 ? t('nextChapter') : t('takeTheQuiz');
+    document.getElementById('module-skip-btn').textContent = t('viewAllChapters');
+
+    updateModuleBookmarkIcon();
   }
 
   // Audio player toggle (visual only)
@@ -1131,7 +1992,7 @@
       setPlayIcon(false);
       return;
     }
-    var content = moduleBody(currentModuleId, pickedLang);
+    var content = chapterBody(currentModuleId, currentChapterIdx, pickedLang);
     var text = content.headline + '. ' + content.text;
     var utter = new SpeechSynthesisUtterance(text);
     var langTag = SPEECH_LANG[pickedLang] || 'en-US';
