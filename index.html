@@ -263,8 +263,38 @@
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1v-9"/></svg>
           <span class="nav-home-label"></span>
         </button>
-        <button class="navitem" onclick="openModule(continueLearningId)">
+        <button class="navitem" onclick="openLearn()">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15z"/></svg>
+          <span class="nav-learn-label"></span>
+        </button>
+        <button class="navitem" onclick="openCheckin()">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5 5 0 00-7.1 0L12 6.3l-1.7-1.7a5 5 0 10-7.1 7.1L12 20.4l8.8-8.7a5 5 0 000-7.1z"/></svg>
+          <span class="nav-checkin-label"></span>
+        </button>
+        <button class="navitem" onclick="go('screen-profile')">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+          <span class="nav-profile-label"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ===================== SCREEN 3a: LEARN (all modules) ===================== -->
+    <div class="screen" id="screen-learn">
+      <div class="scroll" style="padding:24px 20px 12px;display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;">
+          <h1 id="learn-title" style="font-size:20px;"></h1>
+          <div id="learn-count-label" style="font-size:12.5px;color:var(--muted);"></div>
+        </div>
+        <div id="learn-module-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+      </div>
+
+      <div class="bottomnav">
+        <button class="navitem" onclick="go('screen-home')">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1v-9"/></svg>
+          <span class="nav-home-label"></span>
+        </button>
+        <button class="navitem active" onclick="openLearn()">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15z"/></svg>
           <span class="nav-learn-label"></span>
         </button>
         <button class="navitem" onclick="openCheckin()">
@@ -281,7 +311,7 @@
     <!-- ===================== SCREEN 3b: CHAPTER PICKER ===================== -->
     <div class="screen" id="screen-chapters">
       <div class="topbar">
-        <button class="backbtn" onclick="go('screen-home')" aria-label="Back">
+        <button class="backbtn" onclick="go(chaptersReturnScreen)" aria-label="Back">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1C2520" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
         </button>
         <div style="flex:1;">
@@ -299,7 +329,7 @@
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1v-9"/></svg>
           <span class="nav-home-label"></span>
         </button>
-        <button class="navitem active" onclick="openModule(continueLearningId)">
+        <button class="navitem active" onclick="openLearn()">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15z"/></svg>
           <span class="nav-learn-label"></span>
         </button>
@@ -387,7 +417,7 @@
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1v-9"/></svg>
           <span class="nav-home-label"></span>
         </button>
-        <button class="navitem active" onclick="openModule(continueLearningId)">
+        <button class="navitem active" onclick="openLearn()">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15z"/></svg>
           <span class="nav-learn-label"></span>
         </button>
@@ -434,7 +464,7 @@
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1v-9"/></svg>
           <span class="nav-home-label"></span>
         </button>
-        <button class="navitem active" onclick="openModule(continueLearningId)">
+        <button class="navitem active" onclick="openLearn()">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15z"/></svg>
           <span class="nav-learn-label"></span>
         </button>
@@ -532,7 +562,7 @@
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1v-9"/></svg>
           <span class="nav-home-label"></span>
         </button>
-        <button class="navitem" onclick="openModule(continueLearningId)">
+        <button class="navitem" onclick="openLearn()">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15z"/></svg>
           <span class="nav-learn-label"></span>
         </button>
@@ -627,7 +657,7 @@
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1v-9"/></svg>
           <span class="nav-home-label"></span>
         </button>
-        <button class="navitem" onclick="openModule(continueLearningId)">
+        <button class="navitem" onclick="openLearn()">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15z"/></svg>
           <span class="nav-learn-label"></span>
         </button>
@@ -688,7 +718,7 @@
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1v-9"/></svg>
           <span class="nav-home-label"></span>
         </button>
-        <button class="navitem" onclick="openModule(continueLearningId)">
+        <button class="navitem" onclick="openLearn()">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15z"/></svg>
           <span class="nav-learn-label"></span>
         </button>
@@ -806,6 +836,7 @@
     var scroller = target.querySelector('.scroll');
     if (scroller) scroller.scrollTop = 0;
     if (id === 'screen-home' && typeof renderHomeMood === 'function') renderHomeMood();
+    if (id === 'screen-learn' && typeof renderLearnScreen === 'function') renderLearnScreen();
   }
 
   // ===================== LANGUAGES =====================
@@ -2279,6 +2310,7 @@
     setTextClass('nav-checkin-label', t('navCheckin'));
     setTextClass('nav-profile-label', t('navProfile'));
     renderHomeModules();
+    renderLearnScreen();
     renderHomeMood();
     renderContinueCard();
     renderReminderBadge();
@@ -2339,8 +2371,19 @@
     renderReferralScreen();
   }
 
-  function renderHomeModules(){
-    var list = document.getElementById('module-list');
+  function renderHomeModules(){ renderModuleCards('module-list'); }
+  function renderLearnScreen(){
+    setText('learn-title', t('navLearn'));
+    setText('learn-count-label', t('topicsCount'));
+    renderModuleCards('learn-module-list');
+  }
+  // The Learn tab: always the full list of the 4 modules, never a single module's content.
+  function openLearn(){
+    renderLearnScreen();
+    go('screen-learn');
+  }
+  function renderModuleCards(listId){
+    var list = document.getElementById(listId);
     list.innerHTML = '';
     MODULE_ORDER.forEach(function(id){
       var m = MODULES[id];
@@ -2390,7 +2433,10 @@
   var currentModuleId = 'stress';
   var currentChapterIdx = 0;
 
+  var chaptersReturnScreen = 'screen-home';
   function openModule(id){
+    var from = document.querySelector('.screen.active');
+    if (from && (from.id === 'screen-home' || from.id === 'screen-learn')) chaptersReturnScreen = from.id;
     currentModuleId = id;
     renderChapterList(id);
     go('screen-chapters');
