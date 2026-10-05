@@ -1694,8 +1694,7 @@
       // -> true). Powers the one-time mini feedback survey after chapter 3.
       chaptersCompleted: {},
       surveyPromptShown: false,
-      surveyResponse: null,
-      moodHiddenOn: '' // date the Home mood card was hidden (it comes back the next day)
+      surveyResponse: null
     };
     try {
       var raw = localStorage.getItem(STATE_KEY);
@@ -1713,8 +1712,7 @@
           profile: Object.assign({}, def.profile, saved.profile),
           chaptersCompleted: Object.assign({}, saved.chaptersCompleted),
           surveyPromptShown: !!saved.surveyPromptShown,
-          surveyResponse: saved.surveyResponse || null,
-          moodHiddenOn: saved.moodHiddenOn || ''
+          surveyResponse: saved.surveyResponse || null
         };
       }
     } catch(e) {}
@@ -2001,9 +1999,11 @@
     var escalate = document.getElementById('home-mood-escalate');
     if (!good || !escalate) return;
 
-    // Once a mood is captured the card can be hidden for the day; a slim
-    // summary row (with a way back) stands in for it.
-    var hidden = !!todaysMood && STATE.moodHiddenOn === dateKey(new Date());
+    // The full card (with its response / helpline panel) is only open while the
+    // visitor is actively picking a mood. Arriving on Home with a mood already
+    // captured today shows the slim summary row instead — no big panel
+    // waiting on arrival. Hide collapses it; Change opens it again.
+    var hidden = !!todaysMood && !homeMoodOpen;
     document.getElementById('home-mood-card').style.display = hidden ? 'none' : 'block';
     document.getElementById('home-mood-hide-wrap').style.display = (todaysMood && !hidden) ? 'flex' : 'none';
     setText('home-mood-hide-btn', t('hideMood'));
@@ -2899,17 +2899,17 @@
   }
 
   // Home dashboard inline check-in — one tap, no page change
+  var homeMoodOpen = false; // session-only: is the full mood card open on Home?
   function hideHomeMood(){
-    STATE.moodHiddenOn = dateKey(new Date());
-    saveState();
+    homeMoodOpen = false;
     renderHomeMood();
   }
   function showHomeMood(){
-    STATE.moodHiddenOn = '';
-    saveState();
+    homeMoodOpen = true;
     renderHomeMood();
   }
   function pickHomeMood(el){
+    homeMoodOpen = true;
     recordCheckin(el.getAttribute('data-mood'));
     renderCheckinJournal();
   }
