@@ -614,6 +614,7 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9BA299" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
           </div>
         </div>
+        <button onclick="resetDemoData()" id="profile-reset-demo" style="background:none;border:none;color:#8A8F87;font-size:12px;text-decoration:underline;padding:6px 0 2px;align-self:center;">Reset demo data</button>
       </div>
 
       <div class="bottomnav">
@@ -757,6 +758,7 @@
     <button onclick="go('screen-quiz')">5 · Quiz</button>
     <button onclick="openCheckin()">6 · Check-in</button>
     <button onclick="go('screen-profile')">7 · Profile</button>
+    <button onclick="resetDemoData()" style="border-style:dashed;">↺ Reset demo</button>
   </div>
 </div>
 
@@ -2184,6 +2186,17 @@
     saveState();
     applyLanguage(); // refresh the greeting and Profile with the real values
     go('screen-home');
+  }
+
+  // Demo-only: wipe everything saved on this device (progress, check-ins,
+  // bookmarks, survey, sign-up) and reload so the seeded demo data is back.
+  function resetDemoData(){
+    if (!window.confirm('Reset demo data? This clears all saved progress, check-ins and sign-up details on this device.')) return;
+    try {
+      localStorage.removeItem(STATE_KEY);
+      localStorage.removeItem('hsc_onboarded');
+    } catch(e) {}
+    window.location.reload();
   }
 
   // ===================== APPLY LANGUAGE ACROSS ALL SCREENS =====================
