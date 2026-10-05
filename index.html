@@ -805,6 +805,7 @@
     target.classList.add('active');
     var scroller = target.querySelector('.scroll');
     if (scroller) scroller.scrollTop = 0;
+    if (id === 'screen-home' && typeof renderHomeMood === 'function') renderHomeMood();
   }
 
   // ===================== LANGUAGES =====================
@@ -1934,6 +1935,32 @@
     saveState();
     setText('profile-streak-value', computeStreak());
     setText('profile-checkins-value', Object.keys(STATE.checkins).length);
+    renderHomeMood(); // Home and Check-in are two views of the same saved mood
+  }
+
+  // Home's one-tap mood picker, drawn from the saved mood for today — so it
+  // still shows your pick after leaving the screen, picking from the Check-in
+  // page instead, or reloading the app.
+  function renderHomeMood(){
+    var todaysMood = STATE.checkins[dateKey(new Date())];
+    document.querySelectorAll('.home-mood-btn').forEach(function(b){
+      var on = b.getAttribute('data-mood') === todaysMood;
+      b.style.background = on ? 'rgba(255,255,255,0.32)' : 'rgba(255,255,255,0.14)';
+      b.style.borderColor = on ? 'rgba(255,255,255,0.6)' : 'transparent';
+    });
+    var good = document.getElementById('home-mood-good');
+    var escalate = document.getElementById('home-mood-escalate');
+    if (!good || !escalate) return;
+    if (!todaysMood){
+      good.style.display = 'none';
+      escalate.style.display = 'none';
+    } else if (todaysMood === 'great' || todaysMood === 'okay'){
+      good.style.display = 'block';
+      escalate.style.display = 'none';
+    } else {
+      good.style.display = 'none';
+      escalate.style.display = 'flex';
+    }
   }
 
   // ===================== CHECK-IN JOURNAL =====================
@@ -2252,6 +2279,7 @@
     setTextClass('nav-checkin-label', t('navCheckin'));
     setTextClass('nav-profile-label', t('navProfile'));
     renderHomeModules();
+    renderHomeMood();
     renderContinueCard();
     renderReminderBadge();
     if (document.getElementById('reminders-panel').style.display === 'block') renderRemindersList();
@@ -2792,24 +2820,8 @@
 
   // Home dashboard inline check-in — one tap, no page change
   function pickHomeMood(el){
-    document.querySelectorAll('.home-mood-btn').forEach(function(b){
-      b.style.background = 'rgba(255,255,255,0.14)';
-      b.style.borderColor = 'transparent';
-    });
-    el.style.background = 'rgba(255,255,255,0.32)';
-    el.style.borderColor = 'rgba(255,255,255,0.6)';
-
-    var mood = el.getAttribute('data-mood');
-    var good = document.getElementById('home-mood-good');
-    var escalate = document.getElementById('home-mood-escalate');
-    if (mood === 'great' || mood === 'okay'){
-      good.style.display = 'block';
-      escalate.style.display = 'none';
-    } else {
-      good.style.display = 'none';
-      escalate.style.display = 'flex';
-    }
-    recordCheckin(mood);
+    recordCheckin(el.getAttribute('data-mood'));
+    renderCheckinJournal();
   }
 
   // ===================== INITIALISE =====================
